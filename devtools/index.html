@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        body {
+            width: 100%;
+            height: 1000px;
+        }
+        div {
+            border: 1px solid black;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+    <script type="text/javascript">
+        var body = document.querySelector('body');
+        var div = document.querySelector('div');
+        var start = null, end = null;
+        var pressed = false, moved = false;
+        body.addEventListener('mousedown', function (e) {
+            if (e.button != 2) return;
+            pressed = true;
+            start = {
+                x: e.clientX,
+                y: e.clientY
+            }
+
+            div.style.left = start.x;
+            div.style.top = start.y;
+
+        }, false);
+
+        body.addEventListener('mouseup', function (e) {
+            if (e.button != 2) return;
+            pressed = false;
+        }, false);
+
+        body.addEventListener('contextmenu', function (e) {
+
+            if (moved) {
+                e.preventDefault();
+                moved = false;
+                return false;
+            }
+
+        }, false)
+
+        body.addEventListener('mousemove', function (e) {
+            var setPosition = function (x, y) {
+                div.style.left = x + "px";
+                div.style.top = y + "px";
+            }
+
+            if (e.button != 2) return;
+            moved = true;
+            end = {
+                x: e.clientX,
+                y: e.clientY
+            }
+
+            var width = Math.abs(start.x - end.x);
+            var height = Math.abs(start.y - end.y);
+
+            div.style.width = width + "px";
+            div.style.height = height + "px";
+
+            // 左上
+            if (end.y < start.y && end.x < start.x) {
+                setPosition(end.x, end.y);
+            // 右上角
+            } else if (end.y < start.y && end.x > start.x) {
+                setPosition(start.x, end.y);
+            // 左下
+            } else if (end.y > start.y && end.x < start.x) {
+                setPosition(end.x, start.y);
+            // 右上
+            } else if (end.y > start.y && end.x > start.x) {
+                setPosition(start.x, start.y);
+            }
+
+
+        }, false);
+    </script>
+</html>
