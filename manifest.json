@@ -10,12 +10,8 @@
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*"],
-            "js": ["jquery.js"]
-        },
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["content.js"]
-        }
+            "js": ["js/content.js"]
+        }        
     ],
     "browser_action": {
         "default_icon": {
@@ -24,6 +20,5 @@
         },
         "default_title": "That's the tool tip",
         "default_popup": "pop.html"
-    },
-    "devtools_page": "devtools.html"
+    }
 }
