@@ -1,108 +1,101 @@
 (function () {
     log = console.log.bind(console);
+    var $ = (function () {
+        /*
+            data-note-type: 元素类型
+            data-note-id: 元素id: +new Date()
+        */
 
-    var cfg = (function () {
-        var cfg = {
-            leftBtnPressed: false,
-            rightBtnPressed: false,
-            moved: false,
-
-            startPos: {
-                x: 0,
-                y: 0,
-            },
-            endPos: {
-                x: 0,
-                y: 0
-            }
-        };
-
-        var action = {
-            // 创建便签
-            create: {
-                condition: {
-                    leftBtnPressed: false,
-                    rightBtnPressed: true,
-                    moved: true
-                }
-            },
-            // 储存起始位置
-            startPos: {
-                condition: {
-                    leftBtnPressed: false,
-                    rightBtnPressed: true,
-                    moved: false
-                }
-            },
-            test: {
-                condition: {
-                    leftBtnPressed: false,
-                    rightBtnPressed: false,
-                    moved: true                        
-                }
-            }                     
+        var getTarget = function (elem) {
+            var id = elem.getAttribute("data-note-id");
+            return id? id: 0;
         }
 
-        function selectAction() {
-            log(cfg);
-            // var findIt = true;
-            // var choosen;
-            // for (var name in action) {
-            //     var item = action[name];
-            //     var condition = item.condition;
-            //     for (var key in condition) {
-            //         if (condition[key] !== cfg[key]) {
-            //             findIt = false;
-            //             break;
-            //         }
-            //     }
-            //     if (!findIt) continue;
-            //     else {
-            //         choosen = name;
-            //         break;
-            //     }
-            // }
-
-            // log(name);
+        var getType = function () {
 
         }
+
 
         return {
-            selectAction: selectAction,
-            leftBtnPressed: cfg.leftBtnPressed,
-            rightBtnPressed: cfg.rightBtnPressed
+            getTarget: getTarget
         }
-    })()
+
+    })();
+
+
+    // 配置文件
+    var Mediator = (function () {
+        /*
+            M1: 鼠标左键
+            M2: 鼠标右键
+
+            M1U: 鼠标左键抬起
+            M1D: 鼠标左键按下
+
+            M2U: 鼠标右键抬起
+            M2D: 鼠标右键按下
+
+            FLY: 鼠标移动中
+        */
+        var customEvent = {
+            "m1u": {
+                btn: 0,
+                eventType: "mouseup",
+            },
+            "m1d": {
+                btn: 0,
+                eventType: "mousedown",
+            },
+            "m2u": {
+                btn: 2,
+                eventType: "mouseup",
+            },
+            "m2d": {
+                btn: 2,
+                eventType: "mousedown",
+            },
+            "fly": {
+                btn: 0,
+                eventType: "mousemove"  
+            }
+        }
+
+        var gesture = {
+            create: ["m2d", "fly", "m2u"],
+            cancel: ["m2d", "fly", "m1d"],
+            resize: ["m1d", "fly", "m1u"]
+        }
+        var getEventType = function (eventType, btn) {
+            var item = null;
+            for (var key in customEvent) {
+                item = customEvent[key];
+                if (item.eventType == eventType && item.btn == btn) {
+                    return key;
+                }
+            }
+        }
+
+        var gestureQue = [];
+
+        return {
+            getEventType: getEventType
+        };
+    })();
 
     var body = document.querySelector('body');
 
-    body.addEventListener('mousedown', function (e) {
-        cfg.selectAction();
-        var key = e.button;
+    var eventCallback = function (e) {
 
-        switch(key) {
-            case 2: cfg.rightBtnPressed = true; break;
-            case 0: cfg.leftBtnPressed = true; break;
-        }
-        cfg.moved = false;
-        cfg.selectAction();
-    }, false);
-
-    body.addEventListener('mouseup', function (e) {
-        cfg.selectAction();
-        var key = e.button;
-        
-        switch(key) {
-            case 2: cfg.rightBtnPressed = false; break;
-            case 0: cfg.leftBtnPressed = false; break;
-        }
-        cfg.moved = false;
-        cfg.selectAction();
-    }, false);
-
-    body.addEventListener('mousemove', function (e) {
-        cfg.moved = true;
-    }, false);
+        var eventType = e.type;
+        var btn = e.button;
+        var customEvent = Mediator.getEventType(eventType, btn);
+        log(customEvent);
+        var target = $.getTarget(e.target);
+    }
+    body.addEventListener('keypress', eventCallback, false);
+    body.addEventListener('mousedown', eventCallback, false);
+    body.addEventListener('mouseup', eventCallback, false);
+    body.addEventListener('mousemove', eventCallback, false);
 
     
 })()
