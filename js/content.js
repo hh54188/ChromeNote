@@ -2,8 +2,8 @@
     log = console.log.bind(console);
     var $ = (function () {
         /*
-            data-note-type: 元素类型
-            data-note-id: 元素id: +new Date()
+            data-note-type: Note element type
+            data-note-uuid: Unique Identify: +new Date()
         */
 
         var getTarget = function (elem) {
@@ -40,19 +40,19 @@
         var customEvent = {
             "m1u": {
                 btn: 0,
-                eventType: "mouseup",
+                eventType: "mouseup"
             },
             "m1d": {
                 btn: 0,
-                eventType: "mousedown",
+                eventType: "mousedown"
             },
             "m2u": {
                 btn: 2,
-                eventType: "mouseup",
+                eventType: "mouseup"
             },
             "m2d": {
                 btn: 2,
-                eventType: "mousedown",
+                eventType: "mousedown"
             },
             "fly": {
                 btn: 0,
@@ -88,14 +88,35 @@
 
         var eventType = e.type;
         var btn = e.button;
+
+        // Find matched custom define mouse event
         var customEvent = Mediator.getEventType(eventType, btn);
-        log(customEvent);
         var target = $.getTarget(e.target);
     }
-    body.addEventListener('keypress', eventCallback, false);
+
     body.addEventListener('mousedown', eventCallback, false);
-    body.addEventListener('mouseup', eventCallback, false);
-    body.addEventListener('mousemove', eventCallback, false);
+
+    body.addEventListener('mouseup', function (e) {
+        this.setAttribute("data-note-lastClick", e.timeStamp);
+        eventCallback(e);
+    }, false);
+
+    body.addEventListener('click', function (e) {
+        this.setAttribute("data-note-lastClick", e.timeStamp);
+        eventCallback(e);
+    }, false);
+
+    body.addEventListener('mousemove', function (e) {
+
+        var lastClickTimestamp = parseInt(this.getAttribute("data-note-lastClick"), 10);
+
+        // Here is a move bug in Chrome and IE
+        // Solution: http://stackoverflow.com/questions/14538743/what-to-do-if-mousemove-and-click-events-fire-simultaneously
+        if (!lastClickTimestamp || e.timeStamp - lastClickTimestamp > 20) {
+            // log("call mousemove");
+        }
+
+    }, false);
 
     
 })()
