@@ -119,7 +119,7 @@
 
         // Find matched custom define mouse event
         var customEvent = Mediator.getEventType(eventType, btn);
-        log("Event------>", customEvent);
+        // log("Event------>", customEvent);
 
         var targetId = $.getTargetId(e.target);
         var targetType = $.getTargetType(e.target)
