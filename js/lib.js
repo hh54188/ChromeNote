@@ -1,5 +1,17 @@
 var $ = (function () {
 
+    // Helper:
+    var Helper = {
+
+        isEmptyObject: function (object) {
+            for (var prop in object) {
+                return false;
+            }
+
+            return true;
+        }        
+    }
+
     function _$(el) {
         this.el = el;
         this.fn_uuid = 0;
@@ -46,13 +58,7 @@ var $ = (function () {
 
     _$.prototype = {
         constructor: this,
-        isEmptyObject: function (object) {
-            for (var prop in object) {
-                return false;
-            }
 
-            return true;
-        },
         getTargetId: function () {
             var el = this.el;
             var id = el.getAttribute("data-note-uuid");
@@ -139,18 +145,18 @@ var $ = (function () {
                 el.removeEventListener(eventType, data.dispatcher, false);
             }
 
-            if (this.isEmptyObject(data.handlers)) {
+            if (Helper.isEmptyObject(data.handlers)) {
                 delete data.handlers;
                 delete data.dispatcher;
             }
 
-            if (this.isEmptyObject(data)) {
+            if (Helper.isEmptyObject(data)) {
                 _e.removeData(data);
             }
         }
     }
 
-    return function (selector) {
+    var module = function (selector) {
         var el;
 
         // if selector is event target
@@ -159,10 +165,16 @@ var $ = (function () {
         // if selector is query string
         } else if (typeof selector === "string") {
             el = document.querySelector(selector);
-         } else {
+        } else {
             return {};
-         }
+        }
 
         return  new _$(el);
     }
+
+    for (var prop in Helper) {
+        module[prop] = Helper[prop];
+    }
+
+    return module;
 })()

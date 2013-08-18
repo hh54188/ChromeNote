@@ -1,8 +1,8 @@
 // 配置文件
-var Mediator = (function () {
+var CustomEvent = (function () {
     /*
-        M1: left mouse button
-        M2: right mouse button
+        m1: left mouse button
+        m2: right mouse button
 
         u: mouseup
         d: mousedown
@@ -54,7 +54,7 @@ var Mediator = (function () {
     }
 
     var getGestureType = function () {
-        
+        console.log(gestureQue.length);
     }
 
     var getEventType = function (eventType, btn) {
@@ -69,9 +69,13 @@ var Mediator = (function () {
 
     var gestureQue = [];
 
+    var _addToGestureQue = function (item) {
+        gestureQue.push(item);
+    }
+
     return {
-        // variable
-        gestureQue: gestureQue,
+        // Gesture queue method:
+        push: _addToGestureQue,
 
         // method:
         getEventType: getEventType,
