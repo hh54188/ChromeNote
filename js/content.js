@@ -1,5 +1,20 @@
 log = console.log.bind(console);
 
+var body = $('body');
+
+var cb1 = function () {
+    log("this is callback 1", arguments.callee.uuid);
+}
+
+var cb2 = function () {
+    log("this is callback 2", arguments.callee.uuid);
+}
+
+body.on("click", cb1);
+body.on("click", cb2);
+
+body.off("click"); 
+
 
 // (function () {
 //     log = console.log.bind(console);
