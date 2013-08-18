@@ -37,11 +37,11 @@ var CustomEvent = (function () {
     var gesture = {
         create: {
             execQue: ["m2d", "fly", "m2u"],
-            targetType: "paper"
+            targetType: null
         },
         cancel: {
             execQue: ["m2d", "fly", "m1d"],
-            targetType: "paper"
+            targetType: null
         },
         resize: {
             execQue: ["m1d", "fly", "m1u"],
@@ -53,8 +53,32 @@ var CustomEvent = (function () {
         }
     }
 
+    var gestureQue = [];
+
     var getGestureType = function () {
-        console.log(gestureQue.length);
+        // var findGesture = false;
+        // for (var name in gesture) {
+        //     var act = gesture[name];
+
+        //     var execQue = act.execQue;
+        //     var targetType = act.targetType;
+
+        //     for (var i = execQue.length - 1; i >= 0; i--) {
+        //         var event = execQue[i];
+        //         var queIndex = execQue,length - i;
+
+        //         var self_event = gestureQue[queIndex].eventType;
+        //         var self_targetType = gestureQue[queIndex].targetType;
+
+        //         if (event !== self_event) break;
+
+        //         if (targetType && (targetType != self_targetType)) {
+        //             break;
+        //         }
+
+        //     }
+        // }
+        // console.log(gestureQue.length);
     }
 
     var getEventType = function (eventType, btn) {
@@ -67,10 +91,9 @@ var CustomEvent = (function () {
         }
     }
 
-    var gestureQue = [];
-
     var _addToGestureQue = function (item) {
         gestureQue.push(item);
+        getGestureType();
     }
 
     return {

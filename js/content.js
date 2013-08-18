@@ -12,15 +12,14 @@ log(body);
 
         // Find matched custom define mouse event
         var customEvent = CustomEvent.getEventType(eventType, btn);
-        // log("Event------>", customEvent);
 
         var targetId = target.getTargetId();
         var targetType = target.getTargetType();
-        log("targetType------>", targetType);
 
         var item = {
             eventType: customEvent,
-            targetType: targetType
+            targetType: targetType,
+            targetId: targetId
         }
 
         if (customEvent !== "fly") {
