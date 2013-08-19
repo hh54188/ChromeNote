@@ -26,59 +26,103 @@ var CustomEvent = (function () {
         },
         "fly": {
             btn: -1,
-            eventType: "mousemove"  
+            eventType: "mousemove"
         },
         "click": {
             btn: 0,
             eventType: "click"
         }
-    }
+    };
 
     var gesture = {
         create: {
             execQue: ["m2d", "fly", "m2u"],
-            targetType: null
+            targetType: null,
+            isSameTarget: null
         },
         cancel: {
             execQue: ["m2d", "fly", "m1d"],
-            targetType: null
+            targetType: null,
+            isSameTarget: null
         },
         resize: {
             execQue: ["m1d", "fly", "m1u"],
-            targetType: "note"
+            targetType: "note",
+            isSameTarget: null
+        },
+        test: {
+            execQue: ["click"],
+            targetType: null,
+            isSameTarget: null
         },
         "delete": {
             execQue: ["click"],
-            targetType: "delBtn"
+            targetType: "delBtn",
+            isSameTarget: null
         }
-    }
+    };
 
     var gestureQue = [];
 
     var getGestureType = function () {
-        // var findGesture = false;
-        // for (var name in gesture) {
-        //     var act = gesture[name];
+        var exit = false;
 
-        //     var execQue = act.execQue;
-        //     var targetType = act.targetType;
+        for (var name in gesture) {
+            var oneGesture = gesture[name];
 
-        //     for (var i = execQue.length - 1; i >= 0; i--) {
-        //         var event = execQue[i];
-        //         var queIndex = execQue,length - i;
+            var execQue = oneGesture.execQue,
+                targetType = oneGesture.targetType,
+                isSameTarget = oneGesture.isSameTarget;
 
-        //         var self_event = gestureQue[queIndex].eventType;
-        //         var self_targetType = gestureQue[queIndex].targetType;
+            var queIndex = gestureQue.length - 1;
 
-        //         if (event !== self_event) break;
+            for (var i = execQue.length - 1; i >= 0; i--) {
+                var default_event_eventType = execQue[i];
 
-        //         if (targetType && (targetType != self_targetType)) {
-        //             break;
-        //         }
+                // If gestrue queue have not enough custom event
+                if (!queIndex) {
+                    exit = false;
+                    break;
+                }
 
-        //     }
-        // }
-        // console.log(gestureQue.length);
+                var self_event = gestureQue[queIndex--],
+                    self_event_eventType = self_event.eventType,
+                    self_event_targetType = self_event.targetType,
+                    self_event_targetId = self_event.targetId;
+
+                // Compare begin
+
+                // Event type: 
+                if (self_event_eventType !== default_event_eventType) {
+                    exit = false;
+                    break;
+                }
+
+                // Target type: 
+                if (targetType && (targetType !== self_event_eventType)) {
+                    exit = false;
+                    break;
+                }
+
+                // Target Id:
+                if (isSameTarget && (self_event_targetId !== gestureQue[queIndex - 1].targetId)) {
+                    exit = false;
+                    break;
+                }
+
+                // Find the matched gesture;
+                exit = true;
+            }
+
+            if (exit) {
+                // Find one gesture, then restart, clear the gesture queue;
+                return oneGesture;
+            }
+        }
+    };
+
+    var clearQueue = function () {
+        gestureQue.length = 0;
     }
 
     var getEventType = function (eventType, btn) {
@@ -91,8 +135,17 @@ var CustomEvent = (function () {
         }
     }
 
+    var showGestureQue = function () {
+        var str = "";
+        gestureQue.forEach(function (el, index) {
+            str += el.eventType + ", ";
+        })
+        console.log(str);
+    }
+
     var _addToGestureQue = function (item) {
         gestureQue.push(item);
+        showGestureQue();
         getGestureType();
     }
 
