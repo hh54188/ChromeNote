@@ -1,8 +1,8 @@
-log = console.log.bind(console);
+    log = console.log.bind(console);
 
-var body = $('body');
+    var body = $('body');
 
-log(body);
+    log(body);
 
     var eventHandler = function (e) {
         var target = $(e.target);
@@ -12,6 +12,8 @@ log(body);
 
         // Find matched custom define mouse event
         var customEvent = CustomEvent.getEventType(eventType, btn);
+        log(customEvent);
+        return;
 
         var targetId = target.getTargetId();
         var targetType = target.getTargetType();
@@ -29,9 +31,7 @@ log(body);
             CustomEvent.push(item);
             stillFly = true;
         }
-
-        // CustomEvent.getGestureType();
-    }
+    };
 
     var stillFly = false;
 

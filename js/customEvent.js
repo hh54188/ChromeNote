@@ -115,10 +115,14 @@ var CustomEvent = (function () {
             }
 
             if (exit) {
+                clearQueue();
                 // Find one gesture, then restart, clear the gesture queue;
+                console.log(name);
                 return oneGesture;
             }
         }
+
+        return null;
     };
 
     var clearQueue = function () {
