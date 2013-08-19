@@ -32,29 +32,34 @@
     });
 
     body.on('mouseup', function (e) {
-        this.setAttribute("data-note-lastClickTime", e.timeStamp);
-        this.setAttribute("data-note-lastClickBtn", e.button);
+        $.handlerChromeMousebug(e);
+        // this.setAttribute("data-note-lastClickTime", e.timeStamp);
+        // this.setAttribute("data-note-lastClickBtn", e.button);
 
         var gesture = eventHandler(e);
         if (gesture === "create") hasContextMenu = false;
     });
 
     body.on('click', function (e) {
-        this.setAttribute("data-note-lastClickTime", e.timeStamp);
-        this.setAttribute("data-note-lastClickBtn", e.button);
+        $.handlerChromeMousebug(e);
+        // this.setAttribute("data-note-lastClickTime", e.timeStamp);
+        // this.setAttribute("data-note-lastClickBtn", e.button);
         eventHandler(e);
     });
 
     body.on('mousemove', function (e) {
-        var lastClickTimestamp = parseInt(this.getAttribute("data-note-lastClickTime"), 10);
-        var lastClickBtn = parseInt(this.getAttribute("data-note-lastClickBtn"), 10);
+        // var lastClickTimestamp = parseInt(this.getAttribute("data-note-lastClickTime"), 10);
+        // var lastClickBtn = parseInt(this.getAttribute("data-note-lastClickBtn"), 10);
+
         // Here is a mouse move bug in Chrome and IE
         // Solution: http://stackoverflow.com/questions/14538743/what-to-do-if-mousemove-and-click-events-fire-simultaneously
         // if the mouse up event triggered by the mouse right button, it need more react time
-        var dif = lastClickBtn === 0? 10: 1000;
-        if ( !lastClickTimestamp || e.timeStamp - lastClickTimestamp > dif) {
-            eventHandler(e);
-        }
+
+        // var dif = lastClickBtn === 0? 10: 1000;
+        // if ( !lastClickTimestamp || e.timeStamp - lastClickTimestamp > dif) {
+        //     eventHandler(e);
+        // }
+        $.handlerChromeMousebug(e);
     });
 
     body.on("contextmenu", function (e) {

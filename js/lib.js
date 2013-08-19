@@ -9,7 +9,28 @@ var $ = (function () {
             }
 
             return true;
-        }        
+        },
+        latestClick: {
+            button: 0,
+            timeStamp: -1
+        },
+        handlerChromeMousebug: function (e) {
+            var _this = this;
+            
+            var lastTimeClicked = function () {
+                if (_this.latestClick.timeStamp == -1) return false;
+            }
+
+            if (e.type === "mousemove") {
+                // The different click button need different react time
+                var dif = this.latestClick.button === 0? 10: 1000;
+
+                if ( !lastTimeClicked() || e_compare.timeStamp - this.latestClick.timeStamp > dif) return true;
+            } else if (e.type === "click" || e.type === "mouseup") {
+                this.latestClick.button = e.button;
+                this.latestClick.timeStamp = e.timeStamp;                
+            }
+        }
     }
 
     function _$(el) {
