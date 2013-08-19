@@ -146,8 +146,21 @@ var CustomEvent = (function () {
         })
         console.log(str);
     }
+    var checkGestureQue = function (event) {
+        // console.log(gestureQue.length);
+        // console.log(gestureQue[gestureQue.length - 1]);
+        // console.log(item);
+
+        if (!gestureQue.length || (gestureQue[gestureQue.length - 1].eventType !== event)) {
+            return true;
+        }
+
+        return false;
+    }
 
     var _addToGestureQue = function (item) {
+        if (!checkGestureQue(item.eventType)) return;
+        // console.log("passed");
         gestureQue.push(item);
         showGestureQue();
         getGestureType();

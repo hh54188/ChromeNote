@@ -12,8 +12,8 @@
 
         // Find matched custom define mouse event
         var customEvent = CustomEvent.getEventType(eventType, btn);
-        log(customEvent);
-        return;
+        // log(customEvent);
+        // return;
 
         var targetId = target.getTargetId();
         var targetType = target.getTargetType();
@@ -24,13 +24,14 @@
             targetId: targetId
         }
 
-        if (customEvent !== "fly") {
-            CustomEvent.push(item);
-            stillFly = false;
-        } else if (!stillFly && customEvent === "fly") {
-            CustomEvent.push(item);
-            stillFly = true;
-        }
+        CustomEvent.push(item);
+        // if (customEvent !== "fly") {
+        //     CustomEvent.push(item);
+        //     stillFly = false;
+        // } else if (!stillFly && customEvent === "fly") {
+        //     CustomEvent.push(item);
+        //     stillFly = true;
+        // }
     };
 
     var stillFly = false;
