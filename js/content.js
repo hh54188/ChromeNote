@@ -12,8 +12,6 @@
 
         // Find matched custom define mouse event
         var customEvent = CustomEvent.getEventType(eventType, btn);
-        // log(customEvent);
-        // return;
 
         var targetId = target.getTargetId();
         var targetType = target.getTargetType();
@@ -24,17 +22,10 @@
             targetId: targetId
         }
 
-        CustomEvent.push(item);
-        // if (customEvent !== "fly") {
-        //     CustomEvent.push(item);
-        //     stillFly = false;
-        // } else if (!stillFly && customEvent === "fly") {
-        //     CustomEvent.push(item);
-        //     stillFly = true;
-        // }
+        return CustomEvent.push(item);
     };
 
-    var stillFly = false;
+    var hasContextMenu = true;
 
     body.on('mousedown', function (e) {
         eventHandler(e);
@@ -43,7 +34,9 @@
     body.on('mouseup', function (e) {
         this.setAttribute("data-note-lastClickTime", e.timeStamp);
         this.setAttribute("data-note-lastClickBtn", e.button);
-        eventHandler(e);
+
+        var gesture = eventHandler(e);
+        if (gesture === "create") hasContextMenu = false;
     });
 
     body.on('click', function (e) {
@@ -63,3 +56,10 @@
             eventHandler(e);
         }
     });
+
+    body.on("contextmenu", function (e) {
+        if (!hasContextMenu) {
+            e.preventDefault();
+            hasContextMenu = true;
+        };
+    })

@@ -118,7 +118,7 @@ var CustomEvent = (function () {
                 clearQueue();
                 // Find one gesture, then restart, clear the gesture queue;
                 console.log(name);
-                return oneGesture;
+                return name;
             }
         }
 
@@ -144,12 +144,9 @@ var CustomEvent = (function () {
         gestureQue.forEach(function (el, index) {
             str += el.eventType + ", ";
         })
-        console.log(str);
+        console.debug(str);
     }
     var checkGestureQue = function (event) {
-        // console.log(gestureQue.length);
-        // console.log(gestureQue[gestureQue.length - 1]);
-        // console.log(item);
 
         if (!gestureQue.length || (gestureQue[gestureQue.length - 1].eventType !== event)) {
             return true;
@@ -160,10 +157,10 @@ var CustomEvent = (function () {
 
     var _addToGestureQue = function (item) {
         if (!checkGestureQue(item.eventType)) return;
-        // console.log("passed");
+
         gestureQue.push(item);
         showGestureQue();
-        getGestureType();
+        return getGestureType();
     }
 
     return {
