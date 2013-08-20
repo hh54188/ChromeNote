@@ -143,7 +143,7 @@ var CustomEvent = (function () {
         var str = "";
         gestureQue.forEach(function (el, index) {
             str += el.eventType + ", ";
-        })
+        });
         console.debug(str);
     }
     var checkGestureQue = function (event) {
