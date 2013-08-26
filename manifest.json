@@ -8,10 +8,35 @@
     },
     "options_page": "devtools/index.html",
     "content_scripts": [
+        /*
+            Lib
+        */
         {
             "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/lib.js"]
+            "js": ["js/lib/lib.js"]
         },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/lib/class.js"]
+        }, 
+        /*
+            View
+        */
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/View/Note.js"]
+        },         
+        /*
+            Model
+        */
+
+        /*
+            Control:
+        */
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/Mediator.js"]
+        },                
         {
             "matches": ["http://*/*", "https://*/*"],
             "js": ["js/customEvent.js"]

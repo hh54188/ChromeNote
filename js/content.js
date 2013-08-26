@@ -2,7 +2,19 @@
 
     var body = $('body');
 
-    log(body);
+    var NoteView = Class.extend({
+        init: function () {
+
+        },
+        create: function () {
+
+        },
+        destory: function () {
+
+        }
+    });
+
+    log(NoteView.create());
 
     var eventHandler = function (e) {
         var target = $(e.target);

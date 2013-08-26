@@ -35,30 +35,41 @@ var CustomEvent = (function () {
     };
 
     var gesture = {
+        recordStartPos: {
+            execQue: ["m2d"],
+            targetType: null,
+            isSameTarget: null,
+            keepQueue: true
+        },
         create: {
             execQue: ["m2d", "fly", "m2u"],
             targetType: null,
-            isSameTarget: null
+            isSameTarget: null,
+            keepQueue: false
         },
         cancel: {
             execQue: ["m2d", "fly", "m1d"],
             targetType: null,
             isSameTarget: null
+            keepQueue: false
         },
         resize: {
             execQue: ["m1d", "fly", "m1u"],
             targetType: "note",
             isSameTarget: null
+            keepQueue: false
         },
         test: {
             execQue: ["click"],
             targetType: null,
             isSameTarget: null
+            keepQueue: false
         },
         "delete": {
             execQue: ["click"],
             targetType: "delBtn",
-            isSameTarget: null
+            isSameTarget: null,
+            keepQueue: false
         }
     };
 
@@ -115,7 +126,10 @@ var CustomEvent = (function () {
             }
 
             if (exit) {
-                clearQueue();
+                if (!oneGesture.keepQueue) {
+                    clearQueue();    
+                }
+                
                 // Find one gesture, then restart, clear the gesture queue;
                 console.log(name);
                 return name;
