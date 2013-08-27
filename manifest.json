@@ -18,33 +18,11 @@
         {
             "matches": ["http://*/*", "https://*/*"],
             "js": ["js/lib/class.js"]
-        }, 
-        /*
-            View
-        */
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/View/Note.js"]
-        },         
-        /*
-            Model
-        */
-
-        /*
-            Control:
-        */
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/Mediator.js"]
-        },                
-        {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/customEvent.js"]
         },
         {
             "matches": ["http://*/*", "https://*/*"],
             "js": ["js/content.js"]
-        }        
+        }
     ],
     "browser_action": {
         "default_icon": {

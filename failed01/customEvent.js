@@ -41,6 +41,12 @@ var CustomEvent = (function () {
             isSameTarget: null,
             keepQueue: true
         },
+        expandBox: {
+            execQue: ["m2d", "fly"],
+            targetType: null,
+            isSameTarget: null,
+            keepQueue: true  
+        },
         create: {
             execQue: ["m2d", "fly", "m2u"],
             targetType: null,
@@ -79,7 +85,7 @@ var CustomEvent = (function () {
         最后一次手势缓存
         以防止出现触发mousemove引起的反复比较问题
     */
-    var gestrueCache = {};
+    var gestureCache = null;
 
     var getGestureType = function () {
         var exit = false;
@@ -116,7 +122,7 @@ var CustomEvent = (function () {
                 }
 
                 // Target type: 
-                if (targetType && (targetType !== self_event_eventType)) {
+                if (targetType && (targetType !== self_event_targetType)) {
                     exit = false;
                     break;
                 }
@@ -132,8 +138,16 @@ var CustomEvent = (function () {
             }
 
             if (exit) {
+
+                // 缓存
+                gestureCache = {
+                    cfg: oneGesture,
+                    name: name
+                }
+
                 if (!oneGesture.keepQueue) {
                     clearQueue();    
+                    gestureCache = null;
                 }
                 
                 /*
@@ -169,26 +183,45 @@ var CustomEvent = (function () {
     }
     var checkGestureQue = function (event) {
 
-        if (!gestureQue.length || (gestureQue[gestureQue.length - 1].eventType !== event)) {
+        // var lastGesture = gestureQue.length == 0? {}: gestureQue[gestureQue.length - 1];
+
+        if (!gestureQue.length ||
+            (gestureQue[gestureQue.length - 1].eventType !== event.eventType)) {
             return true;
         }
 
         return false;
+
+        // if (!gestureQue.length || 
+        //     lastGesture.eventType != event.eventType ||
+        //     lastGesture.eventType != event.targetType) {
+        //     return true;
+        // }
     }
 
     var _addToGestureQue = function (item) {
 
-        if (!checkGestureQue(item.eventType)) {
+        if (!checkGestureQue(item)) {
             /*
-                如果队列没有改变，
-                自动使用上一次缓存手势
-            */            
-        } else {
+                已经属于同一种动作类型，比如fly
+                但是targetType和targetId可能不同
 
-            gestureQue.push(item);
-            showGestureQue();
-            return getGestureType();            
+                如果上一个动作没有指定targetType
+                和targetId的话，则返回上一个手势
+            */
+
+            if (gestureCache && 
+                !gestureCache.cfg.targetType && 
+                !gestureCache.cfg.targetId) {
+                return gestureCache.name;                    
+            } else if (!gestureCache) {
+                return;
+            }
         }
+
+        gestureQue.push(item);
+        showGestureQue();
+        return getGestureType();
     }
 
     return {

@@ -6,6 +6,12 @@ var Mediator = (function () {
                 context: NoteView,
                 callback: NoteView.recordStartPos
             }
+        ],
+        expandBox: [
+            {
+                context: NoteView,
+                callback: NoteView.expandBox                
+            }
         ]
     }
 
