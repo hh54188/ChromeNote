@@ -50,19 +50,19 @@ var CustomEvent = (function () {
         cancel: {
             execQue: ["m2d", "fly", "m1d"],
             targetType: null,
-            isSameTarget: null
+            isSameTarget: null,
             keepQueue: false
         },
         resize: {
             execQue: ["m1d", "fly", "m1u"],
             targetType: "note",
-            isSameTarget: null
+            isSameTarget: null,
             keepQueue: false
         },
         test: {
             execQue: ["click"],
             targetType: null,
-            isSameTarget: null
+            isSameTarget: null,
             keepQueue: false
         },
         "delete": {
@@ -74,6 +74,12 @@ var CustomEvent = (function () {
     };
 
     var gestureQue = [];
+
+    /*
+        最后一次手势缓存
+        以防止出现触发mousemove引起的反复比较问题
+    */
+    var gestrueCache = {};
 
     var getGestureType = function () {
         var exit = false;
@@ -130,8 +136,9 @@ var CustomEvent = (function () {
                     clearQueue();    
                 }
                 
-                // Find one gesture, then restart, clear the gesture queue;
-                console.log(name);
+                /*
+                    根据鼠标事件队列找到匹配的手势
+                */
                 return name;
             }
         }
@@ -158,7 +165,7 @@ var CustomEvent = (function () {
         gestureQue.forEach(function (el, index) {
             str += el.eventType + ", ";
         });
-        console.debug(str);
+        debug("[Gesture Que]------>", str);
     }
     var checkGestureQue = function (event) {
 
@@ -170,11 +177,18 @@ var CustomEvent = (function () {
     }
 
     var _addToGestureQue = function (item) {
-        if (!checkGestureQue(item.eventType)) return;
 
-        gestureQue.push(item);
-        showGestureQue();
-        return getGestureType();
+        if (!checkGestureQue(item.eventType)) {
+            /*
+                如果队列没有改变，
+                自动使用上一次缓存手势
+            */            
+        } else {
+
+            gestureQue.push(item);
+            showGestureQue();
+            return getGestureType();            
+        }
     }
 
     return {

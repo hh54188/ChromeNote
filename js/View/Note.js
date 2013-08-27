@@ -1,33 +1,32 @@
 var NoteView = Class.extend({
-    /*
-        Property:
-    */
-    initialization: false,
-    drawBox: $("#note-draw_box"),
-    startPos: {
-        x: 0,
-        y:0
+    staticProperty: {
+        drawBox: $("#note-draw_box"),
+        startPos: {
+            x:0,
+            y:0
+        }        
     },
-    /*
-        Methods:
-    */
-    init: function (args) {
-        var cfg = {};
+    staticMethods: {
+        init: function (args) {
+            console.log(this.startPos);
+        },
+        recordStartPos: function (e) {
+            this.startPos = {
+                x: e.clientX,
+                y: e.clientY
+            }
 
-    },
-    recordStartPos: function (e) {
-        this.startPos = {
-            x: e.clientX,
-            y: e.clientY
+            this.drawBox[0].style.left = this.startPos.x + "px";
+            this.drawBox[0].style.top = this.startPos.y + "px";
         }
-        
-        this.drawBox.left = this.startPos.x;
-        this.drawBox.top = this.startPos.y;
     },
-    create: function () {
-        console.log("create");
-    },
-    destory: function () {
-        console.log("destory");
+
+    methods: {
+        create: function () {
+            console.log("create");
+        },
+        destory: function () {
+            console.log("destory");
+        }
     }
 })

@@ -1,12 +1,25 @@
 var Mediator = (function () {
+    
     topics = {
-        create: {
-
-        }   
+        recordStartPos: [
+            {
+                context: NoteView,
+                callback: NoteView.recordStartPos
+            }
+        ]
     }
 
-    var publish = function () {
-
+    var publish = function (name, eventObj) {
+        var callBacks = topics[name];
+        if (callBacks) {
+            callBacks.forEach(function (item, index) {
+                if (item.context) {
+                    item.callback.call(item.context, eventObj);    
+                } else {
+                    item.callback(eventObj);    
+                }
+            })                
+        }
     }
 
     return {

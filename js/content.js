@@ -1,6 +1,4 @@
-    log = console.log.bind(console);
-
-    var body = $('body');
+    var body = $("body");
 
     var NoteView = Class.extend({
         init: function () {
@@ -13,8 +11,6 @@
 
         }
     });
-
-    log(NoteView.create());
 
     var eventHandler = function (e) {
         var target = $(e.target);
@@ -34,7 +30,14 @@
             targetId: targetId
         };
 
-        return CustomEvent.push(item);
+        var gesture_name = CustomEvent.push(item);
+        if (gesture_name) {
+            log("[Gesture name]------>", gesture_name);
+            Mediator.publish(gesture_name, e);
+        }
+
+        // 如果手势是create，则阻止右键菜单事件
+        return gesture_name; 
     };
 
     var hasContextMenu = true;
@@ -57,9 +60,11 @@
     });
 
     body.on('mousemove', function (e) {
-        // Here is a mouse move bug in Chrome and IE
-        // Solution: http://stackoverflow.com/questions/14538743/what-to-do-if-mousemove-and-click-events-fire-simultaneously
-        // if the mouse up event triggered by the mouse right button, it need more react time
+        /*        
+            在IE和Chrome有一个严重的关于mousemove事件的bug
+            Solution: http://stackoverflow.com/questions/14538743/what-to-do-if-mousemove-and-click-events-fire-simultaneously
+            if the mouse up event triggered by the mouse right button, it need more react time
+        */
 
         if ( $.handlerChromeMousebug(e) ) {
             eventHandler(e);

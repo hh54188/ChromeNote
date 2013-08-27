@@ -34,6 +34,9 @@ var $ = (function () {
     }
 
     function _$(el) {
+        for (var i = 0; i < el.length; i++) {
+            this[i] = el[i];
+        }
         this.el = el;
         this.fn_uuid = 0;
     }
@@ -113,7 +116,9 @@ var $ = (function () {
             }
 
             if (data.handlers[eventType].length === 1) {
-                el.addEventListener(eventType, data.dispatcher, false);
+                for (var i = 0; i < el.length; i++) {
+                    el[i].addEventListener(eventType, data.dispatcher, false);
+                }
             }            
         },
         off: function (eventType, fn) {
@@ -185,7 +190,7 @@ var $ = (function () {
             el = selector
         // if selector is query string
         } else if (typeof selector === "string") {
-            el = document.querySelector(selector);
+            el = document.querySelectorAll(selector);
         } else {
             return {};
         }
@@ -198,4 +203,7 @@ var $ = (function () {
     }
 
     return module;
-})()
+})();
+
+log = console.log.bind(console);
+debug = console.debug.bind(console);
