@@ -4,18 +4,27 @@ var eventHandler = function (event) {
     var target = event.target,
         eventType = event.type;
 
+    if (event.button === 0) {
+        if (eventType === "mousedown") {
+            eventType = "leftmousedown";
+        } else if (eventType === "mouseup") {
+            eventType = "leftmouseup";
+        }
+    }
+
     var selfEvent = {
         action: eventType,
         /*
             data-note-type
         */
-        target: $(target).getTargetType()
+        targetType: $(target).getTargetType()
     }
 
     var eventName = CustomEvent.getEventType(selfEvent);
 
     if (eventName) {
-        Mediator.publish(eventName);
+        log("[eventName]------>", eventName);
+        Mediator.publish(eventName, [event]);
     }
 }
 
@@ -28,5 +37,13 @@ body.on('click', function (e) {
 });
 
 body.on("mousemove", function (e) {
+    eventHandler(e);
+})
+
+body.on("mouseup", function (e) {
+    eventHandler(e);
+})
+
+body.on("mousedown", function (e) {
     eventHandler(e);
 })

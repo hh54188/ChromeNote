@@ -1,0 +1,22 @@
+body[data-chrome] {
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+}
+
+body[data-chrome] div {
+    background: skyblue;
+    display: inline;
+    margin: 8px;
+}
+
+div[data-note-type="note-bar"] {
+    width: 100px;
+    height: 100px;
+
+    position: absolute;
+    left: 100px;
+    top: 100px;
+
+    cursor: move;
+}

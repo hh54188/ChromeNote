@@ -2,7 +2,12 @@ var $ = (function () {
 
     // Helper:
     var Helper = {
-
+        isArray: function (param) {
+            if (Object.prototype.toString.call(param) == "[object Array]") {
+                return true;
+            }
+            return false;
+        },
         isEmptyObject: function (object) {
             for (var prop in object) {
                 return false;

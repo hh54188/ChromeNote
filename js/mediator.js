@@ -1,16 +1,39 @@
 var Mediator = (function () {
 
     var topics = {
+        dragStart: [
+            {
+                context: noteView,
+                callback: noteView.startDrag
+            }
+        ],
+        dragEnd: [
+            {
+                context: noteView,
+                callback: noteView.endDrag
+            }
+        ],
+        drag: [
+            {
+                context: noteView,
+                callback: noteView.drag
+            }
+        ],
         showCommandMenu: [
             {
                 context: CommandMenuView,
                 callback: CommandMenuView.show
             }
+        ],
+        hideCommandMenu: [
+            {
+                context: CommandMenuView,
+                callback: CommandMenuView.hide
+            }  
         ]
     }
 
     var publish = function (name, args) {
-
         var callbackQueue = topics[name];
         if (!callbackQueue) return;
         // ES5

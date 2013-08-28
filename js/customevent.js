@@ -1,13 +1,25 @@
 var CustomEvent = (function () {
 
     var customEvent = {
-        test: {
-            action: "click",
-            targetType: null
+        dragStart: {
+            action: "leftmousedown",
+            targetType: "note-bar"
+        },
+        dragEnd: {
+            action: "leftmouseup",
+            targetType: "note-bar"
+        },
+        drag: {
+            action: "mousemove",
+            targetType: "note-bar"
         },
         showCommandMenu: {
             action: "dblclick",
             targetType: null
+        },
+        hideCommandMenu: {
+            action: "click",
+            targetType: "cmdMenu-btn-delete"
         },
         deleteNote: {
             action: "click",
@@ -29,6 +41,10 @@ var CustomEvent = (function () {
                     2.如果需要匹配触发对象，并且匹配成功
                 */
                 if (!defEvent.targetType || (defEvent.targetType && defEvent.targetType === selfEvent.targetType))  {
+                    /*
+                        有风险：
+                        有可能鼠标的一个动作触发多个事件
+                    */
                     return eventName;
                 }
             }

@@ -33,7 +33,11 @@
         {
             "matches": ["http://*/*", "https://*/*"],
             "js": ["js/View/commandmenu.js"]
-        },        
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/View/note.js"]
+        },                
         /*
             Present
         */
@@ -43,7 +47,8 @@
         },          
         {
             "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/content.js"]
+            "js": ["js/content.js"],
+            "css": ["css/content/style.css"]
         }
     ],
     "browser_action": {
