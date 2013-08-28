@@ -84,12 +84,12 @@ var $ = (function () {
         constructor: this,
 
         getTargetId: function () {
-            var el = this.el;
+            var el = this[0];
             var id = el.getAttribute("data-note-uuid");
             return id? id: 0;            
         },
         getTargetType: function () {
-            var el = this.el;
+            var el = this[0];
             var type = el.getAttribute("data-note-type");
             return type? type: "node";            
         },
@@ -187,7 +187,7 @@ var $ = (function () {
 
         // if selector is event target
         if (selector.nodeType && selector.nodeType === 1) {
-            el = selector
+            el = [selector];
         // if selector is query string
         } else if (typeof selector === "string") {
             el = document.querySelectorAll(selector);

@@ -19,6 +19,28 @@
             "matches": ["http://*/*", "https://*/*"],
             "js": ["js/lib/class.js"]
         },
+        /*
+            Config
+        */
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/customevent.js"]
+        },        
+
+        /*
+            View
+        */
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/View/commandmenu.js"]
+        },        
+        /*
+            Present
+        */
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/mediator.js"]
+        },          
         {
             "matches": ["http://*/*", "https://*/*"],
             "js": ["js/content.js"]

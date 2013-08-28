@@ -1,3 +1,8 @@
+/*
+    简单版本
+    1.去除init方法和同名函数的callSuper机制
+    2.新增 staticMethods staticProperty property 机制
+*/
 var Class = (function () {
     // helper:
     var isEmptyObject = function (obj) {
@@ -28,24 +33,44 @@ var Class = (function () {
 
         var _super = Class.prototype;
 
-        if (_super.init) {
-            var tmp = prototype.__callSuper;
-            if (_super.__callSuper) {
-                prototype.__callSuper = _super.__callSuper;
-            }
-            _super.init.apply(this, arguments);
-            prototype.__callSuper = tmp;
-        }
+        /*
+            init函数中的callSuper机制
+        */
 
+        /*        
+            if (_super.init) {
+                var tmp = prototype.__callSuper;
+                if (_super.__callSuper) {
+                    prototype.__callSuper = _super.__callSuper;
+                }
+                _super.init.apply(this, arguments);
+                prototype.__callSuper = tmp;
+            }
+        */
+
+        /*
+            static开头属性为
+            类不需要实例化即同时拥有的方法
+
+            静态方法可用于实现单例模式
+        */
         var staticMethods = props.staticMethods || {},
             staticProperty = props.staticProperty || {},
             property = props.property || {},
             methods = props.methods || {};
 
-        props = mergeObj(staticMethods, property, methods);
-
+        props = mergeObj(staticProperty, staticMethods, property, methods);
+        /*
+            子类也同时拥有静态方法和静态属性
+            但是上下文是自己
+        */
         for (var name in props) {
+            prototype[name] = props[name]; 
 
+        /*
+            暂停使用子类方法调用父类同名方法的callSuper机制
+        */
+        /*
             if (typeof props[name] == "function" && typeof _super[name] == "function") {
 
                 prototype[name] = (function (super_fn, fn) {
@@ -67,6 +92,8 @@ var Class = (function () {
             } else {
                 prototype[name] = props[name];    
             }
+        */
+
         }
 
         for (var name in props) {
@@ -88,9 +115,9 @@ var Class = (function () {
         Class.create = function () {
             var instance = new this();
 
-            if (arguments.callSuper && instance.__callSuper) {
-                instance.__callSuper();
-            }
+            // if (arguments.callSuper && instance.__callSuper) {
+            //     instance.__callSuper();
+            // }
 
             if (instance.init) {
                 instance.init.apply(instance, arguments);
