@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Command Menu</title>
+    <style type="text/css">
+        #wrapper {
+            position: fixed;
+            left: 200px;
+            top: 100px;
+
+            width: 300px;
+            height: 300px;
+
+            border: 1px solid black;
+        }
+
+        li {
+            list-style-type: none;
+            width: 150px;
+            height: 150px;
+            background: skyblue;
+
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            -webkit-transition: all 1s ease;
+            -webkit-transform-origin: 100% 100%;
+        }
+        li a {
+            display: block;
+            width: 60px;
+            height: 60px;
+            background: black;
+
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+
+            color: white;
+
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+            border-bottom-right-radius: 50%;
+            border-bottom-left-radius: 50%;
+
+            -webkit-transition: all 1s ease;
+            -webkit-transform-origin: 100% 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <ul>
+            <li><a href="">Menu1</a></li>
+            <li><a href="">Menu2</a></li>
+            <li><a href="">Menu3</a></li>
+            <!-- <li><a href="">Menu4</a></li> -->
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    function computeAngle(elems) {
+        var total = 360;
+        var len = elems.length
+        var eachAngle = total / len;
+        if (eachAngle > 90) {
+            var angle = (parseFloat((eachAngle - 90)) / 2) * (-1);
+        } else if (eachAngle < 90) {
+            var angle = (parseFloat((90 - eachAngle)) / 2);
+        } else {
+
+        }
+
+        var skew = " skewX(" + angle + "deg) skewY(" + angle + "deg) ";
+        var innerSkew = " skewX(" + angle * (-1) + "deg) skewY(" + angle * (-1) + "deg) ";
+
+
+        for (var i = 0; i < elems.length; i++) {
+            var transform = "";
+            var el = elems[i];
+            var rotate = "rotate(" + eachAngle * i + "deg)";
+            var innerRotate = "rotate(" + eachAngle * i * (-1) + "deg)"
+            el.style.webkitTransform += (rotate + skew);
+
+            var innerEl = el.querySelector("a");
+            innerEl.style.webkitTransform += innerSkew;
+        }
+    }
+
+    var elems = document.querySelectorAll("li");
+    computeAngle(elems);
+</script>
+</html>
