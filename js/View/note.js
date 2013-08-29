@@ -1,23 +1,36 @@
 var noteView = Class.extend({
     staticProperty: {
-        allowDrag: false
+        /*
+            Drag
+        */
+        allowDrag: false,
+        dragTarget: 0,
+        dragOffsetX: 0,
+        dragOffsetY: 0
     },
     staticMethods: {
-        startDrag: function () {
+        startDrag: function (event) {
             this.allowDrag = true;
+            this.dragTarget = event.target;
+
+            $('body').addClass("is_drag");
+            this.dragOffsetX = event.clientX - parseInt(event.target.style.left);
+            this.dragOffsetY = event.clientY - parseInt(event.target.style.top);
         },
-        endDrag: function () {
+        endDrag: function (event) {
+            $('body').removeClass("is_drag");
             this.allowDrag = false;
+            this.dragTarget = null;
+            
+            this.dragOffsetX = 0;
+            this.dragOffsetY = 0;            
         },
         drag: function (event) {
-            if (!this.allowDrag) return;
-            var target = event.target;
+            if (!this.allowDrag || !this.dragTarget) return;
 
-            var difX = event.clientX - parseInt(target.style.left),
-                difY = event.clientY - parseInt(target.style.top);
 
-            target.style.left = event.clientX - difX + "px";
-            target.style.top = event.clientY - difY + "px";
+            this.dragTarget.style.left = event.clientX - this.dragOffsetX + "px";
+            this.dragTarget.style.top = event.clientY - this.dragOffsetY + "px";
         }
     }
 })

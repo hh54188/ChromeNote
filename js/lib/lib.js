@@ -1,3 +1,18 @@
+/*
+    现有方法：
+    $.: 
+        isArray
+        isEmptyObject
+    $():.
+        getTargetId        
+        getTargetType
+        addClass
+        removeClass
+        on
+        off
+
+*/
+
 var $ = (function () {
 
     // Helper:
@@ -97,6 +112,30 @@ var $ = (function () {
             var el = this[0];
             var type = el.getAttribute("data-note-type");
             return type? type: "node";            
+        },
+        addClass: function (name) {
+            var el = this[0];
+            if (el.classList) {
+                el.classList.add(name);
+            } else {
+                el.className += " " + name;
+            }
+        },
+        removeClass: function (name) {
+            var el =this[0];
+            if (el.classList) {
+                el.classList.remove(name);
+            } else {
+                var newClassName = "";
+                var i;
+                var classes = el.className.split(" ");
+                for(i = 0; i < classes.length; i++) {
+                    if(classes[i] !== name) {
+                        newClassName += classes[i] + " ";
+                    }
+                }
+                el.className = newClassName;
+            }
         },
         on: function (eventType, fn) {
             var el = this.el;
