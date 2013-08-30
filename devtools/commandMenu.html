@@ -16,8 +16,8 @@
 
         li {
             list-style-type: none;
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             background: skyblue;
 
             position: absolute;
@@ -34,18 +34,18 @@
             background: black;
 
             position: absolute;
-            bottom: -30px;
-            right: -30px;
+            bottom: 0px;
+            right: 0px;
 
             color: white;
+            text-align: center;
 
-            border-top-left-radius: 50%;
+/*            border-top-left-radius: 50%;
             border-top-right-radius: 50%;
             border-bottom-right-radius: 50%;
-            border-bottom-left-radius: 50%;
+            border-bottom-left-radius: 50%;*/
 
             -webkit-transition: all 1s ease;
-            -webkit-transform-origin: 100% 100%;
         }
     </style>
 </head>
@@ -55,12 +55,14 @@
             <li><a href="">Menu1</a></li>
             <li><a href="">Menu2</a></li>
             <li><a href="">Menu3</a></li>
-            <!-- <li><a href="">Menu4</a></li> -->
+            <li><a href="">Menu4</a></li>
+            <!-- <li><a href="">Menu5</a></li> -->
+            <!-- <li><a href="">Menu6</a></li> -->
         </ul>
     </div>
 </body>
 <script type="text/javascript">
-    function computeAngle(elems) {
+/*    function computeAngle(elems) {
         var total = 360;
         var len = elems.length
         var eachAngle = total / len;
@@ -85,6 +87,36 @@
 
             var innerEl = el.querySelector("a");
             innerEl.style.webkitTransform += innerSkew;
+        }
+    }*/
+
+    function computeAngle(elems) {
+        var total = 360;
+        var len = elems.length
+        var eachAngle = total / len;
+
+        for (var i = 0; i < elems.length; i++) {
+            var el = elems[i];
+            var innerEl = el.querySelector("a");
+
+            /*
+                eachAngle - 90: 保证最上方有一条直线
+            */
+            var outerRotateDeg = (i * eachAngle) - (eachAngle - 90); 
+            var rotate = " rotate(" + outerRotateDeg + "deg) ";
+
+            var outerSkewXDeg = 90 - eachAngle;
+            var skewX = " skewX(" + outerSkewXDeg + "deg) ";
+
+            el.style.webkitTransform += rotate + skewX;
+
+            var innerSkewXDeg = outerSkewXDeg * (-1);
+            var innerRotateDeg = (90 - parseFloat(eachAngle) / 2) * (-1);
+
+            rotate = " rotate(" + innerRotateDeg + "deg) ";
+            skewX = " skewX(" + innerSkewXDeg + "deg) ";
+
+            innerEl.style.webkitTransform += skewX + rotate;
         }
     }
 
