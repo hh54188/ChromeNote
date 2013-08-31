@@ -3,24 +3,33 @@
 <head>
     <title>Command Menu</title>
     <style type="text/css">
-        #wrapper {
+        #world {
+            -webkit-perspective: 1000px;
+
             position: fixed;
             left: 200px;
             top: 100px;
 
             width: 300px;
             height: 300px;
+        }
+        #wrapper {
+            position: absolute;
 
-            border-top-left-radius: 50%;
-            border-top-right-radius: 50%;
-            border-bottom-right-radius: 50%;
-            border-bottom-left-radius: 50%;
+            width: 300px;
+            height: 300px;
 
             overflow: hidden;
 
             border: 1px solid black;
+            -webkit-transform-style: preserve-3d;
         }
-
+        .circle {
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+            border-bottom-right-radius: 50%;
+            border-bottom-left-radius: 50%;
+        }
         li {
             list-style-type: none;
             width: 250px;
@@ -50,25 +59,44 @@
             color: white;
             text-align: center;
 
-            border-top-left-radius: 50%;
-            border-top-right-radius: 50%;
-            border-bottom-right-radius: 50%;
-            border-bottom-left-radius: 50%;
+            -webkit-transition: all 0.2s ease;
+        }
+        #btn {
+            width: 100px;
+            height: 100px;
+            background: white;
 
-            -webkit-transition: all 1s ease;
+            position: absolute;
+            left: 100px;
+            top: 100px;
+
+            z-index: 999;
+            cursor: pointer;            
+        }
+        .text {
+            display: block;
+            position: absolute;
+
+            left: 80px;
+            top: 30px;
+
+            width: 80px;
+            height: 30px;
         }
     </style>
 </head>
 <body>
-    <div id="wrapper">
-        <ul>
-            <li><a href="">Menu1</a></li>
-            <li><a href="">Menu2</a></li>
-            <li><a href="">Menu3</a></li>
-            <!-- <li><a href="">Menu4</a></li> -->
-            <!-- <li><a href="">Menu5</a></li> -->
-            <!-- <li><a href="">Menu6</a></li> -->
-        </ul>
+    <div id="world">
+        <div class="circle" id="wrapper">
+            <div id="btn" class="circle"></div>
+            <ul>
+                <li><a class="link circle" href="javascript:void(0)"><span class="text">Menu1</span></a></li>
+                <li><a class="link circle" href="javascript:void(0)"><span class="text">Menu2</span></a></li>
+                <li><a class="link circle" href="javascript:void(0)"><span class="text">Menu3</span></a></li>
+                <li><a class="link circle" href="javascript:void(0)"><span class="text">Menu4</span></a></li>  
+                <li><a class="link circle" href="javascript:void(0)"><span class="text">Menu5</span></a></li>          
+            </ul>
+        </div>
     </div>
 </body>
 <script type="text/javascript">
@@ -100,12 +128,51 @@
             skewX = " skewX(" + innerSkewXDeg + "deg) ";
 
             innerEl.style.webkitTransform += skewX + rotate;
-            // innerEl.style.webkitTransform += skewX;
 
+            var text = innerEl.querySelector(".text");
+
+            var textRotateDeg = innerRotateDeg * (-1) - outerRotateDeg;
+            var textRotate = " rotate(" + textRotateDeg + "deg) ";
+            text.style.webkitTransform += textRotate;
         }
     }
 
     var elems = document.querySelectorAll("li");
     computeAngle(elems);
+
+    var links = document.querySelectorAll(".link");
+    for (var i = 0; i < links.length; i++) {
+
+        links[i].addEventListener("mouseover", function (e) {
+            e.target.classList.add("hover");
+        }, false);
+
+        links[i].addEventListener("mouseout", function (e) {
+            e.target.classList.remove("hover");
+        }, false);
+    }
+
+    var worldXAngle, worldYAngle, backupX, backupY;
+    window.addEventListener( 'mousemove', function( e ) {
+        var xPercent = parseFloat(353) / window.innerWidth;
+        var yPercent = parseFloat(252) / window.innerHeight;
+
+        backupX = worldXAngle, backupY = worldYAngle;
+
+        worldYAngle = -( xPercent - ( e.clientX / window.innerWidth ) ) * 180;
+        worldXAngle = ( yPercent - ( e.clientY / window.innerHeight ) ) * 180;
+
+        if (Math.abs(worldXAngle) >= 10) worldXAngle = backupX;
+        if (Math.abs(worldYAngle) >= 10) worldYAngle = backupY;
+        
+        // if 
+
+        var world = document.querySelector("#wrapper");
+
+        world.style.webkitTransform = 'translateZ(0px ) \
+        rotateX( ' + worldXAngle * (-1) + 'deg) \
+        rotateY( ' + worldYAngle * (-1) + 'deg)';
+    } );
+
 </script>
 </html>
