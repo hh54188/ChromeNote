@@ -3,6 +3,7 @@
 <head>
     <title>Command Menu</title>
     <style type="text/css">
+        * {margin: 0; padding: 0;}
         #world {
             -webkit-perspective: 1000px;
 
@@ -12,6 +13,8 @@
 
             width: 300px;
             height: 300px;
+
+            overflow: hidden;
         }
         #wrapper {
             position: absolute;
@@ -19,7 +22,7 @@
             width: 300px;
             height: 300px;
 
-            overflow: hidden;
+            /*overflow: hidden;*/
 
             border: 1px solid black;
             -webkit-transform-style: preserve-3d;
@@ -29,6 +32,15 @@
             border-top-right-radius: 50%;
             border-bottom-right-radius: 50%;
             border-bottom-left-radius: 50%;
+        }
+        ul {
+/*            width: 300px;
+            height: 300px;
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            -webkit-transform-style: preserve-3d;*/
         }
         li {
             list-style-type: none;
@@ -45,6 +57,7 @@
 
             -webkit-transition: all 1s ease;
             -webkit-transform-origin: 100% 100%;
+            -webkit-transform-style: preserve-3d;
         }
         li a {
             display: block;
@@ -60,6 +73,7 @@
             text-align: center;
 
             -webkit-transition: all 0.2s ease;
+            -webkit-transform-style: preserve-3d;
         }
         #btn {
             width: 100px;
@@ -71,7 +85,10 @@
             top: 100px;
 
             z-index: 999;
-            cursor: pointer;            
+            cursor: pointer; 
+
+            -webkit-transform: translateZ(10px);
+            -webkit-transform-style: preserve-3d;           
         }
         .text {
             display: block;
@@ -86,7 +103,24 @@
     </style>
 </head>
 <body>
-    <div id="world">
+    <div id="article">
+        Like a beautiful jewel, 3-D transforms can be dazzling, a true spectacle to behold. But before we start tacking 3-D diamonds and rubies to our compositions like Liberace‘s tailor, we owe it to our users to ask how they can benefit from this awesome feature.
+
+        An entire application should not take advantage of 3-D transforms. CSS was built to style documents, not generate explorable environments. I fail to find a benefit to completing a web form that can be accessed by swivelling my viewport to the Sign-Up Room (although there have been proposals to make the web just that). Nevertheless, there are plenty of opportunities to use 3-D transforms in between interactions with the interface, via transitions.
+
+        Take, for instance, the Weather App on the iPhone. The application uses two views: a details view; and an options view. Switching between these two views is done with a 3-D flip transition. This informs the user that the interface has two – and only two – views, as they can exist only on either side of the same plane.
+        Like a beautiful jewel, 3-D transforms can be dazzling, a true spectacle to behold. But before we start tacking 3-D diamonds and rubies to our compositions like Liberace‘s tailor, we owe it to our users to ask how they can benefit from this awesome feature.
+
+        An entire application should not take advantage of 3-D transforms. CSS was built to style documents, not generate explorable environments. I fail to find a benefit to completing a web form that can be accessed by swivelling my viewport to the Sign-Up Room (although there have been proposals to make the web just that). Nevertheless, there are plenty of opportunities to use 3-D transforms in between interactions with the interface, via transitions.
+
+        Take, for instance, the Weather App on the iPhone. The application uses two views: a details view; and an options view. Switching between these two views is done with a 3-D flip transition. This informs the user that the interface has two – and only two – views, as they can exist only on either side of the same plane.
+        Like a beautiful jewel, 3-D transforms can be dazzling, a true spectacle to behold. But before we start tacking 3-D diamonds and rubies to our compositions like Liberace‘s tailor, we owe it to our users to ask how they can benefit from this awesome feature.
+
+        An entire application should not take advantage of 3-D transforms. CSS was built to style documents, not generate explorable environments. I fail to find a benefit to completing a web form that can be accessed by swivelling my viewport to the Sign-Up Room (although there have been proposals to make the web just that). Nevertheless, there are plenty of opportunities to use 3-D transforms in between interactions with the interface, via transitions.
+
+        Take, for instance, the Weather App on the iPhone. The application uses two views: a details view; and an options view. Switching between these two views is done with a 3-D flip transition. This informs the user that the interface has two – and only two – views, as they can exist only on either side of the same plane.
+    </div>
+    <div id="world" class="circle">
         <div class="circle" id="wrapper">
             <div id="btn" class="circle"></div>
             <ul>
@@ -162,8 +196,8 @@
         worldYAngle = -( xPercent - ( e.clientX / window.innerWidth ) ) * 180;
         worldXAngle = ( yPercent - ( e.clientY / window.innerHeight ) ) * 180;
 
-        if (Math.abs(worldXAngle) >= 10) worldXAngle = backupX;
-        if (Math.abs(worldYAngle) >= 10) worldYAngle = backupY;
+        if (Math.abs(worldXAngle) >= 15) worldXAngle = backupX;
+        if (Math.abs(worldYAngle) >= 15) worldYAngle = backupY;
         
         // if 
 
