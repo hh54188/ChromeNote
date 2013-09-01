@@ -15,7 +15,7 @@
             height: 300px;
 
             overflow: hidden;
-            background: skyblue;
+            /*background: skyblue;*/
         }
         #wrapper {
             position: absolute;
@@ -25,7 +25,17 @@
 
             /*overflow: hidden;*/
 
-            border: 1px solid black;
+            /*border: 1px solid black;*/
+            -webkit-transform-style: preserve-3d;
+        }
+        #border {
+            position: absolute;
+
+            width: 260px;
+            height: 260px;            
+
+            border: 20px solid yellow;
+            z-index: 999;
             -webkit-transform-style: preserve-3d;
         }
         .circle {
@@ -103,6 +113,7 @@
 <body>
     <div id="article"></div>
     <div id="world" class="circle">
+        <div id="border" class="circle"></div>
         <div class="circle" id="wrapper">
             <div id="btn" class="circle"></div>
             <ul>
@@ -214,8 +225,13 @@
         if (Math.abs(worldYAngle) >= 12) worldYAngle = backupY;
 
         var world = document.querySelector("#wrapper");
+        var border = document.querySelector("#border");
 
         world.style.webkitTransform = 'translateZ(0px ) \
+        rotateX( ' + worldXAngle * (-1) + 'deg) \
+        rotateY( ' + worldYAngle * (-1) + 'deg)';
+
+        border.style.webkitTransform = 'translateZ(0px ) \
         rotateX( ' + worldXAngle * (-1) + 'deg) \
         rotateY( ' + worldYAngle * (-1) + 'deg)';
     } );
