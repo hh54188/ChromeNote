@@ -75,6 +75,8 @@
             border: 1px solid white;
             overflow: hidden;
 
+            cursor: pointer;
+
             -webkit-transition: all 0.3s ease;
             -webkit-transform-origin: 100% 100%;
             -webkit-transform-style: preserve-3d;
@@ -92,6 +94,8 @@
             color: white;
             text-align: center;
 
+            cursor: pointer;
+
             -webkit-transition: all 0.2s ease;
             -webkit-transform-style: preserve-3d;
         }
@@ -107,7 +111,7 @@
             z-index: 999;
             cursor: pointer; 
 
-            -webkit-transform: translateZ(10px);
+            -webkit-transform: translateZ(25px);
             -webkit-transform-style: preserve-3d;           
         }
         .text {
@@ -128,17 +132,20 @@
     </style>
 </head>
 <body>
-    <div id="article"></div>
-    <div id="world" class="circle1">
+    <div id="article">
+
+    </div>
+    <div id="world">
         <div id="outer" class="circle">
             <div class="circle" id="wrapper">
-                <div id="btn" class="circle"></div>
+                <div id="btn" class="circle">
+                </div>
                 <ul>
                     <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu1</span></a></li>
                     <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu2</span></a></li>
                     <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu3</span></a></li>
-                    <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu4</span></a></li>  
-                    <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu5</span></a></li>          
+                    <!-- <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu4</span></a></li>   -->
+                    <!-- <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu5</span></a></li>           -->
                 </ul>
             </div>
         </div>
