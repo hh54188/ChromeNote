@@ -15,6 +15,7 @@
             height: 300px;
 
             overflow: hidden;
+            background: skyblue;
         }
         #wrapper {
             position: absolute;
@@ -33,20 +34,12 @@
             border-bottom-right-radius: 50%;
             border-bottom-left-radius: 50%;
         }
-        ul {
-/*            width: 300px;
-            height: 300px;
-            position: absolute;
-            left: 0;
-            top: 0;
-
-            -webkit-transform-style: preserve-3d;*/
-        }
         li {
             list-style-type: none;
             width: 250px;
             height: 250px;
-            background: skyblue;
+            /*background: skyblue;*/
+            background: transparent;
 
             position: absolute;
             left: -100px;
@@ -55,7 +48,7 @@
             border: 1px solid white;
             overflow: hidden;
 
-            -webkit-transition: all 1s ease;
+            -webkit-transition: all 0.3s ease;
             -webkit-transform-origin: 100% 100%;
             -webkit-transform-style: preserve-3d;
         }
@@ -100,35 +93,24 @@
             width: 80px;
             height: 30px;
         }
+        #article {
+            width: 800px;
+            height: 800px;
+            background: gray;
+        }
     </style>
 </head>
 <body>
-    <div id="article">
-        Like a beautiful jewel, 3-D transforms can be dazzling, a true spectacle to behold. But before we start tacking 3-D diamonds and rubies to our compositions like Liberace‘s tailor, we owe it to our users to ask how they can benefit from this awesome feature.
-
-        An entire application should not take advantage of 3-D transforms. CSS was built to style documents, not generate explorable environments. I fail to find a benefit to completing a web form that can be accessed by swivelling my viewport to the Sign-Up Room (although there have been proposals to make the web just that). Nevertheless, there are plenty of opportunities to use 3-D transforms in between interactions with the interface, via transitions.
-
-        Take, for instance, the Weather App on the iPhone. The application uses two views: a details view; and an options view. Switching between these two views is done with a 3-D flip transition. This informs the user that the interface has two – and only two – views, as they can exist only on either side of the same plane.
-        Like a beautiful jewel, 3-D transforms can be dazzling, a true spectacle to behold. But before we start tacking 3-D diamonds and rubies to our compositions like Liberace‘s tailor, we owe it to our users to ask how they can benefit from this awesome feature.
-
-        An entire application should not take advantage of 3-D transforms. CSS was built to style documents, not generate explorable environments. I fail to find a benefit to completing a web form that can be accessed by swivelling my viewport to the Sign-Up Room (although there have been proposals to make the web just that). Nevertheless, there are plenty of opportunities to use 3-D transforms in between interactions with the interface, via transitions.
-
-        Take, for instance, the Weather App on the iPhone. The application uses two views: a details view; and an options view. Switching between these two views is done with a 3-D flip transition. This informs the user that the interface has two – and only two – views, as they can exist only on either side of the same plane.
-        Like a beautiful jewel, 3-D transforms can be dazzling, a true spectacle to behold. But before we start tacking 3-D diamonds and rubies to our compositions like Liberace‘s tailor, we owe it to our users to ask how they can benefit from this awesome feature.
-
-        An entire application should not take advantage of 3-D transforms. CSS was built to style documents, not generate explorable environments. I fail to find a benefit to completing a web form that can be accessed by swivelling my viewport to the Sign-Up Room (although there have been proposals to make the web just that). Nevertheless, there are plenty of opportunities to use 3-D transforms in between interactions with the interface, via transitions.
-
-        Take, for instance, the Weather App on the iPhone. The application uses two views: a details view; and an options view. Switching between these two views is done with a 3-D flip transition. This informs the user that the interface has two – and only two – views, as they can exist only on either side of the same plane.
-    </div>
+    <div id="article"></div>
     <div id="world" class="circle">
         <div class="circle" id="wrapper">
             <div id="btn" class="circle"></div>
             <ul>
-                <li><a class="link circle" href="javascript:void(0)"><span class="text">Menu1</span></a></li>
-                <li><a class="link circle" href="javascript:void(0)"><span class="text">Menu2</span></a></li>
-                <li><a class="link circle" href="javascript:void(0)"><span class="text">Menu3</span></a></li>
-                <li><a class="link circle" href="javascript:void(0)"><span class="text">Menu4</span></a></li>  
-                <li><a class="link circle" href="javascript:void(0)"><span class="text">Menu5</span></a></li>          
+                <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu1</span></a></li>
+                <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu2</span></a></li>
+                <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu3</span></a></li>
+                <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu4</span></a></li>  
+                <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu5</span></a></li>          
             </ul>
         </div>
     </div>
@@ -153,6 +135,8 @@
             var outerSkewXDeg = 90 - eachAngle;
             var skewX = " skewX(" + outerSkewXDeg + "deg) ";
 
+            el.setAttribute("data-rotate", outerRotateDeg);
+            el.setAttribute("data-skewX", outerSkewXDeg);
             el.style.webkitTransform += rotate + skewX;
 
             var innerSkewXDeg = outerSkewXDeg * (-1);
@@ -171,18 +155,48 @@
         }
     }
 
+
+
+    var texts = document.querySelectorAll(".text");
+    for (var i = 0; i < texts.length; i++) {
+        texts[i].addEventListener("mouseover", function () {});
+        texts[i].addEventListener("mouseout", function () {});
+    }
+
+
     var elems = document.querySelectorAll("li");
     computeAngle(elems);
 
     var links = document.querySelectorAll(".link");
+    var translateZ = "20";
     for (var i = 0; i < links.length; i++) {
+        var link = links[i];
+        link.addEventListener("mouseover", function (e) {
+            var target = e.target;
+            var outerRotateDeg = target.getAttribute("data-rotate");
+            var rotate = " rotate(" + outerRotateDeg + "deg) ";
 
-        links[i].addEventListener("mouseover", function (e) {
-            e.target.classList.add("hover");
+            var outerSkewXDeg = target.getAttribute("data-skewX");
+            var skewX = " skewX(" + outerSkewXDeg + "deg) ";
+
+            var translateZ = " translateZ(20px) ";
+
+            target.style.webkitTransform = rotate + skewX + translateZ;
+
         }, false);
 
-        links[i].addEventListener("mouseout", function (e) {
-            e.target.classList.remove("hover");
+        link.addEventListener("mouseout", function (e) {
+            var target = e.target;
+            var outerRotateDeg = target.getAttribute("data-rotate");
+            var rotate = " rotate(" + outerRotateDeg + "deg) ";
+
+            var outerSkewXDeg = target.getAttribute("data-skewX");
+            var skewX = " skewX(" + outerSkewXDeg + "deg) ";
+
+            var translateZ = " translateZ(0px) ";
+
+            target.style.webkitTransform = rotate + skewX + translateZ;
+
         }, false);
     }
 
@@ -196,10 +210,8 @@
         worldYAngle = -( xPercent - ( e.clientX / window.innerWidth ) ) * 180;
         worldXAngle = ( yPercent - ( e.clientY / window.innerHeight ) ) * 180;
 
-        if (Math.abs(worldXAngle) >= 15) worldXAngle = backupX;
-        if (Math.abs(worldYAngle) >= 15) worldYAngle = backupY;
-        
-        // if 
+        if (Math.abs(worldXAngle) >= 12) worldXAngle = backupX;
+        if (Math.abs(worldYAngle) >= 12) worldYAngle = backupY;
 
         var world = document.querySelector("#wrapper");
 
