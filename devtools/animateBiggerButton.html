@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Animate Button</title>
+    <style type="text/css">
+        #centerBtn {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            border:1px solid #dcdcdc;
+
+            background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+            -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+            
+
+            -webkit-transform: scale(0.1);
+
+            /*animate*/
+            -webkit-animation-name: scaleUp;
+            -webkit-animation-duration: 1s;
+            -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.390);
+            -webkit-animation-delay: 0s;
+            /*-webkit-animation-iteration-count: infinite ;*/
+            -webkit-animation-iteration-count: 1;
+            -webkit-animation-direction: normal;
+        }
+
+        @-webkit-keyframes scaleUp {
+           0% {
+              -webkit-transform: scale(0.1);
+           }
+           100%{
+              -webkit-transform: scale(1);
+           }
+        }
+    </style>
+</head>
+<body>
+    <input type="range" min="0.1" max="1" step="0.1" id="slide" value="1">
+    <div id="centerBtn"></div>
+</body>
+<script type="text/javascript">
+    var slide = document.querySelector("#slide");
+    var btn = document.querySelector("#centerBtn");
+
+    btn.addEventListener("webkitAnimationStart", function (e) {
+        console.log("animate start", e);
+    }, false);
+
+    btn.addEventListener("webkitAnimationIteration", function (e) {
+        console.log("animate iteration", e);
+    }, false);
+
+    btn.addEventListener("webkitAnimationEnd", function (e) {
+        console.log("animate end", e);
+    }, false);
+
+    btn.addEventListener("webkitCssAnimationKeyframe", function (e) {
+        console.log("animate key frame", e);
+    }, false);
+
+</script>
+</html>
