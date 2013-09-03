@@ -1,0 +1,15 @@
+.chromeNote-setup-3d-perspective {
+    -webkit-perspective: 1000px;
+}
+
+.chromeNote-setup-3d-style {
+    -webkit-transform-style: preserve-3d;
+}
+
+.chromeNote-transform-origin-100and100 {
+    -webkit-transform-origin: 100% 100%;
+}
+
+.chromeNote-transform-translateZ {
+    -webkit-transform: translateZ(25px);
+}

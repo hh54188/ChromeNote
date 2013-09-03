@@ -1,0 +1,8 @@
+.theme-white #chromeNote-cmdMenu-btn {
+    background: white;
+}
+
+.theme-white .chromeNote-cmdMenu-menuItem-outerWrap {
+    background: skyblue;
+    border: 1px solid white;
+}
