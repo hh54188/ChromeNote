@@ -2,8 +2,9 @@
 <html>
 <head>
     <title>Animate Button</title>
+    <script type="text/javascript" src="../js/lib/lib.js"></script>
     <style type="text/css">
-        #centerBtn {
+        .centerBtn {
             width: 100px;
             height: 100px;
             border-radius: 50%;
@@ -13,33 +14,33 @@
             top: 100px;
             border:1px solid #dcdcdc;
 
+            text-align: center;
+            font-size: 14px;
+            line-height: 95px;
+
+            display: none;
+
             background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
             -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
             
 
             -webkit-transform: scale(0.1);
+        }
 
-            /*animate*/
+        .show {
+            display: block;
+        }
+
+        .animateScaleUp {
             -webkit-animation-name: scaleUp;
             -webkit-animation-duration: 0.5s;
             -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
             -webkit-animation-delay: 0s;
-            /*-webkit-animation-iteration-count: infinite ;*/
             -webkit-animation-iteration-count: 1;
             -webkit-animation-direction: normal;
         }
 
-        #centerBtn.realScaleUp {
-            -webkit-transform: scale(1);            
-        }
-
         @-webkit-keyframes scaleUp {
-           /*0% {
-              -webkit-transform: scale(0.1);
-           }
-           100%{
-              -webkit-transform: scale(1);
-           }*/
            from {
               -webkit-transform: scale(0.1);
            }
@@ -47,32 +48,34 @@
               -webkit-transform: scale(1);
            }
         }
+
+        .endScaleUp {
+            -webkit-transform: scale(1);            
+        }
     </style>
 </head>
 <body>
-    <input type="range" min="0.1" max="1" step="0.1" id="slide" value="1">
-    <div id="centerBtn"></div>
+    <div class="centerBtn">Close</div>
+    <div class="bigger"></div>
 </body>
 <script type="text/javascript">
-    var slide = document.querySelector("#slide");
-    var btn = document.querySelector("#centerBtn");
-
-    btn.addEventListener("webkitAnimationStart", function (e) {
-        console.log("animate start", e);
-    }, false);
-
-    btn.addEventListener("webkitAnimationIteration", function (e) {
-        console.log("animate iteration", e);
-    }, false);
-
-    btn.addEventListener("webkitAnimationEnd", function (e) {
-        e.target.classList.add("realScaleUp");
-        console.log("animate end", e);
-    }, false);
-
-    btn.addEventListener("webkitCssAnimationKeyframe", function (e) {
-        console.log("animate key frame", e);
-    }, false);
-
+    var el = $(".centerBtn");
+    el.animSub({
+        open: [
+            {
+                elem: el,
+                beforeAnimate: function () {
+                    el.addClass("show");
+                },
+                startStatusClass: "show",
+                animateClass: "animateScaleUp", 
+                endStatusClass: "endScaleUp",
+                afterAnimate: function () {
+                    
+                }
+            }
+        ]        
+    });
+    el.animPub("open");
 </script>
 </html>

@@ -4,12 +4,19 @@
         isArray
         isEmptyObject
     $():.
+        // Basix
         getTargetId        
         getTargetType
         addClass
         removeClass
+
+        // event:
         on
-        off
+        off() | off("click") | off("click", fn)
+
+        // Animate:
+        animSub(topics)
+        animPub(topic)
 
 */
 
@@ -64,7 +71,7 @@ var $ = (function () {
     // event handler manage
     var _e = (function (el) {
         var cache = {},
-            expando = +new Date();
+            expando = "event_" + (+new Date());
 
         var getData = function (el) {
             var uuid = el[expando];
@@ -137,6 +144,84 @@ var $ = (function () {
                 el.className = newClassName;
             }
         },
+        /*
+            Animate:
+            animSub();
+            animPub();
+        */
+
+        animSub: function (topics) {
+
+            /*
+                subscrile:
+                
+                elem: "",
+                beforeAnimate: fn // 执行前要干的事情 函数
+                animateClass: "", // 执行的动画样式
+                startStatusClass: ""// 动画执行之前需要添加的样式
+                endStatusClass: "" // 动画结束之后添加的样式
+                afterAnimate: fn // 执行完成时的事情 函数
+            */
+
+            var el = this.el;
+            var data = _e.getData(el);
+            if (!data.animate) data.animate = {};
+
+            data.animate = topics;
+        },
+        _execAnim: function (step) {
+            var el = step.elem,
+                beforeCallBack = step.beforeAnimate,
+                animateClass = step.animateClass,
+                startStatusClass = step.startStatusClass,
+                endStatusClass = step.endStatusClass,
+                afterCallBack = step.afterAnimate;
+
+            el.off("webkitAnimationStart");
+            el.off("webkitAnimationEnd");
+
+            if (beforeCallBack) {
+                beforeCallBack.call(el);
+            }
+
+            if (startStatusClass) {
+                el.addClass(startStatusClass);
+            }
+
+
+            el.on("webkitAnimationStart", function (e) {});
+
+            el.on("webkitAnimationEnd", function (e) {
+
+                if (endStatusClass) {
+                    el.addClass(endStatusClass);
+                }
+
+                if (afterCallBack) {
+                    afterCallBack.call(el);
+                }
+
+            });
+
+            el.addClass(animateClass);
+
+        },
+        animPub: function (topic) {
+            var el = this.el;
+            var data = _e.getData(el);
+            var _this = this;
+
+            if (!data || !data.animate) return;
+            var queue = data.animate[topic];
+            queue.forEach(function (step, index) {
+                _this._execAnim(step);
+            })
+        },
+        /*
+            Event: 
+            on()
+            off()
+        */
         on: function (eventType, fn) {
             var el = this.el;
             var data = _e.getData(el);
@@ -169,6 +254,8 @@ var $ = (function () {
             var el = this.el;
             var data = _e.getData(el);
             var _this = this;
+
+            if (!data.handlers) return;
 
             var removeType = function (t) {
                 data.handlers[t] = [];

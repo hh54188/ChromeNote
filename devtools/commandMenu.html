@@ -4,6 +4,14 @@
     <title>Command Menu</title>
     <style type="text/css">
         * {margin: 0; padding: 0;}
+
+        .btnStyle {
+            background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+            -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+            border:1px solid #dcdcdc;
+            text-shadow:1px 1px 0px #ffffff;
+            color:#777777;
+        }
         #world {
             -webkit-perspective: 1000px;
 
@@ -85,7 +93,7 @@
             display: block;
             width: 240px;
             height: 240px;
-            background: black;
+            /*background: black;*/
 
             position: absolute;
             bottom: -120px;
@@ -138,12 +146,12 @@
     <div id="world">
         <div id="outer" class="circle">
             <div class="circle" id="wrapper">
-                <div id="btn" class="circle">
+                <div id="btn" class="circle btnStyle">
                 </div>
                 <ul>
-                    <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu1</span></a></li>
-                    <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu2</span></a></li>
-                    <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu3</span></a></li>
+                    <li class="link"><a class="circle btnStyle" href="javascript:void(0)"><span class="text">Menu1</span></a></li>
+                    <li class="link"><a class="circle btnStyle" href="javascript:void(0)"><span class="text">Menu2</span></a></li>
+                    <li class="link"><a class="circle btnStyle" href="javascript:void(0)"><span class="text">Menu3</span></a></li>
                     <!-- <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu4</span></a></li>   -->
                     <!-- <li class="link"><a class="circle" href="javascript:void(0)"><span class="text">Menu5</span></a></li>           -->
                 </ul>
