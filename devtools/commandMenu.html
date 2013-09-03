@@ -9,6 +9,7 @@
 <body class="theme-white">
     <div id="chromeNote-threeDWorld" class="chromeNote-setup-3d-perspective">
         <div id="chromeNote-cmdMenu-mask" class="chromeNote-decorate-circle chromeNote-setup-3d-style">
+
             <div id="chromeNote-cmdMenu-wrap" class="chromeNote-decorate-circle chromeNote-setup-3d-style">
                 <div id="chromeNote-cmdMenu-btn" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-translateZ"></div>
                 <ul>
@@ -137,5 +138,11 @@
         rotateX( ' + worldXAngle * (-1) + 'deg) \
         rotateY( ' + worldYAngle * (-1) + 'deg)';
     } );
+    
+    window.addEventListener("click", function () {
+
+        // var mask = document.querySelector("#chromeNote-cmdMenu-mask");
+        // mask.classList.add("animateScaleDown");
+    })
 </script>
 </html>

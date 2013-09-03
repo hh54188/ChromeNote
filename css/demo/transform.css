@@ -13,3 +13,25 @@
 .chromeNote-transform-translateZ {
     -webkit-transform: translateZ(25px);
 }
+
+.animateScaleDown {
+    -webkit-animation-name: scaleDown;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+    -webkit-animation-delay: 0s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-direction: normal;
+}
+
+@-webkit-keyframes scaleDown {
+   from {
+
+   }
+   to {
+
+   }
+}
+
+.scaleDown {
+    -webkit-transform: scale(1);            
+}

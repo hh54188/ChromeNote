@@ -1,5 +1,6 @@
 .theme-white #chromeNote-cmdMenu-btn {
     background: white;
+    border: 1px solid black;
 }
 
 .theme-white .chromeNote-cmdMenu-menuItem-outerWrap {
