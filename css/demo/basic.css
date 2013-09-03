@@ -15,6 +15,9 @@ hide: {
 
     width: 350px;
     height: 350px;
+
+    /*hack*/
+    -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);    
 }
 
 #chromeNote-cmdMenu-mask {
@@ -81,6 +84,8 @@ hide: {
 
     width: 80px;
     height: 30px;
+
+    text-align: center;
 }
 
 .chromeNote-decorate-circle {

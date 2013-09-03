@@ -13,17 +13,17 @@
                 <div id="chromeNote-cmdMenu-btn" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-translateZ"></div>
                 <ul>
                     <li class="chromeNote-cmdMenu-menuItem-outerWrap chromeNote-setup-3d-style chromeNote-transform-origin-100and100">
-                        <a class="chromeNote-cmdMenu-menuItem-innerWrap" href="javascript:void(0)">
+                        <a class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle" href="javascript:void(0)">
                             <span class="chromeNote-cmdMenu-menuItem-text">Menu1</span>
                         </a>
                     </li>
                     <li class="chromeNote-cmdMenu-menuItem-outerWrap chromeNote-setup-3d-style chromeNote-transform-origin-100and100">
-                        <a class="chromeNote-cmdMenu-menuItem-innerWrap" href="javascript:void(0)">
+                        <a class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle" href="javascript:void(0)">
                             <span class="chromeNote-cmdMenu-menuItem-text">Menu2</span>
                         </a>
                     </li>
                     <li class="chromeNote-cmdMenu-menuItem-outerWrap chromeNote-setup-3d-style chromeNote-transform-origin-100and100">
-                        <a class="chromeNote-cmdMenu-menuItem-innerWrap" href="javascript:void(0)">
+                        <a class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle" href="javascript:void(0)">
                             <span class="chromeNote-cmdMenu-menuItem-text">Menu3</span>
                         </a>
                     </li>
@@ -109,7 +109,9 @@
     }
 
     var worldXAngle, worldYAngle, backupX, backupY;
+    // var disableMousemove = true;
     var disableMousemove = false;
+
     window.addEventListener( 'mousemove', function( e ) {
         if (disableMousemove) return false;
 

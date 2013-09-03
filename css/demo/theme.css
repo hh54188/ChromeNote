@@ -6,3 +6,8 @@
     background: skyblue;
     border: 1px solid white;
 }
+
+.theme-white .chromeNote-cmdMenu-menuItem-innerWrap {
+    background: yellow;
+    border: 1px solid white;
+}
