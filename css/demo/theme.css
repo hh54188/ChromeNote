@@ -1,14 +1,44 @@
 .theme-white #chromeNote-cmdMenu-btn {
-    background: white;
-    border: 1px solid black;
+    /*background: white;*/
+    /*border: 1px solid black;*/
+
+    -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
+    background-color:#ffffff;
+    border:1px solid #dcdcdc;
+    color:#666666;
+    font-family:arial;
+    font-size:15px;
 }
 
 .theme-white .chromeNote-cmdMenu-menuItem-outerWrap {
-    background: skyblue;
-    border: 1px solid white;
+    /*background: skyblue;*/
+    /*border: 1px solid white;*/
+
 }
 
 .theme-white .chromeNote-cmdMenu-menuItem-innerWrap {
-    background: yellow;
-    border: 1px solid white;
+    /*background: yellow;*/
+    /*border: 1px solid white;*/
+
+    -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
+    background-color:#ffffff;
+    border:1px solid #dcdcdc;
+    color:#666666;
+    font-family:arial;
+    font-size:15px;    
+
+    /*-webkit-font-smoothing: antialiased*/
+}
+
+.theme-white .hover a{
+    -webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
+    background-color:#007dc1;
+    border:1px solid #124d77;    
+    color:#ffffff;
+    font-family:arial;
+    /*font-size:13px;*/
+    /*-webkit-font-smoothing: antialiased*/
 }

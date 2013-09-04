@@ -8,6 +8,47 @@
     <script type="text/javascript" src="../js/lib/lib.js"></script>
 </head>
 <body class="theme-white">
+    <div id="article">
+There is a lot of duplication due to vendor prefixes - until the specification if finalised, this will persist. If this bothers you, there are various tools such as CSS Scaffold, LESS, or my preference - SASS, that allow you to define mixins to avoid repetitive code.
+
+Another approach is simply to write the CSS without the prefixes, then use Lea Verou's -prefix-free to add them in at runtime.
+
+Something you definitely shouldn't do is to only include the webkit prefix. Tempting though it seems, particularly when developing for mobile devices, webkit isn't the only rendering engine!
+
+It's worth noting as well that there isn't an -ms- prefix on these properties. IE10 was the first browser to ship without a prefix on these. The betas of IE10 did use the prefix however, so you may see code using -ms-. It's not needed though.
+
+The syntax is pretty straightforward, you specify the property you want to animate, all or border-radius or color or whatever, the time to run, then the transition timing function. The options for the timing function are shown below.
+
+Whenever any property changes, then it will animate instead of changing directly. This can be due to a different set of properties set on a pseudo class such as hover, or a new class or properties set by javascript. The example below uses :hover to change the properties – no javascript is needed.
+
+To see the difference in speed, have a look at the speed test.
+There is a lot of duplication due to vendor prefixes - until the specification if finalised, this will persist. If this bothers you, there are various tools such as CSS Scaffold, LESS, or my preference - SASS, that allow you to define mixins to avoid repetitive code.
+
+Another approach is simply to write the CSS without the prefixes, then use Lea Verou's -prefix-free to add them in at runtime.
+
+Something you definitely shouldn't do is to only include the webkit prefix. Tempting though it seems, particularly when developing for mobile devices, webkit isn't the only rendering engine!
+
+It's worth noting as well that there isn't an -ms- prefix on these properties. IE10 was the first browser to ship without a prefix on these. The betas of IE10 did use the prefix however, so you may see code using -ms-. It's not needed though.
+
+The syntax is pretty straightforward, you specify the property you want to animate, all or border-radius or color or whatever, the time to run, then the transition timing function. The options for the timing function are shown below.
+
+Whenever any property changes, then it will animate instead of changing directly. This can be due to a different set of properties set on a pseudo class such as hover, or a new class or properties set by javascript. The example below uses :hover to change the properties – no javascript is needed.
+
+To see the difference in speed, have a look at the speed test.
+There is a lot of duplication due to vendor prefixes - until the specification if finalised, this will persist. If this bothers you, there are various tools such as CSS Scaffold, LESS, or my preference - SASS, that allow you to define mixins to avoid repetitive code.
+
+Another approach is simply to write the CSS without the prefixes, then use Lea Verou's -prefix-free to add them in at runtime.
+
+Something you definitely shouldn't do is to only include the webkit prefix. Tempting though it seems, particularly when developing for mobile devices, webkit isn't the only rendering engine!
+
+It's worth noting as well that there isn't an -ms- prefix on these properties. IE10 was the first browser to ship without a prefix on these. The betas of IE10 did use the prefix however, so you may see code using -ms-. It's not needed though.
+
+The syntax is pretty straightforward, you specify the property you want to animate, all or border-radius or color or whatever, the time to run, then the transition timing function. The options for the timing function are shown below.
+
+Whenever any property changes, then it will animate instead of changing directly. This can be due to a different set of properties set on a pseudo class such as hover, or a new class or properties set by javascript. The example below uses :hover to change the properties – no javascript is needed.
+
+To see the difference in speed, have a look at the speed test.
+    </div>
     <div id="chromeNote-threeDWorld" class="chromeNote-setup-3d-perspective">
         <div id="chromeNote-cmdMenu-mask" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-scale-point1 chromeNote-hide">
             <div id="chromeNote-cmdMenu-wrap" class="chromeNote-decorate-circle chromeNote-setup-3d-style">
@@ -73,15 +114,23 @@
     }
 
 
-    var elems = document.querySelectorAll("li");
-    computeAngle(elems);
-
     var links = document.querySelectorAll("li");
+    computeAngle(links);
+
+    for (var i = 0; i < links.length; i++) {
+        var hook = links[i].querySelector("a");
+        hook.addEventListener("mouseout", function (e) {
+            // e.stopPropagation();
+        })
+    }
+
     var translateZ = "20";
     for (var i = 0; i < links.length; i++) {
         var link = links[i];
         link.addEventListener("mouseover", function (e) {
-            var target = e.target;
+
+            // var target = e.target;
+            var target = this;
             var outerRotateDeg = target.getAttribute("data-rotate");
             var rotate = " rotate(" + outerRotateDeg + "deg) ";
 
@@ -91,11 +140,15 @@
             var translateZ = " translateZ(20px) ";
 
             target.style.webkitTransform = rotate + skewX + translateZ;
+            target = $(this);
+            target.addClass("hover");
 
         }, false);
 
         link.addEventListener("mouseout", function (e) {
-            var target = e.target;
+
+            // var target = e.target;
+            var target = this;
             var outerRotateDeg = target.getAttribute("data-rotate");
             var rotate = " rotate(" + outerRotateDeg + "deg) ";
 
@@ -104,14 +157,15 @@
 
             var translateZ = " translateZ(0px) ";
 
-            target.style.webkitTransform = rotate + skewX + translateZ;
-
+            target.style.webkitTransform = rotate + skewX;
+            target = $(this);
+            target.removeClass("hover");
         }, false);
     }
 
     var worldXAngle, worldYAngle, backupX, backupY;
-    // var disableMousemove = true;
-    var disableMousemove = false;
+    var disableMousemove = true;
+    // var disableMousemove = false;
 
     window.addEventListener( 'mousemove', function( e ) {
         if (disableMousemove) return false;
@@ -124,8 +178,8 @@
         worldYAngle = -( xPercent - ( e.clientX / window.innerWidth ) ) * 180;
         worldXAngle = ( yPercent - ( e.clientY / window.innerHeight ) ) * 180;
 
-        if (Math.abs(worldXAngle) >= 12) worldXAngle = backupX;
-        if (Math.abs(worldYAngle) >= 12) worldYAngle = backupY;
+        if (Math.abs(worldXAngle) >= 5) worldXAngle = backupX;
+        if (Math.abs(worldYAngle) >= 5) worldYAngle = backupY;
 
         var world = document.querySelector("#chromeNote-cmdMenu-wrap");
         var outer = document.querySelector("#chromeNote-cmdMenu-mask");
