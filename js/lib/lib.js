@@ -4,7 +4,7 @@
         isArray
         isEmptyObject
     $():.
-        // Basix
+        // Basic
         getTargetId        
         getTargetType
         addClass
@@ -299,7 +299,9 @@ var $ = (function () {
             // if not equal to zero?
             if (data.handlers[eventType].length === 0) {
                 delete data.handlers[eventType];
-                el.removeEventListener(eventType, data.dispatcher, false);
+                for (var i = 0; i < el.length; i++) {
+                    el[i].removeEventListener(eventType, data.dispatcher, false);    
+                }
             }
 
             if (Helper.isEmptyObject(data.handlers)) {
