@@ -129,17 +129,18 @@ To see the difference in speed, have a look at the speed test.
         var link = links[i];
         link.addEventListener("mouseover", function (e) {
 
-            // var target = e.target;
             var target = this;
-            var outerRotateDeg = target.getAttribute("data-rotate");
-            var rotate = " rotate(" + outerRotateDeg + "deg) ";
+            // var outerRotateDeg = target.getAttribute("data-rotate");
+            // var rotate = " rotate(" + outerRotateDeg + "deg) ";
 
-            var outerSkewXDeg = target.getAttribute("data-skewX");
-            var skewX = " skewX(" + outerSkewXDeg + "deg) ";
+            // var outerSkewXDeg = target.getAttribute("data-skewX");
+            // var skewX = " skewX(" + outerSkewXDeg + "deg) ";
 
-            var translateZ = " translateZ(20px) ";
+            // var translateZ = " translateZ(30px) ";
 
-            target.style.webkitTransform = rotate + skewX + translateZ;
+            // target.style.webkitTransform = rotate + skewX + translateZ;
+            // target.style.webkitTransform = rotate + skewX;
+
             target = $(this);
             target.addClass("hover");
 
@@ -147,25 +148,24 @@ To see the difference in speed, have a look at the speed test.
 
         link.addEventListener("mouseout", function (e) {
 
-            // var target = e.target;
             var target = this;
-            var outerRotateDeg = target.getAttribute("data-rotate");
-            var rotate = " rotate(" + outerRotateDeg + "deg) ";
+            // var outerRotateDeg = target.getAttribute("data-rotate");
+            // var rotate = " rotate(" + outerRotateDeg + "deg) ";
 
-            var outerSkewXDeg = target.getAttribute("data-skewX");
-            var skewX = " skewX(" + outerSkewXDeg + "deg) ";
+            // var outerSkewXDeg = target.getAttribute("data-skewX");
+            // var skewX = " skewX(" + outerSkewXDeg + "deg) ";
 
-            var translateZ = " translateZ(0px) ";
+            // var translateZ = " translateZ(0px) ";
 
-            target.style.webkitTransform = rotate + skewX;
+            // target.style.webkitTransform = rotate + skewX;
             target = $(this);
             target.removeClass("hover");
         }, false);
     }
 
-    var worldXAngle, worldYAngle, backupX, backupY;
-    var disableMousemove = true;
-    // var disableMousemove = false;
+    var worldXAngle, worldYAngle, backupX, backupY, shadow_x, shadow_y, backupSX, backupSY;
+    // var disableMousemove = true;
+    var disableMousemove = false;
 
     window.addEventListener( 'mousemove', function( e ) {
         if (disableMousemove) return false;
@@ -178,8 +178,24 @@ To see the difference in speed, have a look at the speed test.
         worldYAngle = -( xPercent - ( e.clientX / window.innerWidth ) ) * 180;
         worldXAngle = ( yPercent - ( e.clientY / window.innerHeight ) ) * 180;
 
-        if (Math.abs(worldXAngle) >= 5) worldXAngle = backupX;
-        if (Math.abs(worldYAngle) >= 5) worldYAngle = backupY;
+        /*计算阴影开始*/
+
+        var btn = document.querySelector("#chromeNote-cmdMenu-btn");
+
+        backupSX = shadow_x, backupSY = shadow_y;
+
+        shadow_x = (xPercent - ( e.clientX / window.innerWidth )) * 100;
+        shadow_y = (yPercent - ( e.clientY / window.innerHeight )) * 100;
+
+        if (Math.abs(shadow_x) > 5) shadow_x = backupSX;
+        if (Math.abs(shadow_y) > 5) shadow_y = backupSY;
+
+        btn.style.boxShadow = shadow_x + "px " + shadow_y + "px 10px rgba(0,0,0,0.5)";
+
+        /*计算阴影结束*/
+
+        if (Math.abs(worldXAngle) >= 3) worldXAngle = backupX;
+        if (Math.abs(worldYAngle) >= 3) worldYAngle = backupY;
 
         var world = document.querySelector("#chromeNote-cmdMenu-wrap");
         var outer = document.querySelector("#chromeNote-cmdMenu-mask");
