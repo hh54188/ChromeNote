@@ -1,5 +1,9 @@
 * {margin:0; padding:0;}
 
+body {
+    font-family:Arial;
+}
+
 .chromeNote-show {
     display: block;
 }
@@ -13,8 +17,8 @@
     left: 175px;
     top: 75px;
 
-    width: 350px;
-    height: 350px;
+    width: 250px;
+    height: 250px;
 
     /*hack*/
     -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);    
@@ -23,11 +27,8 @@
 #chromeNote-cmdMenu-mask {
     position: absolute;
 
-    width: 300px;
-    height: 300px;
-
-    left: 25px;
-    top: 25px;
+    width: 250px;
+    height: 250px;
 
     /*hack*/
     -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
@@ -35,17 +36,17 @@
 
 #chromeNote-cmdMenu-wrap {
     position: absolute;
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
 }
 
 #chromeNote-cmdMenu-btn {
-    width: 100px;
-    height: 100px;
+    width: 42px;
+    height: 42px;
 
     position: absolute;
-    left: 100px;
-    top: 100px;
+    left: 104px;
+    top: 104px;
 
     z-index: 999;
 }
@@ -56,8 +57,8 @@
     height: 250px;
 
     position: absolute;
-    left: -100px;
-    top: -100px;
+    left: -125px;
+    top: -125px;
 
     overflow: hidden;
     cursor: pointer;
@@ -65,12 +66,12 @@
 
 .chromeNote-cmdMenu-menuItem-innerWrap {
     display: block;
-    width: 240px;
-    height: 240px;
+    width: 42px;
+    height: 42px;
 
     position: absolute;
-    bottom: -120px;
-    right: -120px;
+    left: 145px;
+    top: 208px;
 
     cursor: pointer;
 }

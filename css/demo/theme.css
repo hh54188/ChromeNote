@@ -1,94 +1,22 @@
 .theme-white #chromeNote-cmdMenu-btn {
-    /*background: white;*/
-    /*border: 1px solid black;*/
-
-/*    -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
-    background-color:#ffffff;
-    border:1px solid #dcdcdc;
-    color:#666666;
-    font-family:arial;
-    font-size:15px;*/
-
-
-    -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
-    box-shadow:inset 0px 1px 0px 0px #ffffff;
-    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
-    background-color:#ededed;
-    text-indent:0;
-    border:1px solid #dcdcdc;
-    display:inline-block;
-    color:#777777;
-    font-family:arial;
-    font-size:15px;
-    font-weight:bold;
-    font-style:normal;
-    line-height:50px;
-    text-decoration:none;
-    text-align:center;
-    text-shadow:1px 1px 0px #ffffff;
+    background: white;
+    border: 1px solid #c4c4c4;
 }
 
 .theme-white .chromeNote-cmdMenu-menuItem-outerWrap {
-    /*background: skyblue;*/
-    /*border: 1px solid white;    */
-
-    -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
-    box-shadow:inset 0px 1px 0px 0px #ffffff;
-    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
-    background-color:#ededed;
-    text-indent:0;
-    border:1px solid #dcdcdc;
-    display:inline-block;
-    color:#777777;
-    font-family:arial;
-    font-size:15px;
-    font-weight:bold;
-    font-style:normal;
-    line-height:50px;
-    text-decoration:none;
-    text-align:center;
-    text-shadow:1px 1px 0px #ffffff;
-
+    background: white;
+    border: 1px solid #c4c4c4;
 }
 
 .theme-white .chromeNote-cmdMenu-menuItem-innerWrap {
+    color: #89939C;
     /*background: yellow;*/
     /*border: 1px solid white;*/
-
-/*    -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
-    background-color:#ffffff;
-    border:1px solid #dcdcdc;
-    color:#666666;
-    font-family:arial;
-    font-size:15px;    */
-
-/*    -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
-    box-shadow:inset 0px 1px 0px 0px #ffffff;
-    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
-    background-color:#ededed;
-    text-indent:0;
-    border:1px solid #dcdcdc;
-    display:inline-block;
-    color:#777777;
-    font-family:arial;
-    font-size:15px;
-    font-weight:bold;
-    font-style:normal;
-    line-height:50px;
-    text-decoration:none;
-    text-align:center;
-    text-shadow:1px 1px 0px #ffffff;*/
 }
 
 .theme-white .hover{
-    -webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
-    background-color:#007dc1;
-    border:1px solid #124d77;    
-    color:#ffffff;
-    font-family:arial;
-    /*font-size:13px;*/
-    /*-webkit-font-smoothing: antialiased*/
+    background-color:#26BCF1;
+}
+.theme-white .hover a {
+    color: white;
 }
