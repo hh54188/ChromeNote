@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Command Menu</title>
+    <link rel="stylesheet" type="text/css" href="../css/font-awesome/css/font-awesome.css">    
     <link rel="stylesheet" type="text/css" href="../css/demo/basic.css">
     <link rel="stylesheet" type="text/css" href="../css/demo/theme.css">
     <link rel="stylesheet" type="text/css" href="../css/demo/transform.css">
@@ -55,20 +56,20 @@ To see the difference in speed, have a look at the speed test.
                 <div id="chromeNote-cmdMenu-btn" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-translateZ"></div>
                 <ul>
                     <li class="chromeNote-cmdMenu-menuItem-outerWrap chromeNote-setup-3d-style chromeNote-transform-origin-100and100 chromeNote-transform-transition">
-                        <a class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle" href="javascript:void(0)">
-                            <span class="chromeNote-cmdMenu-menuItem-text">Menu1</span>
+                        <a class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-x72y21" href="javascript:void(0)">
+                            <i class="chromeNote-cmdMenu-menuItem-text icon-pencil"></i>
                         </a>
                     </li>
                     <li class="chromeNote-cmdMenu-menuItem-outerWrap chromeNote-setup-3d-style chromeNote-transform-origin-100and100 chromeNote-transform-transition">
-                        <a class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle" href="javascript:void(0)">
-                            <span class="chromeNote-cmdMenu-menuItem-text">Menu2</span>
+                        <a class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-x72y21" href="javascript:void(0)">
+                            <i class="chromeNote-cmdMenu-menuItem-text icon-pencil"></i>
                         </a>
                     </li>
                     <li class="chromeNote-cmdMenu-menuItem-outerWrap chromeNote-setup-3d-style chromeNote-transform-origin-100and100 chromeNote-transform-transition">
-                        <a class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle" href="javascript:void(0)">
-                            <span class="chromeNote-cmdMenu-menuItem-text">Menu3</span>
+                        <a class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-x72y21" href="javascript:void(0)">
+                            <i class="chromeNote-cmdMenu-menuItem-text icon-pencil"></i>
                         </a>
-                    </li>
+                    </li>                                        
                 </ul>
             </div>
         </div>
@@ -87,7 +88,9 @@ To see the difference in speed, have a look at the speed test.
             /*
                 eachAngle - 90: 保证最上方有一条直线
             */
-            var outerRotateDeg = (i * eachAngle) - (eachAngle - 90); 
+            // var outerRotateDeg = (i * eachAngle) - (eachAngle - 90); 
+            var outerRotateDeg = (i * eachAngle) + (eachAngle - 90)
+
             var rotate = " rotate(" + outerRotateDeg + "deg) ";
 
             var outerSkewXDeg = 90 - eachAngle;
@@ -98,16 +101,19 @@ To see the difference in speed, have a look at the speed test.
             el.style.webkitTransform += rotate + skewX;
 
             var innerSkewXDeg = outerSkewXDeg * (-1);
-            var innerRotateDeg = (90 - parseFloat(eachAngle) / 2) * (-1);
+            // var innerRotateDeg = (90 - parseFloat(eachAngle) / 2) * (-1);
+            var innerRotateDeg = parseFloat(eachAngle) / 2;
+
 
             rotate = " rotate(" + innerRotateDeg + "deg) ";
             skewX = " skewX(" + innerSkewXDeg + "deg) ";
 
             innerEl.style.webkitTransform += skewX + rotate;
 
-            var text = innerEl.querySelector("span");
+            var text = innerEl.querySelector("i");
 
-            var textRotateDeg = innerRotateDeg * (-1) - outerRotateDeg;
+            // var textRotateDeg = innerRotateDeg * (-1) - outerRotateDeg;
+            var textRotateDeg = (-1) * outerRotateDeg + (-1) * innerRotateDeg;
             var textRotate = " rotate(" + textRotateDeg + "deg) ";
             text.style.webkitTransform += textRotate;
         }
@@ -142,7 +148,7 @@ To see the difference in speed, have a look at the speed test.
             // target.style.webkitTransform = rotate + skewX;
 
             target = $(this);
-            target.addClass("hover");
+            // target.addClass("hover");
 
         }, false);
 
@@ -159,13 +165,13 @@ To see the difference in speed, have a look at the speed test.
 
             // target.style.webkitTransform = rotate + skewX;
             target = $(this);
-            target.removeClass("hover");
+            // target.removeClass("hover");
         }, false);
     }
 
     var worldXAngle, worldYAngle, backupX, backupY, shadow_x, shadow_y, backupSX, backupSY;
-    // var disableMousemove = true;
-    var disableMousemove = false;
+    var disableMousemove = true;
+    // var disableMousemove = false;
 
     window.addEventListener( 'mousemove', function( e ) {
         if (disableMousemove) return false;
@@ -190,12 +196,12 @@ To see the difference in speed, have a look at the speed test.
         if (Math.abs(shadow_x) > 5) shadow_x = backupSX;
         if (Math.abs(shadow_y) > 5) shadow_y = backupSY;
 
-        btn.style.boxShadow = shadow_x + "px " + shadow_y + "px 10px rgba(0,0,0,0.1)";
+        btn.style.boxShadow = shadow_x + "px " + shadow_y + "px 10px rgba(0,0,0,0.3)";
 
         /*计算阴影结束*/
 
-        if (Math.abs(worldXAngle) >= 3) worldXAngle = backupX;
-        if (Math.abs(worldYAngle) >= 3) worldYAngle = backupY;
+        if (Math.abs(worldXAngle) >= 10) worldXAngle = backupX;
+        if (Math.abs(worldYAngle) >= 10) worldYAngle = backupY;
 
         var world = document.querySelector("#chromeNote-cmdMenu-wrap");
         var outer = document.querySelector("#chromeNote-cmdMenu-mask");

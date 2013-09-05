@@ -22,6 +22,10 @@
     -webkit-transition: all 0.1s linear;
 }
 
+.chromeNote-transform-origin-x72y21 {
+    -webkit-transform-origin: 72px 21px
+}
+
 .animateScaleUp {
     -webkit-animation-name: scaleUp;
     -webkit-animation-duration: 0.3s;

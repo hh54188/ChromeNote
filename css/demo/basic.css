@@ -70,7 +70,7 @@ body {
     height: 42px;
 
     position: absolute;
-    left: 145px;
+    left: 157px;
     top: 208px;
 
     cursor: pointer;
@@ -80,11 +80,9 @@ body {
     display: block;
 
     position: absolute;
-    left: 80px;
-    top: 30px;
 
-    width: 80px;
-    height: 30px;
+    width: 42px;
+    height: 42px;
 
     text-align: center;
 }
