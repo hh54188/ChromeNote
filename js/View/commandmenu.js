@@ -83,6 +83,10 @@ var CommandMenuView = (function () {
         }
     }
 
+    function eventBind() {
+        
+    }
+
     var init = function () {
         var body = document.querySelector("body");
         var world = document.createElement("div");
