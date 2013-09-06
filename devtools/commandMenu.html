@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="../css/demo/theme.css">
     <link rel="stylesheet" type="text/css" href="../css/demo/transform.css">
     <script type="text/javascript" src="../js/lib/lib.js"></script>
+    <script type="text/javascript" src="../js/View/commandmenu.js"></script>
 </head>
 <body class="theme-white">
     <div id="article">
@@ -50,7 +51,7 @@ Whenever any property changes, then it will animate instead of changing directly
 
 To see the difference in speed, have a look at the speed test.
     </div>
-    <div id="chromeNote-threeDWorld" class="chromeNote-setup-3d-perspective">
+<!--     <div id="chromeNote-threeDWorld" class="chromeNote-setup-3d-perspective">
         <div id="chromeNote-tip-note" class="chromeNote-tip chromeNote-transform-transition chromeNote-setup-3d-style chromeNote-board-arrow-left">
             <p>Write a sticky note on this page:)</p>
         </div>
@@ -78,9 +79,10 @@ To see the difference in speed, have a look at the speed test.
                 </ul>
             </div>
         </div>
-    </div>
+    </div> -->
 </body>
 <script type="text/javascript">
+    CommandMenuView.open();
     function computeAngle(elems) {
         var total = 360;
         var len = elems.length
@@ -133,45 +135,6 @@ To see the difference in speed, have a look at the speed test.
         hook.addEventListener("mouseout", function (e) {
             // e.stopPropagation();
         })
-    }
-
-    var translateZ = "20";
-    for (var i = 0; i < links.length; i++) {
-        var link = links[i];
-        link.addEventListener("mouseover", function (e) {
-
-            var target = this;
-            // var outerRotateDeg = target.getAttribute("data-rotate");
-            // var rotate = " rotate(" + outerRotateDeg + "deg) ";
-
-            // var outerSkewXDeg = target.getAttribute("data-skewX");
-            // var skewX = " skewX(" + outerSkewXDeg + "deg) ";
-
-            // var translateZ = " translateZ(30px) ";
-
-            // target.style.webkitTransform = rotate + skewX + translateZ;
-            // target.style.webkitTransform = rotate + skewX;
-
-            target = $(this);
-            // target.addClass("hover");
-
-        }, false);
-
-        link.addEventListener("mouseout", function (e) {
-
-            var target = this;
-            // var outerRotateDeg = target.getAttribute("data-rotate");
-            // var rotate = " rotate(" + outerRotateDeg + "deg) ";
-
-            // var outerSkewXDeg = target.getAttribute("data-skewX");
-            // var skewX = " skewX(" + outerSkewXDeg + "deg) ";
-
-            // var translateZ = " translateZ(0px) ";
-
-            // target.style.webkitTransform = rotate + skewX;
-            target = $(this);
-            // target.removeClass("hover");
-        }, false);
     }
 
     var worldXAngle, worldYAngle, backupX, backupY, shadow_x, shadow_y, backupSX, backupSY;
@@ -257,7 +220,7 @@ To see the difference in speed, have a look at the speed test.
     mask.animPub("open");
 
     window.addEventListener("dblclick", function () {
-        mask.animPub("open");
+        // mask.animPub("open");
     });
 
     var setting = $("#chromeNote-board-setting");
