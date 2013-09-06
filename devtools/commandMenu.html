@@ -83,150 +83,108 @@ To see the difference in speed, have a look at the speed test.
 </body>
 <script type="text/javascript">
     CommandMenuView.open();
-    function computeAngle(elems) {
-        var total = 360;
-        var len = elems.length
-        var eachAngle = total / len;
-
-        for (var i = 0; i < elems.length; i++) {
-            var el = elems[i];
-            var innerEl = el.querySelector("a");
-
-            /*
-                eachAngle - 90: 保证最上方有一条直线
-            */
-            // var outerRotateDeg = (i * eachAngle) - (eachAngle - 90); 
-            var outerRotateDeg = (i * eachAngle) + (eachAngle - 90)
-
-            var rotate = " rotate(" + outerRotateDeg + "deg) ";
-
-            var outerSkewXDeg = 90 - eachAngle;
-            var skewX = " skewX(" + outerSkewXDeg + "deg) ";
-
-            el.setAttribute("data-rotate", outerRotateDeg);
-            el.setAttribute("data-skewX", outerSkewXDeg);
-            el.style.webkitTransform += rotate + skewX;
-
-            var innerSkewXDeg = outerSkewXDeg * (-1);
-            // var innerRotateDeg = (90 - parseFloat(eachAngle) / 2) * (-1);
-            var innerRotateDeg = parseFloat(eachAngle) / 2;
 
 
-            rotate = " rotate(" + innerRotateDeg + "deg) ";
-            skewX = " skewX(" + innerSkewXDeg + "deg) ";
+    // var links = document.querySelectorAll("li");
+    // computeAngle(links);
 
-            innerEl.style.webkitTransform += skewX + rotate;
-
-            var text = innerEl.querySelector("i");
-
-            // var textRotateDeg = innerRotateDeg * (-1) - outerRotateDeg;
-            var textRotateDeg = (-1) * outerRotateDeg + (-1) * innerRotateDeg;
-            var textRotate = " rotate(" + textRotateDeg + "deg) ";
-            text.style.webkitTransform += textRotate;
-        }
-    }
-
-
-    var links = document.querySelectorAll("li");
-    computeAngle(links);
-
-    for (var i = 0; i < links.length; i++) {
-        var hook = links[i].querySelector("a");
-        hook.addEventListener("mouseout", function (e) {
-            // e.stopPropagation();
-        })
-    }
+    // for (var i = 0; i < links.length; i++) {
+    //     var hook = links[i].querySelector("a");
+    //     hook.addEventListener("mouseout", function (e) {
+    //         // e.stopPropagation();
+    //     })
+    // }
 
     var worldXAngle, worldYAngle, backupX, backupY, shadow_x, shadow_y, backupSX, backupSY;
     var disableMousemove = true;
     // var disableMousemove = false;
 
-    window.addEventListener( 'mousemove', function( e ) {
+    // window.addEventListener( 'mousemove', function( e ) {
 
-        if (disableMousemove) return false;
+    //     if (disableMousemove) return false;
 
-        var xPercent = parseFloat(300) / window.innerWidth;
-        var yPercent = parseFloat(200) / window.innerHeight;
+    //     var xPercent = parseFloat(300) / window.innerWidth;
+    //     var yPercent = parseFloat(200) / window.innerHeight;
 
-        backupX = worldXAngle, backupY = worldYAngle;
+    //     backupX = worldXAngle, backupY = worldYAngle;
 
-        worldYAngle = -( xPercent - ( e.clientX / window.innerWidth ) ) * 180;
-        worldXAngle = ( yPercent - ( e.clientY / window.innerHeight ) ) * 180;
+    //     worldYAngle = -( xPercent - ( e.clientX / window.innerWidth ) ) * 180;
+    //     worldXAngle = ( yPercent - ( e.clientY / window.innerHeight ) ) * 180;
 
-        /*计算阴影开始*/
+    //     /*计算阴影开始*/
 
-        var btn = document.querySelector("#chromeNote-cmdMenu-btn");
+    //     var btn = document.querySelector("#chromeNote-cmdMenu-btn");
 
-        backupSX = shadow_x, backupSY = shadow_y;
+    //     backupSX = shadow_x, backupSY = shadow_y;
 
-        shadow_x = (xPercent - ( e.clientX / window.innerWidth )) * 100;
-        shadow_y = (yPercent - ( e.clientY / window.innerHeight )) * 100;
+    //     shadow_x = (xPercent - ( e.clientX / window.innerWidth )) * 100;
+    //     shadow_y = (yPercent - ( e.clientY / window.innerHeight )) * 100;
 
-        if (Math.abs(shadow_x) > 5) shadow_x = backupSX;
-        if (Math.abs(shadow_y) > 5) shadow_y = backupSY;
+    //     if (Math.abs(shadow_x) > 5) shadow_x = backupSX;
+    //     if (Math.abs(shadow_y) > 5) shadow_y = backupSY;
 
-        btn.style.boxShadow = shadow_x + "px " + shadow_y + "px 10px rgba(0,0,0,0.3)";
+    //     btn.style.boxShadow = shadow_x + "px " + shadow_y + "px 10px rgba(0,0,0,0.3)";
 
-        /*计算阴影结束*/
+    //     /*计算阴影结束*/
 
-        if (Math.abs(worldXAngle) >= 8) worldXAngle = backupX;
-        if (Math.abs(worldYAngle) >= 8) worldYAngle = backupY;
+    //     if (Math.abs(worldXAngle) >= 8) worldXAngle = backupX;
+    //     if (Math.abs(worldYAngle) >= 8) worldYAngle = backupY;
 
-        var world = document.querySelector("#chromeNote-cmdMenu-wrap");
-        var outer = document.querySelector("#chromeNote-cmdMenu-mask");
+    //     var world = document.querySelector("#chromeNote-cmdMenu-wrap");
+    //     var outer = document.querySelector("#chromeNote-cmdMenu-mask");
 
-        world.style.webkitTransform = 'translateZ(0px ) \
-        rotateX( ' + worldXAngle * (-1) + 'deg) \
-        rotateY( ' + worldYAngle * (-1) + 'deg)';
+    //     world.style.webkitTransform = 'translateZ(0px ) \
+    //     rotateX( ' + worldXAngle * (-1) + 'deg) \
+    //     rotateY( ' + worldYAngle * (-1) + 'deg)';
 
-        outer.style.webkitTransform = 'translateZ(0px ) \
-        rotateX( ' + worldXAngle * (-1) + 'deg) \
-        rotateY( ' + worldYAngle * (-1) + 'deg)';
-    } );
+    //     outer.style.webkitTransform = 'translateZ(0px ) \
+    //     rotateX( ' + worldXAngle * (-1) + 'deg) \
+    //     rotateY( ' + worldYAngle * (-1) + 'deg)';
+    // } );
     
-    var mask = $("#chromeNote-cmdMenu-mask");
-    mask.animSub({
-        open:[
-            {
-                elem: mask,
-                beforeAnimate: function () {
-                    mask.removeClass("chromeNote-hide");
-                    mask.removeClass("chromeNote-transform-scale-point1");
+    // var mask = $("#chromeNote-cmdMenu-mask");
+    // mask.animSub({
+    //     open:[
+    //         {
+    //             elem: mask,
+    //             beforeAnimate: function () {
+    //                 mask.removeClass("chromeNote-hide");
+    //                 mask.removeClass("chromeNote-transform-scale-point1");
                     
-                    mask.removeClass("animateScaleDown");
-                    mask.removeClass("scaleDown");
-                },
-                animateClass: "animateScaleUp", 
-                endStatusClass: "scaleUp"
-            }
-        ],
-        close: [
-            {
-                elem: mask,
-                beforeAnimate: function () {
-                    mask.removeClass("animateScaleUp");
-                    mask.removeClass("scaleUp");
-                },
-                animateClass: "animateScaleDown",
-                endStatusClass: "scaleDown",
-                afterAnimate: function () {
-                    mask.addClass("chromeNote-hide");
-                    mask.addClass("chromeNote-transform-scale-point1");
-                }
-            }
-        ]
-    });
+    //                 mask.removeClass("animateScaleDown");
+    //                 mask.removeClass("scaleDown");
+    //             },
+    //             animateClass: "animateScaleUp", 
+    //             endStatusClass: "scaleUp"
+    //         }
+    //     ],
+    //     close: [
+    //         {
+    //             elem: mask,
+    //             beforeAnimate: function () {
+    //                 mask.removeClass("animateScaleUp");
+    //                 mask.removeClass("scaleUp");
+    //             },
+    //             animateClass: "animateScaleDown",
+    //             endStatusClass: "scaleDown",
+    //             afterAnimate: function () {
+    //                 mask.addClass("chromeNote-hide");
+    //                 mask.addClass("chromeNote-transform-scale-point1");
+    //             }
+    //         }
+    //     ]
+    // });
 
-    mask.animPub("open");
+    // mask.animPub("open");
 
-    window.addEventListener("dblclick", function () {
-        // mask.animPub("open");
-    });
+    // window.addEventListener("dblclick", function () {
+    //     mask.animPub("open");
+    // });
 
-    var setting = $("#chromeNote-board-setting");
-    setting.on("click", function () {
-        log("click board");
-    })
+    // var setting = $("#chromeNote-board-setting");
+    // setting.on("click", function () {
+    //     log("click board");
+    // })
 
     // window.addEventListener("click", function () {
     //     mask.animPub("close");

@@ -156,11 +156,17 @@ var $ = (function () {
                 subscrile:
                 
                 elem: "",
-                beforeAnimate: fn // 执行前要干的事情 函数
-                animateClass: "", // 执行的动画样式
-                startStatusClass: ""// 动画执行之前需要添加的样式
-                endStatusClass: "" // 动画结束之后添加的样式
-                afterAnimate: fn // 执行完成时的事情 函数
+                before: {
+                    removedClass: [],
+                    addedClass: [],
+                    callback: fn
+                },
+                animateClass: "",
+                after: {
+                    removedClass: [],
+                    addedClass: [],
+                    callback: fn
+                }
             */
 
             var el = this.el;
@@ -170,41 +176,40 @@ var $ = (function () {
             data.animate = topics;
         },
         _execAnim: function (step) {
+            var execInnerStep = function (phase) {
+                if (phase.removedClass && phase.removedClass.length) {
+                    phase.removedClass.forEach(function (cls) {
+                        el.removeClass(cls);
+                    })
+                }
+
+                if (phase.addedClass && phase.addedClass.length) {
+                    phase.addedClass.forEach(function (cls) {
+                        el.addClass(cls);
+                    })
+                }
+
+                if (phase.callback) {
+                    phase.callback.call(el);
+                }
+            }
+
             var el = step.elem,
-                beforeCallBack = step.beforeAnimate,
+                before = step.before,
                 animateClass = step.animateClass,
-                startStatusClass = step.startStatusClass,
-                endStatusClass = step.endStatusClass,
-                afterCallBack = step.afterAnimate;
+                after =  step.after;
+
+            // if (before)
+            execInnerStep(before);
 
             el.off("webkitAnimationStart");
             el.off("webkitAnimationEnd");
 
-            if (beforeCallBack) {
-                beforeCallBack.call(el);
-            }
-
-            if (startStatusClass) {
-                el.addClass(startStatusClass);
-            }
-
-
-            el.on("webkitAnimationStart", function (e) {});
-
             el.on("webkitAnimationEnd", function (e) {
-
-                if (endStatusClass) {
-                    el.addClass(endStatusClass);
-                }
-
-                if (afterCallBack) {
-                    afterCallBack.call(el);
-                }
-
+                execInnerStep(after);
             });
 
-            el.addClass(animateClass);
-
+            if (animateClass) el.addClass(animateClass);
         },
         animPub: function (topic) {
             var el = this.el;

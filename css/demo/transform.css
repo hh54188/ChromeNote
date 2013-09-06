@@ -18,6 +18,10 @@
     -webkit-transform: scale(0.1);
 }
 
+.chromeNote-transform-scale-one {
+    -webkit-transform: scale(1);
+}
+
 .chromeNote-transform-transition {
     -webkit-transition: all 0.3s linear;
 }
@@ -58,10 +62,6 @@
     }
 }
 
-.scaleUp {
-    -webkit-transform: scale(1);            
-}
-
 .animateScaleDown {
     -webkit-animation-name: scaleDown;
     -webkit-animation-duration: 0.3s;
@@ -79,8 +79,4 @@
     to {
       -webkit-transform: scale(0.1);
     }
-}
-
-.scaleDown {
-    -webkit-transform: scale(0.1);
 }

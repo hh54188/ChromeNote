@@ -3,7 +3,7 @@ var CommandMenuView = (function () {
         '<div id="chromeNote-tip-note" class="chromeNote-tip chromeNote-transform-transition chromeNote-setup-3d-style chromeNote-board-arrow-left chromeNote-hide">',
             '<p>Write a sticky note on this page:)</p>',
         '</div>',
-        '<div id="chromeNote-tip-mark" class="chromeNote-tip chromeNote-transform-transition chromeNote-setup-3d-style chromeNote-board-arrow-left chromeNote-hide">',
+        '<div id="chromeNote-tip-mark" class="chromeNote-tip chromeNote-transform-transition chromeNote-setup-3d-style chromeNote-board-arrow-left  chromeNote-hide">',
             '<p>Mark where I have read on this page:)</p>',
         '</div>',
         '<div id="chromeNote-cmdMenu-mask" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-scale-point1">',
@@ -51,7 +51,6 @@ var CommandMenuView = (function () {
         for (var i = 0; i < elems.length; i++) {
             var el = elems[i];
             var innerEl = el.querySelector(".chromeNote-cmdMenu-menuItem-innerWrap");
-
             /*
                 eachAngle - 90: 保证工整
             */
@@ -75,7 +74,7 @@ var CommandMenuView = (function () {
 
             innerEl.style.webkitTransform += skewX + rotate;
 
-            var text = innerEl.querySelector("chromeNote-cmdMenu-menuItem-text");
+            var text = innerEl.querySelector(".chromeNote-cmdMenu-menuItem-text");
 
             var textRotateDeg = (-1) * outerRotateDeg + (-1) * innerRotateDeg;
             var textRotate = " rotate(" + textRotateDeg + "deg) ";
@@ -98,7 +97,7 @@ var CommandMenuView = (function () {
         body.className += " theme-white ";
         body.appendChild(world);
 
-        initAngle(document.querySelectorAll("chromeNote-cmdMenu-menuItem-outerWrap"));
+        initAngle(document.querySelectorAll(".chromeNote-cmdMenu-menuItem-outerWrap"));
 
         doms = {
             world: $(world),
@@ -114,7 +113,29 @@ var CommandMenuView = (function () {
                 mark: $("#chromeNote-tip-mark")
             }
         };
-        log(doms);
+
+        
+        doms.widget.wrap.animSub({
+            open: [
+                {
+                    elem: doms.world,
+                    before: {
+                        removedClass: ["chromeNote-hide"],
+                    }
+                },
+                {
+                    elem: doms.widget.wrap,
+                    // before: {
+                    //     removedClass: ["chromeNote-transform-scale-point1"],
+                    // },
+                    animateClass: "animateScaleUp",
+                    after: {
+                        addedClass: ["chromeNote-transform-scale-one"]
+                    }
+                }
+            ],
+            close: []
+        })
 
         initialize = true;
     };
@@ -122,6 +143,7 @@ var CommandMenuView = (function () {
     var open = function (pos) {
         // 单例模式
         if (!initialize) init();
+        doms.widget.wrap.animPub("open");
     };
 
     var close = function () {
