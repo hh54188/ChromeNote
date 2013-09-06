@@ -19,12 +19,25 @@
 }
 
 .chromeNote-transform-transition {
-    -webkit-transition: all 0.1s linear;
+    -webkit-transition: all 0.3s linear;
 }
 
 .chromeNote-transform-origin-x72y21 {
-    -webkit-transform-origin: 72px 21px
+    -webkit-transform-origin: 72px 21px;
 }
+
+.chromeNote-transform-origin-x0y50 {
+    -webkit-transform-origin: left 50%;   
+}
+
+.chromeNote-transform-rotateY-90deg {
+    -webkit-transform: rotateY(90deg);
+}
+
+.chromeNote-transform-rotateY-0deg {
+    -webkit-transform: rotateY(0deg);
+}
+
 
 .animateScaleUp {
     -webkit-animation-name: scaleUp;

@@ -1,7 +1,12 @@
+body.theme-white {
+    color: #3E3F41;
+}
+
 .theme-white #chromeNote-cmdMenu-btn {
     background: white;
     border: 1px solid #c4c4c4;
     cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
 .theme-white .chromeNote-cmdMenu-menuItem-outerWrap {
@@ -9,7 +14,7 @@
 }
 
 .theme-white .chromeNote-cmdMenu-menuItem-innerWrap {
-    color: #89939C;
+    color: #3E3F41;
     background: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
     border: 1px solid #c4c4c4;

@@ -51,6 +51,9 @@ Whenever any property changes, then it will animate instead of changing directly
 To see the difference in speed, have a look at the speed test.
     </div>
     <div id="chromeNote-threeDWorld" class="chromeNote-setup-3d-perspective">
+        <div id="chromeNote-tip-note" class="chromeNote-tip chromeNote-transform-transition chromeNote-setup-3d-style chromeNote-board-arrow-left">
+            <p>Write a sticky note on this page:)</p>
+        </div>
         <div id="chromeNote-cmdMenu-mask" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-scale-point1 chromeNote-hide">
             <div id="chromeNote-cmdMenu-wrap" class="chromeNote-decorate-circle chromeNote-setup-3d-style">
                 <div id="chromeNote-cmdMenu-btn" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-translateZ">
@@ -58,20 +61,20 @@ To see the difference in speed, have a look at the speed test.
                 </div>
                 <ul>
                     <li class="chromeNote-cmdMenu-menuItem-outerWrap chromeNote-setup-3d-style chromeNote-transform-origin-100and100 chromeNote-transform-transition">
-                        <a class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-x72y21" href="javascript:void(0)">
+                        <a id="chromeNote-cmdMenu-menuItem-write" class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-x72y21" href="javascript:void(0)">
                             <i class="chromeNote-cmdMenu-menuItem-text icon-pencil"></i>
                         </a>
                     </li>
                     <li class="chromeNote-cmdMenu-menuItem-outerWrap chromeNote-setup-3d-style chromeNote-transform-origin-100and100 chromeNote-transform-transition">
-                        <a class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-x72y21" href="javascript:void(0)">
-                            <i class="chromeNote-cmdMenu-menuItem-text icon-pencil"></i>
+                        <a id="chromeNote-cmdMenu-menuItem-setting" class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-x72y21" href="javascript:void(0)">
+                            <i class="chromeNote-cmdMenu-menuItem-text icon-gear"></i>
                         </a>
                     </li>
                     <li class="chromeNote-cmdMenu-menuItem-outerWrap chromeNote-setup-3d-style chromeNote-transform-origin-100and100 chromeNote-transform-transition">
-                        <a class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-x72y21" href="javascript:void(0)">
-                            <i class="chromeNote-cmdMenu-menuItem-text icon-off"></i>
+                        <a id="chromeNote-cmdMenu-menuItem-mark" class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-x72y21" href="javascript:void(0)">
+                            <i class="chromeNote-cmdMenu-menuItem-text icon-bookmark"></i>
                         </a>
-                    </li>                                        
+                    </li>                    
                 </ul>
             </div>
         </div>
@@ -176,10 +179,11 @@ To see the difference in speed, have a look at the speed test.
     // var disableMousemove = false;
 
     window.addEventListener( 'mousemove', function( e ) {
+
         if (disableMousemove) return false;
 
-        var xPercent = parseFloat(353) / window.innerWidth;
-        var yPercent = parseFloat(252) / window.innerHeight;
+        var xPercent = parseFloat(300) / window.innerWidth;
+        var yPercent = parseFloat(200) / window.innerHeight;
 
         backupX = worldXAngle, backupY = worldYAngle;
 
@@ -202,8 +206,8 @@ To see the difference in speed, have a look at the speed test.
 
         /*计算阴影结束*/
 
-        if (Math.abs(worldXAngle) >= 10) worldXAngle = backupX;
-        if (Math.abs(worldYAngle) >= 10) worldYAngle = backupY;
+        if (Math.abs(worldXAngle) >= 8) worldXAngle = backupX;
+        if (Math.abs(worldYAngle) >= 8) worldYAngle = backupY;
 
         var world = document.querySelector("#chromeNote-cmdMenu-wrap");
         var outer = document.querySelector("#chromeNote-cmdMenu-mask");
@@ -254,10 +258,17 @@ To see the difference in speed, have a look at the speed test.
 
     window.addEventListener("dblclick", function () {
         mask.animPub("open");
+    });
+
+    var setting = $("#chromeNote-board-setting");
+    setting.on("click", function () {
+        log("click board");
     })
 
-    window.addEventListener("click", function () {
-        mask.animPub("close");
-    })
+    // window.addEventListener("click", function () {
+    //     mask.animPub("close");
+    // })
+
+    
 </script>
 </html>
