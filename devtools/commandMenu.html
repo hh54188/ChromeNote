@@ -84,6 +84,10 @@ To see the difference in speed, have a look at the speed test.
 <script type="text/javascript">
     CommandMenuView.open();
 
+    document.addEventListener("click", function () {
+        CommandMenuView.close();
+    }, false);
+
 
     // var links = document.querySelectorAll("li");
     // computeAngle(links);
@@ -95,8 +99,8 @@ To see the difference in speed, have a look at the speed test.
     //     })
     // }
 
-    var worldXAngle, worldYAngle, backupX, backupY, shadow_x, shadow_y, backupSX, backupSY;
-    var disableMousemove = true;
+    // var worldXAngle, worldYAngle, backupX, backupY, shadow_x, shadow_y, backupSX, backupSY;
+    // var disableMousemove = true;
     // var disableMousemove = false;
 
     // window.addEventListener( 'mousemove', function( e ) {

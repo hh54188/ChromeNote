@@ -83,7 +83,13 @@ var CommandMenuView = (function () {
     }
 
     function eventBind() {
-        
+        doms.menuItems.on("mouseover", function () {
+            // log("mouseover");
+        });
+
+        doms.menuItems.on("mouseout", function () {
+           // log("mouseout"); 
+        })
     }
 
     var init = function () {
@@ -102,6 +108,7 @@ var CommandMenuView = (function () {
         doms = {
             world: $(world),
             body: $(body),
+            menuItems: $(".chromeNote-cmdMenu-menuItem-outerWrap"),
             widget: {
                 wrap: $("#chromeNote-cmdMenu-mask"),
                 btnSetting: $("#chromeNote-cmdMenu-note"),
@@ -114,6 +121,7 @@ var CommandMenuView = (function () {
             }
         };
 
+        eventBind();
         
         doms.widget.wrap.animSub({
             open: [
@@ -125,33 +133,55 @@ var CommandMenuView = (function () {
                 },
                 {
                     elem: doms.widget.wrap,
-                    // before: {
-                    //     removedClass: ["chromeNote-transform-scale-point1"],
-                    // },
+                    before: {
+                        removedClass: ["chromeNote-transform-scale-point1"],
+                    },
                     animateClass: "animateScaleUp",
                     after: {
                         addedClass: ["chromeNote-transform-scale-one"]
                     }
                 }
             ],
-            close: []
+            close: [
+                {
+                    elem: doms.widget.wrap,
+                    before: {
+                        removedClass: ["chromeNote-transform-scale-one"]
+                    },
+                    animateClass: "animateScaleDown",
+                    after: {
+                        removedClass: ["chromeNote-transform-scale-point1"],
+                        callback: function () {
+                            doms.world.addClass("chromeNote-hide");
+                        }
+                    }
+                }
+            ]
         })
 
         initialize = true;
     };
 
     var open = function (pos) {
+        isOpen = true;
         // 单例模式
         if (!initialize) init();
         doms.widget.wrap.animPub("open");
     };
 
     var close = function () {
-
+        if (!isOpen) return;
+        isOpen = false;
+        doms.widget.wrap.animPub("close");
     };
+
+    var getData = function () {
+        return doms.widget.wrap.getData();
+    }
 
     return {
         open: open,
-        close: close
+        close: close,
+        getData: getData
     };
 })();

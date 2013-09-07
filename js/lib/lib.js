@@ -59,13 +59,13 @@ var $ = (function () {
             }
         }
     }
+    var fn_uuid = 0, el_uuid = 0;
 
     function _$(el) {
         for (var i = 0; i < el.length; i++) {
             this[i] = el[i];
         }
         this.el = el;
-        this.fn_uuid = 0;
     }
 
     // event handler manage
@@ -77,7 +77,7 @@ var $ = (function () {
             var uuid = el[expando];
 
             if (!uuid) {
-                uuid = el[expando] = +new Date();
+                uuid = el[expando] = ++el_uuid;
                 cache[uuid] = {};
             }
 
@@ -102,7 +102,8 @@ var $ = (function () {
 
         return {
             getData: getData,
-            removeData: removeData
+            removeData: removeData,
+            cache: cache
         }
 
     })();
@@ -152,28 +153,18 @@ var $ = (function () {
 
         animSub: function (topics) {
 
-            /*
-                subscrile:
-                
-                elem: "",
-                before: {
-                    removedClass: [],
-                    addedClass: [],
-                    callback: fn
-                },
-                animateClass: "",
-                after: {
-                    removedClass: [],
-                    addedClass: [],
-                    callback: fn
-                }
-            */
-
             var el = this.el;
+            // log(el);
             var data = _e.getData(el);
             if (!data.animate) data.animate = {};
 
             data.animate = topics;
+            // log(_e.cache);
+        },
+        getData: function () {
+            var el = this.el;
+            log(_e.cache);
+            return _e.getData(el);
         },
         _execAnim: function (step) {
             var execInnerStep = function (phase) {
@@ -199,14 +190,17 @@ var $ = (function () {
                 animateClass = step.animateClass,
                 after =  step.after;
 
-            // if (before)
-            execInnerStep(before);
+            if (!Helper.isEmptyObject(before)) {
+                execInnerStep(before);
+            }
 
             el.off("webkitAnimationStart");
             el.off("webkitAnimationEnd");
 
             el.on("webkitAnimationEnd", function (e) {
-                execInnerStep(after);
+                if (!Helper.isEmptyObject(after)) {
+                    execInnerStep(after);
+                }
             });
 
             if (animateClass) el.addClass(animateClass);
@@ -215,7 +209,6 @@ var $ = (function () {
             var el = this.el;
             var data = _e.getData(el);
             var _this = this;
-
             if (!data || !data.animate) return;
             var queue = data.animate[topic];
             queue.forEach(function (step, index) {
@@ -233,7 +226,7 @@ var $ = (function () {
             if (!data.handlers) data.handlers = {};
             if (!data.handlers[eventType]) data.handlers[eventType] = [];
 
-            if (!fn.uuid) fn.uuid = ++this.fn_uuid;
+            if (!fn.uuid) fn.uuid = ++fn_uuid;
             data.handlers[eventType].push(fn);
 
             if (!data.dispatcher){
