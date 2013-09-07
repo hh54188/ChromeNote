@@ -121,6 +121,8 @@ var CommandMenuView = (function () {
             }
         };
 
+        log($(".chromeNote-cmdMenu-menuItem-outerWrap"));
+
         eventBind();
         
         doms.widget.wrap.animSub({

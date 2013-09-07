@@ -66,6 +66,7 @@ var $ = (function () {
             this[i] = el[i];
         }
         this.el = el;
+        this.length = el.length;
     }
 
     // event handler manage
