@@ -11,7 +11,7 @@
 }
 
 .chromeNote-transform-translateZ {
-    -webkit-transform: translateZ(25px);
+    -webkit-transform: translateZ(1px);
 }
 
 .chromeNote-transform-scale-point1 {

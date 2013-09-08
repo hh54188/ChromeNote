@@ -20,9 +20,9 @@ var CommandMenuView = (function () {
                 '<strong class="chromeNote-board-item">Follow Mousemove</strong>',
             '</p>',            
         '</div>',
-        '<div id="chromeNote-cmdMenu-mask" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-scale-point1">',
+        '<div id="chromeNote-cmdMenu-mask" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-scale-point1 chromeNote-transform-transition">',
             '<div id="chromeNote-cmdMenu-wrap" class="chromeNote-decorate-circle chromeNote-setup-3d-style">',
-                '<div id="chromeNote-cmdMenu-btnClose" class="chromeNote-decorate-circle chromeNote-setup-3d-style">',
+                '<div id="chromeNote-cmdMenu-btnClose" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-translateZ">',
                     '<i class="chromeNote-cmdMenu-menuItem-text icon-off"></i>',
                 '</div>',
                 '<ul>',
@@ -157,6 +157,12 @@ var CommandMenuView = (function () {
                         removedClass: ["chromeNote-board-setting-hide"],
                         addedClass: ["chromeNote-board-setting-show"]
                     }
+                },
+                {
+                    elem: doms.widget.wrap,
+                    before: {
+                        addedClass: ["chromeNote-blur"]
+                    }
                 }
             ],
             close: [
@@ -166,7 +172,13 @@ var CommandMenuView = (function () {
                         removedClass: ["chromeNote-board-setting-show"],
                         addedClass: ["chromeNote-board-setting-hide"]
                     }
-                }            
+                },
+                {
+                    elem: doms.widget.wrap,
+                    before: {
+                        removedClass: ["chromeNote-blur"]
+                    }
+                }
             ]
         })
         

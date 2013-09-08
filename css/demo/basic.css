@@ -10,6 +10,11 @@ a {
 select {
     background: white;
 }
+
+.chromeNote-blur {
+    -webkit-filter: blur(2px);
+}
+
 #chromeNote-threeDWorld {
     position: fixed;
     left: 175px;
@@ -174,6 +179,8 @@ select {
     top: 104px;
 
     color: #3E3F41;
+
+    z-index: 999;
 }
 
 .chromeNote-cmdMenu-menuItem-outerWrap {
