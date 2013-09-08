@@ -3,12 +3,26 @@ var CommandMenuView = (function () {
         '<div id="chromeNote-tip-note" class="chromeNote-tip chromeNote-transform-transition chromeNote-setup-3d-style chromeNote-board-arrow-left chromeNote-hide">',
             '<p>Write a sticky note on this page:)</p>',
         '</div>',
-        '<div id="chromeNote-tip-mark" class="chromeNote-tip chromeNote-transform-transition chromeNote-setup-3d-style chromeNote-board-arrow-left  chromeNote-hide">',
+        '<div id="chromeNote-tip-mark" class="chromeNote-tip chromeNote-transform-transition chromeNote-setup-3d-style chromeNote-board-arrow-left chromeNote-hide">',
             '<p>Mark where I have read on this page:)</p>',
+        '</div>',
+        '<div id="chromeNote-board-setting" class="chromeNote-board chromeNote-transform-transition-point8-easeOutQuint chromeNote-setup-3d-style chromeNote-board-setting-hide">',
+            '<i id="chromeNote-board-btn-close" class="icon-remove"></i>',
+            '<p class="chromeNote-board-row chromeNote-transform-transition">',
+                '<strong class="chromeNote-board-item">Theme:</strong>',
+                '<select class="chromeNote-board-item">',
+                    '<option>White</option>',
+                    '<option>Black</option>',
+                '</select>',
+            '</p>',
+            '<p class="chromeNote-board-row chromeNote-transform-transition">',
+                '<input type="checkbox" class="chromeNote-board-item">',            
+                '<strong class="chromeNote-board-item">Follow Mousemove</strong>',
+            '</p>',            
         '</div>',
         '<div id="chromeNote-cmdMenu-mask" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-scale-point1">',
             '<div id="chromeNote-cmdMenu-wrap" class="chromeNote-decorate-circle chromeNote-setup-3d-style">',
-                '<div id="chromeNote-cmdMenu-btn" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-translateZ">',
+                '<div id="chromeNote-cmdMenu-btnClose" class="chromeNote-decorate-circle chromeNote-setup-3d-style">',
                     '<i class="chromeNote-cmdMenu-menuItem-text icon-off"></i>',
                 '</div>',
                 '<ul>',
@@ -83,13 +97,19 @@ var CommandMenuView = (function () {
     }
 
     function eventBind() {
-        doms.menuItems.on("mouseover", function () {
-            // log("mouseover");
+        doms.widget.btnSetting.on("click", function () {
+            doms.setting.board.animPub("open");
         });
 
-        doms.menuItems.on("mouseout", function () {
-           // log("mouseout"); 
+        doms.setting.btnClose.on("click", function () {
+            doms.setting.board.animPub("close");  
+        });
+
+        doms.widget.btnClose.on("click", function () {
+            doms.widget.wrap.animPub("close");
         })
+
+        // doms.widget.
     }
 
     var init = function () {
@@ -111,9 +131,14 @@ var CommandMenuView = (function () {
             menuItems: $(".chromeNote-cmdMenu-menuItem-outerWrap"),
             widget: {
                 wrap: $("#chromeNote-cmdMenu-mask"),
-                btnSetting: $("#chromeNote-cmdMenu-note"),
-                btnNote: $("#chromeNote-cmdMenu-mask"),
-                btnMark: $("#chromeNote-cmdMenu-setting")
+                btnSetting: $("#chromeNote-cmdMenu-menuItem-setting"),
+                btnNote: $("#chromeNote-cmdMenu-menuItem-note"),
+                btnMark: $("#chromeNote-cmdMenu-menuItem-mark"),
+                btnClose: $("#chromeNote-cmdMenu-btnClose"),
+            },
+            setting: {
+                board: $("#chromeNote-board-setting"),
+                btnClose: $("#chromeNote-board-btn-close")
             },
             tips: {
                 note: $("#chromeNote-tip-note"),
@@ -121,9 +146,29 @@ var CommandMenuView = (function () {
             }
         };
 
-        log($(".chromeNote-cmdMenu-menuItem-outerWrap"));
 
         eventBind();
+
+        doms.setting.board.animSub({
+            open: [
+                {
+                    elem: doms.setting.board,
+                    before: {
+                        removedClass: ["chromeNote-board-setting-hide"],
+                        addedClass: ["chromeNote-board-setting-show"]
+                    }
+                }
+            ],
+            close: [
+                {
+                    elem: doms.setting.board,
+                    before: {
+                        removedClass: ["chromeNote-board-setting-show"],
+                        addedClass: ["chromeNote-board-setting-hide"]
+                    }
+                }            
+            ]
+        })
         
         doms.widget.wrap.animSub({
             open: [

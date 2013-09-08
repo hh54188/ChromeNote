@@ -2,15 +2,20 @@ body.theme-white {
     color: #3E3F41;
 }
 
-.theme-white #chromeNote-cmdMenu-btn {
+.theme-white #chromeNote-cmdMenu-btnClose {
     background: white;
     border: 1px solid #c4c4c4;
     cursor: pointer;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
-.theme-white .chromeNote-cmdMenu-menuItem-outerWrap {
-    
+.theme-white .chromeNote-board {
+    background: #404143;
+    color: #C1CCD0;
+}
+
+.theme-white .chromeNote-board-row {
+
 }
 
 .theme-white .chromeNote-cmdMenu-menuItem-innerWrap {
@@ -20,7 +25,7 @@ body.theme-white {
     border: 1px solid #c4c4c4;
 }
 
-.theme-white #chromeNote-cmdMenu-btn:hover,
+.theme-white #chromeNote-cmdMenu-btnClose:hover,
 .theme-white .chromeNote-cmdMenu-menuItem-innerWrap:hover {
     background-color:#26BCF1;
     color: white;

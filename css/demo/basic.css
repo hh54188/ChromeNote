@@ -7,7 +7,9 @@ body {
 a {
     text-decoration: none;
 }
-
+select {
+    background: white;
+}
 #chromeNote-threeDWorld {
     position: fixed;
     left: 175px;
@@ -19,15 +21,47 @@ a {
     /*hack*/
     /*-webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);    */
 }
-
-.chromeNote-tip {
+.chromeNote-board {
     width: 200px;
-    height: 18px;
-    background: #404143;
+    height: 60px;
 
     position: absolute;
-    left: 165px;
-    top: 25px;
+    left: 25px;
+    top: 65px;
+
+    font-size: 12px;
+    padding: 10px;
+
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    z-index: 9999;
+}
+
+#chromeNote-board-btn-close {   
+    width: 15px;
+    height: 15px;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    text-align: center;
+    cursor: pointer;
+}
+
+.chromeNote-board-row {
+    height: 20px;
+    padding: 5px;
+    line-height: 20px;
+}
+
+.chromeNote-board-item {
+    margin: 0 5px;
+}
+
+.chromeNote-tip {
+    background: #404143;
+    height: 18px;
+    position: absolute;
 
     font-size: 13px;
     color: #C1CCD0;
@@ -37,6 +71,18 @@ a {
     z-index: 999;
 
     box-shadow: 0 0 10px rgba(0,0,0,0.3);    
+}
+
+#chromeNote-tip-mark {
+    left: 100px;
+    top: 140px;
+    width: 220px;
+}
+
+#chromeNote-tip-note {
+    left: 165px;
+    top: 25px;
+    width: 200px;
 }
 
 .chromeNote-board-arrow-right:after {
@@ -119,7 +165,7 @@ a {
     height: 250px;
 }
 
-#chromeNote-cmdMenu-btn {
+#chromeNote-cmdMenu-btnClose {
     width: 42px;
     height: 42px;
 
@@ -128,8 +174,6 @@ a {
     top: 104px;
 
     color: #3E3F41;
-
-    z-index: 999;
 }
 
 .chromeNote-cmdMenu-menuItem-outerWrap {
