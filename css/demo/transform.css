@@ -30,8 +30,9 @@
     -webkit-transition: all 0.8s cubic-bezier(0.230, 1.000, 0.320, 1.000);
 }
 
-.chromeNote-transform-origin-x72y21 {
-    -webkit-transform-origin: 72px 21px;
+.chromeNote-transform-origin-x67y21 {
+    /*-webkit-transform-origin: 72px 21px;*/
+    -webkit-transform-origin: 67px 21px;
 }
 
 .chromeNote-transform-origin-x0y50 {

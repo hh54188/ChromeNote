@@ -195,14 +195,15 @@ select {
     overflow: hidden;
     cursor: pointer;
 }
-
+/*修改innerWrap的间距*/
 .chromeNote-cmdMenu-menuItem-innerWrap {
     display: block;
     width: 42px;
     height: 42px;
 
     position: absolute;
-    left: 157px;
+    /*left: 157px;*/
+    left: 162px;
     top: 208px;
 
     cursor: pointer;
