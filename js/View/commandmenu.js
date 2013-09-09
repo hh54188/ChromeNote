@@ -106,7 +106,7 @@ var CommandMenuView = (function () {
         });
 
         doms.widget.btnClose.on("click", function () {
-            doms.widget.wrap.animPub("close");
+            close();
         })
 
         // doms.widget.
@@ -116,7 +116,7 @@ var CommandMenuView = (function () {
         var body = document.querySelector("body");
         var world = document.createElement("div");
 
-        world.className = ["chromeNote-setup-3d-perspective", "chromeNote-transform-transition", "chromeNote-hide"].join(" ");
+        world.className = ["chromeNote-setup-3d-perspective", "chromeNote-transform-transition-point8-easeOutQuint", "chromeNote-hide"].join(" ");
         world.setAttribute("id", "chromeNote-threeDWorld");
         world.innerHTML = tpl;
 
@@ -193,7 +193,7 @@ var CommandMenuView = (function () {
                 {
                     elem: doms.widget.wrap,
                     before: {
-                        removedClass: ["chromeNote-transform-scale-point1"],
+                        removedClass: ["chromeNote-transform-scale-point1", "animateScaleDown"],
                     },
                     animateClass: "animateScaleUp",
                     after: {
@@ -205,34 +205,48 @@ var CommandMenuView = (function () {
                 {
                     elem: doms.widget.wrap,
                     before: {
-                        removedClass: ["chromeNote-transform-scale-one"]
+                        removedClass: ["chromeNote-transform-scale-one", "animateScaleUp"]
                     },
                     animateClass: "animateScaleDown",
                     after: {
-                        removedClass: ["chromeNote-transform-scale-point1"],
+                        addedClass: ["chromeNote-transform-scale-point1"],
                         callback: function () {
                             doms.world.addClass("chromeNote-hide");
                         }
                     }
-                }
+                },
             ]
         })
 
         initialize = true;
     };
 
-    var open = function (pos) {
-        isOpen = true;
+    var open = function (event) {
         // 单例模式
         if (!initialize) init();
+        var pos = doms.world.getAppropriatePos({
+            top: event.clientY,
+            left: event.clientX
+        })
+
+        setPos(pos);
+
+        if (isOpen) return;
+
+        isOpen = true;
+
         doms.widget.wrap.animPub("open");
     };
 
-    var close = function () {
-        if (!isOpen) return;
+    var close = function (pos) {
         isOpen = false;
         doms.widget.wrap.animPub("close");
     };
+
+    var setPos = function (pos) {
+        doms.world[0].style.top = pos[0] + "px";
+        doms.world[0].style.left = pos[1] + "px";
+    }
 
     var getData = function () {
         return doms.widget.wrap.getData();

@@ -82,9 +82,11 @@ To see the difference in speed, have a look at the speed test.
     </div> -->
 </body>
 <script type="text/javascript">
-    CommandMenuView.open();
+    
 
-    // CommandMenuView.close();
+    document.addEventListener("dblclick", function (e) {
+        CommandMenuView.open(e);
+    })
 
 
     // var links = document.querySelectorAll("li");

@@ -41,6 +41,18 @@ var $ = (function () {
             button: 0,
             timeStamp: -1
         },
+        // http://www.quirksmode.org/js/findpos.html
+        findOffset: function (obj) {
+            var curleft = curtop = 0;
+            if (obj.offsetParent) {
+                do {
+                    curleft += obj.offsetLeft;
+                    curtop += obj.offsetTop;
+                } while (obj = obj.offsetParent);
+
+                return [curleft, curtop];
+            }
+        },
         handlerChromeMousebug: function (e) {
             var _this = this;
             
@@ -111,7 +123,20 @@ var $ = (function () {
 
     _$.prototype = {
         constructor: this,
+        getAppropriatePos: function (clientPos) {
+            var el = this[0];
+            var el_width = parseInt(window.getComputedStyle(el).getPropertyValue("width")),
+                el_height = parseInt(window.getComputedStyle(el).getPropertyValue("height"));
 
+            var top = clientPos.top - el_height / 2 >= 0? clientPos.top - el_height / 2: 0,
+                left = clientPos.left - el_width / 2 >= 0? clientPos.left - el_width / 2: 0;
+
+            top = clientPos.top + el_height / 2 <= window.innerHeight? top: window.innerHeight - el_height + 36,
+            left = clientPos.left + el_width / 2 <= window.innerWidth? left: window.innerWidth - el_width;
+
+            return [top, left];
+
+        },
         getTargetId: function () {
             var el = this[0];
             var id = el.getAttribute("data-note-uuid");
