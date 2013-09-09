@@ -192,7 +192,7 @@ select {
     left: -125px;
     top: -125px;
 
-    overflow: hidden;
+    /*overflow: hidden;*/
     cursor: pointer;
 }
 /*修改innerWrap的间距*/
@@ -202,11 +202,20 @@ select {
     height: 42px;
 
     position: absolute;
-    /*left: 157px;*/
     left: 162px;
     top: 208px;
 
     cursor: pointer;
+}
+
+.chromeNote-cmdMenu-subMenuItem {
+    display: block;
+    width: 42px;
+    height: 42px;
+
+    position: absolute;
+    left: 68px;
+    background: red;
 }
 
 .chromeNote-cmdMenu-menuItem-text {

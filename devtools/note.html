@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Note</title>
+    <link rel="stylesheet" type="text/css" href="../css/font-awesome/css/font-awesome.css">        
+    <style type="text/css">
+        .chromeNote-noteItem {
+            width: 240px;
+            height: 260px;
+            background: #26BCF1;
+
+            position: absolute;
+            left: 200px;
+            top: 100px;
+
+            overflow: hidden;
+            resize: both;
+
+            display: none;
+        }   
+        .shadow {
+            box-shadow: 0 0 10px black;
+        }
+        .chromeNote-noteItem-header {
+            margin: 0 8px;
+            padding: 10px 2px;
+            height: 10px;
+            line-height: 10px;
+
+            position: relative;
+
+            border-bottom: 1px solid white;
+        }
+        .chromeNote-noteItem-header-date {
+            font-size: 12px;
+            font-family: "Arial";
+            color: white;
+        }
+        .chromeNote-noteItem-header-iconWrap {
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            right: 0;
+        }
+        .chromeNote-noteItem-header-icon {
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        .chromeNote-noteItem-threeDWorld {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            left: 200px;
+            top: 200px;
+            border: 1px solid black;
+
+            -webkit-perspective: 1000px;
+        }
+        .flipcard {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            -webkit-transform: rotateY(20deg);
+            -webkit-transform-style: preserve-3d;
+        }
+        #sideA {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            background: red;            
+            -webkit-backface-visibility: hidden;
+            -webkit-transform-style: preserve-3d;
+        }
+
+        #sideB {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            /*background: black;    */
+            -webkit-transform: rotateY(180deg); 
+            -webkit-backface-visibility: hidden; 
+            -webkit-transform-style: preserve-3d;      
+        }        
+    </style>
+</head>
+<body>
+    <div class="article">
+CSS-TRICKS
+Show search box
+HOME  FORUMS  SNIPPETS  GALLERY  VIDEOS  ALMANAC  DEMOS  LODGE
+Almanac
+Home » CSS Almanac » Properties » B » backface-visibility
+backface-visibility
+Last updated on: DECEMBER 11, 2011
+
+The backface-visibility property relates to 3D transforms. With 3D transforms, you can manage to rotate an element so what we think of as the "front" of an element no longer faces the screen. For instance, this would flip an element away from the screen:
+
+.flip {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform:    rotateY(180deg);
+  -ms-transform:     rotateY(180deg);
+}
+It will look as if you picked it up with a spatula and flipped it over like a pancake. That's because the default for backface-visibility is visible. Instead of it being visible, you could hide it.
+
+.flip {
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+ 
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility:    hidden;
+  -ms-backface-visibility:     hidden;
+}
+Simple demo.
+
+This is useful when doing 3D effects. For instance:
+
+Works properly
+Front Back
+Problematic in WebKit because backface-visibility not hidden
+Front Back
+This isn't problematic in Firefox for whatever reason, although the property works the same way.
+
+More Information
+3D CSS Tester
+WebKit announcement of 3D transforms
+Spec
+Mozilla Docs
+Browser Support
+Chrome  Safari  Firefox Opera   IE  Android iOS
+12+ 4+  10+ 11.60-  10+ 3.0+    2.0+
+Comments
+
+TBRudy3
+Permalink to comment# DECEMBER 13, 2011
+Cool
+
+Reply ↓
+
+Bhaskar Machcha
+Permalink to comment# DECEMBER 17, 2011
+This is very cool for menu designs.
+
+Reply ↓
+
+Jan Drewniak
+Permalink to comment# JANUARY 7, 2012
+Finally some other browsers have begun implementing this cool feature that’s been around in safari for a while now.
+I’ve noticed this property doesn’t work on elements that have been absolutely positioned (in chrome anyway).
+
+Reply ↓
+
+Attila Hajzer
+Permalink to comment# JANUARY 17, 2012
+Is there anyway you could change the THICKNESS of the actual div ? to show that the div isn’t flat? like a Depth? I think that would be really cool!
+
+but its still cool.
+
+Reply ↓
+
+Joe
+Permalink to comment# SEPTEMBER 5, 2013
+check this out
+
+
+Akash Saikia
+Permalink to comment# MAY 4, 2012
+Hey, very nice article. Helped me in some cases when i used this css rule.
+
+But I am in big dilemma regarding this.
+
+For last many days, i have been struggling canvas drawing operation(different shapes) in sencha touch(javascript) application.
+
+The drawing of lines where a bit slow while the finger moved ahead of the line while drawing it in the IPAD in canvas.
+
+I was not able to figure out that what made this application little slow. Then suddenly, when i added backface-visiblity: visible, propery in css of the body, the drawing become faster as it should be.
+
+But what is the importance of this css in relation to canvas drawing, as there is no animation going on while drawing something on canvas?
+
+Thanks.
+
+Reply ↓
+
+zach
+Permalink to comment# MAY 28, 2012
+Do you know why this would break my :active states?
+
+If I remover the backface-visibility property, everything works fine. But once it’s included, I can no longer get any sort of :active pseudo state to work.
+
+Thoughts?
+
+Reply ↓
+
+Joe
+Permalink to comment# JUNE 18, 2012
+I don’t think the backface-visiblity-hidden works on Android 3.0. Looking at it on a Xyboard tablet (running 3.2.2), and it doesn’t appear to do any hiding. Total bummer. I wish Google would get their version of webkit up to snuff.
+
+Reply ↓
+
+cabezud
+Permalink to comment# JANUARY 17, 2013
+I agree – I don’t believe this is supported in the Android browser for some reason.
+
+Try this example: http://desandro.github.com/3dtransforms/examples/card-01.html
+
+It works on Chrome/Safari on desktop, even works on Chrome browser app on iOS, but doesn’t work on Android browser (Jelly Bean).
+
+
+Guy Routledge
+Permalink to comment# SEPTEMBER 10, 2012
+Really useful use-case for a lesser known property!
+
+I’ve just used -webkit-backface-visibility: hidden to solve text rendering inconsistencies in webkit where there were lot of animations on a page and text was being rendered thinner (and occasionally flickering) than other pages. This made all text thin but at least it was consistent.
+
+Reply ↓
+
+Sean
+Permalink to comment# SEPTEMBER 18, 2012
+it can’t work in IE10 correctly. could you give any idea how to fix it?
+
+Reply ↓
+
+Artem Ivanyk
+Permalink to comment# SEPTEMBER 27, 2012
+See my comment here http://davidwalsh.name/css-flip
+
+
+Mike
+Permalink to comment# OCTOBER 3, 2012
+Thanks very much. I this is probably the 5th time I’ve fixed something on my site by getting advice from this site. You’re a site-saver, man.
+
+Reply ↓
+
+Rafael
+Permalink to comment# OCTOBER 9, 2012
+You save my day! Thanks a lot :D
+
+Reply ↓
+
+Guy
+Permalink to comment# DECEMBER 13, 2012
+Do not use -webkit-backface-visibility, it’s extremely buggy, and in many cases causes the handle on the vertical scroll bar to disappear. Still buggy as of Chrome 23.
+
+Reply ↓
+
+Youss
+Permalink to comment# APRIL 19, 2013
+Don’t work with Internet Explorer
+
+Reply ↓
+
+Flavio
+Permalink to comment# JUNE 14, 2013
+For the record, with FF 16 (OSX 10.5.8) i see the “front” text on the problematic example. Could this property fix an issue on Android stock browser? My client is not doing any 3D rotation, but is experiencing a problem in which an hidden image that should be visible only on :hover, replaces the idle image.
+
+Reply ↓
+
+Sander
+Permalink to comment# JUNE 26, 2013
+Opera 15, the first Blink-version, supports 3D transforms, so you might want to update the “Browser Support” table.
+Also, “Problematic in WebKit because backface-visibility not hidden” goes for Blink (Chrome and new Opera) as well.
+
+Reply ↓
+
+Sam
+Permalink to comment# JULY 23, 2013
+Hi guys! Is there a workaround for Opera? maybe a js that will run this effect in Opera only?..
+
+Reply ↓
+Leave a Comment
+Name*EmailWebsite
+Comment
+BoldItalicLinkQuoteInline CodeBlock Code
+
+Use markdown or basic HTML and be nice.
+
+  Notify me of follow-up comments by email.
+ Notify me of new posts by email.
+
+
+The Lodge is a member login only area with access to video training on how to build websites from scratch using the best modern tools.
+Sign up!
+Is it useful to distinguish between "web apps" and "web sites"?
+Yep. They are different things with different concerns.
+Nope. It's all just the web.
+   View Results
+Over 100,000 of the best looking web workers subscribe to CSS-Tricks. Join them?
+
+RSS  iTunes
+See all Subscription Options
+Contact CSS-Tricks
+Advertise on CSS-Tricks
+Twitter: real_css_tricks
+Facebook: CSSTricks
+YouTube: realcsstricks
+GitHub: CSS-Tricks Org
+Twitter: chriscoyier
+CodePen: chriscoyier
+Dribbble: chriscoyier
+Pinboard: chriscoyier
+Google+: chriscoyier
+The Bookshelf
+Poll Archive
+Design Archive
+Article Archive
+Digging into WordPress
+Lynda.com WP Theme Course
+Quotes on Design
+HTML-Ipsum
+Deals
+The Store
+The License
+CodePen Logo  CodePen is a social code playground for web designers and developers. Build demos, find inspiration, or troubleshoot code. With CodePen PRO you can teach students, pair program, host files, and more! ShopTalk Logo  ShopTalk is a podcast about all things web design and development hosted by Dave Rupert and me. The show is recorded live and covers the week in #hotdrama and listener Q&A.
+CSS-Tricks* is created, written by, and maintained by Chris Coyier. It is built on WordPress, hosted by Media Temple and NetDNA, with fonts by H&FJ. *May or may not contain any "CSS" or "Tricks".
+
+    </div>
+    <div class="chromeNote-noteItem shadow">
+        <div class="chromeNote-noteItem-header">
+            <span class="chromeNote-noteItem-header-date">2012.9.9 23:09</span>
+            <span class="chromeNote-noteItem-header-iconWrap">
+                <i class="icon-gear chromeNote-noteItem-header-icon"></i>
+                <i class="icon-remove  chromeNote-noteItem-header-icon"></i>
+            </span>
+        </div>
+    </div>
+
+    <div class="chromeNote-noteItem-threeDWorld">
+        <div class="flipcard">
+            <div id="sideA">This is side a</div>
+            <div id="sideB">This is side b</div>
+        </div>
+    </div>
+</body>
+</html>

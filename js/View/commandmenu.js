@@ -28,6 +28,7 @@ var CommandMenuView = (function () {
                 '<ul>',
                     '<li id="chromeNote-cmdMenu-note" class="chromeNote-cmdMenu-menuItem-outerWrap chromeNote-setup-3d-style chromeNote-transform-origin-100and100 chromeNote-transform-transition">',
                         '<a id="chromeNote-cmdMenu-menuItem-write" class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-x67y21" href="javascript:void(0)">',
+                            // '<div class="chromeNote-cmdMenu-subMenuItem chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-100and100"></div>',
                             '<i class="chromeNote-cmdMenu-menuItem-text icon-pencil"></i>',
                         '</a>',
                     '</li>',
@@ -57,6 +58,23 @@ var CommandMenuView = (function () {
     var isOpen = false;
     var doms = {};
 
+    function initSubAngle(elem) {
+        var total = 360;
+        var elems = elem.querySelectorAll(".chromeNote-cmdMenu-subMenuItem");
+        if (!elems) return;
+        var len = elems.length;
+        // debugger
+        var eachAngle = total / len;
+        for (var i = 0; i < elems.length; i++) {
+            var el = elems[i];
+
+            var outerRotateDeg = (i * eachAngle) + (eachAngle - 90);
+            var rotate = " rotate(" + outerRotateDeg + "deg) ";            
+
+            el.style.webkitTransform += rotate;
+        }
+    }
+
     function initAngle(elems) {
         var total = 360;
         var len = elems.length
@@ -66,28 +84,44 @@ var CommandMenuView = (function () {
             var el = elems[i];
             var innerEl = el.querySelector(".chromeNote-cmdMenu-menuItem-innerWrap");
             /*
-                eachAngle - 90: 保证工整
+                outer element
             */
+
+            // eachAngle - 90: 保证工整
             var outerRotateDeg = (i * eachAngle) + (eachAngle - 90);
+            // 如果只有两个菜单项，则公式不管用了
+            if (len == 2) {
+                outerRotateDeg = outerRotateDeg + 45;
+            }
 
             var rotate = " rotate(" + outerRotateDeg + "deg) ";
 
             var outerSkewXDeg = 90 - eachAngle;
+            if (len == 2) {
+                outerSkewXDeg = 0;
+            }
             var skewX = " skewX(" + outerSkewXDeg + "deg) ";
 
-            el.setAttribute("data-rotate", outerRotateDeg);
-            el.setAttribute("data-skewX", outerSkewXDeg);
             el.style.webkitTransform += rotate + skewX;
 
+            /*
+                inner element
+            */
             var innerSkewXDeg = outerSkewXDeg * (-1);
             var innerRotateDeg = parseFloat(eachAngle) / 2;
-
+            if (len == 2) {
+                innerRotateDeg = 45;
+            }
 
             rotate = " rotate(" + innerRotateDeg + "deg) ";
             skewX = " skewX(" + innerSkewXDeg + "deg) ";
 
             innerEl.style.webkitTransform += skewX + rotate;
+            // initSubAngle(innerEl);
 
+            /*
+                text element
+            */
             var text = innerEl.querySelector(".chromeNote-cmdMenu-menuItem-text");
 
             var textRotateDeg = (-1) * outerRotateDeg + (-1) * innerRotateDeg;
