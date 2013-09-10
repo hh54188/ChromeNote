@@ -1,0 +1,32 @@
+.theme-note-blue .chromeNote-noteItem-wrap {
+    background: #26BCF1;
+}
+
+.theme-note-blue .chromeNote-noteItem-header {
+    border-bottom: 1px solid white;
+}
+
+.theme-note-blue .chromeNote-noteItem-header-date {
+    color: white;
+} 
+
+.theme-note-blue .chromeNote-noteItem-header-iconWrap {
+    color: white;
+}
+.theme-note-blue .chromeNote-noteItem-textarea {
+    background: #26BCF1;
+    border: none;
+    color: white;
+}
+.theme-note-blue .chromeNote-noteItem-footer {
+    background: white;
+}
+
+.theme-note-blue .chromeNote-noteItem-grid {
+    color: #26BCF1;
+}
+
+.theme-note-blue .chromeNote-noteItem-grid td:hover {
+    background: #26BCF1;
+    color: white;
+}

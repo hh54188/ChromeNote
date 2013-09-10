@@ -6,6 +6,10 @@
     -webkit-transform-style: preserve-3d;
 }
 
+.chromeNote-3d-backface-hidden {
+    -webkit-backface-visibility: hidden; 
+}
+
 .chromeNote-transform-origin-100and100 {
     -webkit-transform-origin: 100% 100%;
 }
