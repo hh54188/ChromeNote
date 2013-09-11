@@ -62,8 +62,6 @@
 }
 .chromeNote-noteItem-textarea::-webkit-scrollbar {
     width: 8px;
-    background: red;
-    height: 10px;
 }
  
 .chromeNote-noteItem-textarea::-webkit-scrollbar-track {
@@ -72,14 +70,8 @@
 }
  
 .chromeNote-noteItem-textarea::-webkit-scrollbar-thumb {
-    background: white;
     border-radius: 10px;
     -webkit-transition: all 0.3s linear;
-}
-
-.chromeNote-noteItem-textarea::-webkit-scrollbar-thumb:hover {
-    background: rgba(0,0,0,0.2);
-    border-radius: 10px;
 }
 
 .chromeNote-noteItem-textarea {
@@ -94,11 +86,11 @@
     -webkit-box-sizing: border-box;
 
 
-    padding: 5px 6px 0 0;
+    padding: 0 6px 0 6px;
     margin: 0;
 
     border-style: solid;
-    border-width: 0 8px;
+    border-width: 4px 8px 5px 0;
 
     font-family: "Arial";
 

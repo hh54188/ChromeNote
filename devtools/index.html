@@ -2,10 +2,46 @@
 <html>
 <head>
     <title></title>
+    <script type="text/javascript" src="../js/lib/lib.js"></script>
+    <script type="text/javascript" src="../js/lib/class.js"></script>
+    <script type="text/javascript">
+        var Note = Class.extend({
+            methods: {
+                init: function (opt) {
+                    this.height = opt.height;
+                },
+                /* Basic: */
+                hide: function () {
+                    log("hide");
+                },
+                open: function () {
+                    log(this.height);
+                },
+                del: function () {
+                    log("delete");
+                },
+                /* Function */
+                showMore: function () {
+                    log("showMore");
+                },
+                showConfig: function () {
+                    log("showConfig");
+                }
+            }
+        });
+
+        var note1 = Note.create({
+            height: 200
+        })
+
+        var note2 = Note.create({
+            height: 400
+        })
+
+        note1.open();
+        note2.open();
+    </script>
 </head>
-<body data-chrome="note">
-    <div data-note-type="cmdMenu-btn-delete">命令菜单关闭按钮cmdMenu-btn-delete</div>
-    <div style="left: 50px; top: 50px;" data-note-uuid="123456" data-note-type="note-bar">可以被拖动的标题栏note-bar</div>
-    <div style="left: 160px; top: 50px;" data-note-uuid="123456" data-note-type="note-bar">可以被拖动的标题栏note-bar</div>
+<body>
 </body>
 </html>

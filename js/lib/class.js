@@ -1,7 +1,7 @@
 /*
     简单版本
     1.去除init方法和同名函数的callSuper机制
-    2.新增 staticMethods staticProperty property 机制
+    2.新增 staticMethods staticProperty property methods机制
 */
 var Class = (function () {
     // helper:
