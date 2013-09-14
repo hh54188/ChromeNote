@@ -1,0 +1,38 @@
+.theme-note-green .chromeNote-noteItem-wrap {
+    background: #ffcf56;
+}
+
+.theme-note-green .chromeNote-noteItem-header {
+    border-bottom: 1px solid white;
+}
+
+.theme-note-green .chromeNote-noteItem-header-date {
+    color: white;
+} 
+
+.theme-note-green .chromeNote-noteItem-header-iconWrap {
+    color: white;
+}
+.theme-note-green .chromeNote-noteItem-textarea {
+    background: #ffcf56;
+    border-color: #ffcf56;
+    color: white;
+}
+.theme-note-green .chromeNote-noteItem-textarea::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.1);
+}
+.theme-note-green .chromeNote-noteItem-textarea::-webkit-scrollbar-thumb:hover {
+    background: white;    
+}
+.theme-note-green .chromeNote-noteItem-footer {
+    background: white;
+}
+
+.theme-note-green .chromeNote-noteItem-grid {
+    color: #ffcf56;
+}
+
+.theme-note-green .chromeNote-noteItem-grid td:hover {
+    background: white;
+    color: #ffcf56;
+}

@@ -18,10 +18,10 @@
     border-color: #26BCF1;
     color: white;
 }
-.chromeNote-noteItem-textarea::-webkit-scrollbar-thumb {
+.theme-note-blue .chromeNote-noteItem-textarea::-webkit-scrollbar-thumb {
     background: rgba(0,0,0,0.1);
 }
-.chromeNote-noteItem-textarea::-webkit-scrollbar-thumb:hover {
+.theme-note-blue .chromeNote-noteItem-textarea::-webkit-scrollbar-thumb:hover {
     background: white;    
 }
 .theme-note-blue .chromeNote-noteItem-footer {

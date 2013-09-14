@@ -6,6 +6,13 @@
     -webkit-transform-style: preserve-3d;
 }
 
+.chromeNote-3d-flipStatus {
+    overflow: visible;
+}
+.chromeNote-3d-flip-backSide {
+    -webkit-transform: rotateY(180deg);
+}
+
 .chromeNote-3d-backface-hidden {
     -webkit-backface-visibility: hidden; 
 }
