@@ -124,6 +124,7 @@ var $ = (function () {
     _$.prototype = {
         constructor: this,
         getAppropriatePos: function (clientPos) {
+            debugger
             var el = this[0];
             var el_width = parseInt(window.getComputedStyle(el).getPropertyValue("width")),
                 el_height = parseInt(window.getComputedStyle(el).getPropertyValue("height"));

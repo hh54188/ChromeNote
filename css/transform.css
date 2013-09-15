@@ -8,6 +8,7 @@
 
 .chromeNote-3d-flipStatus {
     overflow: visible;
+    -webkit-user-select: none;
 }
 .chromeNote-3d-flip-backSide {
     -webkit-transform: rotateY(180deg);

@@ -10,28 +10,38 @@
     <link rel="stylesheet" type="text/css" href="../css/transform.css">    
 </head>
 <body>
-    <div class="chromeNote-noteItem-threeDWorld chromeNote-setup-3d-perspective theme-note-blue chromeNote-noteItem-decorate-shadow chromeNote-noteItem-resize chromeNote-3d-flipStatus">
-        <div class="chromeNote-noteItem-flipCard chromeNote-setup-3d-style" style="-webkit-transform: rotateY(120deg);">
+    <div class="chromeNote-noteItem-threeDWorld chromeNote-setup-3d-perspective theme-note-blue chromeNote-noteItem-decorate-shadow chromeNote-noteItem-resize">
+        <!-- 如果是在翻动状态则需要添加 chromeNote-3d-flipStatus-->
+        <div class="chromeNote-noteItem-flipCard chromeNote-setup-3d-style">
             <div class="chromeNote-noteItem-wrap chromeNote-setup-3d-style chromeNote-3d-backface-hidden">
                 <div class="chromeNote-noteItem-header">
                     <span class="chromeNote-noteItem-header-date">2012.9.9 23:09</span>
                     <span class="chromeNote-noteItem-header-iconWrap">
                         <i class="icon-gear chromeNote-noteItem-header-icon"></i>
                         <i class="icon-minus-sign chromeNote-noteItem-header-icon"></i>
-                        <i class="icon-remove-sign chromeNote-noteItem-header-icon"></i>
                     </span>
                 </div>
                 <textarea class="chromeNote-noteItem-textarea"></textarea>
-                <div class="chromeNote-noteItem-footer chromeNote-noteItem-footer-hide1">
-                    <table class="chromeNote-noteItem-grid chromeNote-noteItem-grid3">
+                <div class="chromeNote-noteItem-footer chromeNote-noteItem-footer-hide chromeNote-noteItem-footer-show">
+                    <!-- 想要显示颜色选项 chromeNote-noteItem-footer-showColor -->
+                    <!-- 想要显示菜单选项 chromeNote-noteItem-footer-showMenu -->
+                    <table class="chromeNote-noteItem-grid chromeNote-noteItem-grid2 chromeNote-noteItem-footer-menu">
                         <tbody>
                             <tr>
                                 <td><i class="icon-tint"></i></td>
-                                <td><i class="icon-paste"></td>
-                                <td><i class="icon-cogs"></td>
+                                <td><i class="icon-trash"></td>
                             </tr>
                         </tbody>
                     </table>
+                    <table class="chromeNote-noteItem-grid chromeNote-noteItem-grid3 chromeNote-noteItem-footer-color">
+                        <tbody>
+                            <tr>
+                                <td><div class="chromeNote-noteItem-footer-colorItem chromeNote-noteItem-footer-colorItem-blue"><em></em></div></td>
+                                <td><div class="chromeNote-noteItem-footer-colorItem chromeNote-noteItem-footer-colorItem-black"><em></em></div></td>
+                                <td><div class="chromeNote-noteItem-footer-colorItem chromeNote-noteItem-footer-colorItem-green"><em></em></div></td>
+                            </tr>
+                        </tbody>
+                    </table>                    
                 </div>
             </div>
             <div class="chromeNote-noteItem-miniIcon-wrap chromeNote-setup-3d-style chromeNote-3d-backface-hidden chromeNote-3d-flip-backSide">

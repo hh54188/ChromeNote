@@ -8,7 +8,7 @@
 }
 .chromeNote-noteItem-threeDWorld {
     width: 200px;
-    height: 200px;
+    height: 180px;
 
     position: absolute;
     left: 200px;
@@ -115,10 +115,13 @@
     width: 100%;
     height: 25px;
     border-spacing: 0px;
+    display: none;
 }
 .chromeNote-noteItem-grid td {
     text-align: center;
     padding: 0;
+    /*box-sizing: border-box;*/
+    /*-webkit-box-sizing: border-box;*/
     cursor: pointer;
 }
 .chromeNote-noteItem-grid2 td {
@@ -145,4 +148,39 @@
     left: 50%;
     top: 50%;
     margin: -25px 0 0 -25px;
+}
+.chromeNote-noteItem-footer-showMenu, .chromeNote-noteItem-footer-showColor{
+    bottom: 0;
+}
+
+.chromeNote-noteItem-footer-showMenu .chromeNote-noteItem-footer-menu, 
+.chromeNote-noteItem-footer-showColor .chromeNote-noteItem-footer-color {
+    display: table;
+}
+.chromeNote-noteItem-footer-colorItem {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    padding: 1px 2px;
+
+}
+.chromeNote-noteItem-footer-colorItem-blue em{
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #26BCF1;
+}
+.chromeNote-noteItem-footer-colorItem-green em{
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #ffcf56;
+}
+.chromeNote-noteItem-footer-colorItem-black em{
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #404143;
 }

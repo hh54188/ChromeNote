@@ -2,44 +2,92 @@
 <html>
 <head>
     <title></title>
+    <style type="text/css">
+        body {
+            background: url("../PSD/960grid.png");
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="../css/font-awesome/css/font-awesome.css">       
+    <link rel="stylesheet" type="text/css" href="../css/note/basic.css">
+    <link rel="stylesheet" type="text/css" href="../css/note/theme-blue.css">
+    <link rel="stylesheet" type="text/css" href="../css/note/theme-black.css">
+    <link rel="stylesheet" type="text/css" href="../css/note/theme-green.css">
+    <link rel="stylesheet" type="text/css" href="../css/transform.css">    
     <script type="text/javascript" src="../js/lib/lib.js"></script>
     <script type="text/javascript" src="../js/lib/class.js"></script>
     <script type="text/javascript">
         var Note = Class.extend({
+            property: {
+                tpl: [
+                    '<!-- 如果是在翻动状态则需要添加 chromeNote-3d-flipStatus-->',
+                    '<div class="chromeNote-noteItem-flipCard chromeNote-setup-3d-style">',
+                        '<div class="chromeNote-noteItem-wrap chromeNote-setup-3d-style chromeNote-3d-backface-hidden">',
+                            '<div class="chromeNote-noteItem-header">',
+                                '<span class="chromeNote-noteItem-header-date">2012.9.9 23:09</span>',
+                                '<span class="chromeNote-noteItem-header-iconWrap">',
+                                    '<i class="icon-gear chromeNote-noteItem-header-icon"></i>',
+                                    '<i class="icon-minus-sign chromeNote-noteItem-header-icon"></i>',
+                                '</span>',
+                            '</div>',
+                            '<textarea class="chromeNote-noteItem-textarea"></textarea>',
+                            '<div class="chromeNote-noteItem-footer chromeNote-noteItem-footer-hide chromeNote-noteItem-footer-show">',
+                                '<!-- 想要显示颜色选项 chromeNote-noteItem-footer-showColor -->',
+                                '<!-- 想要显示菜单选项 chromeNote-noteItem-footer-showMenu -->',
+                                '<table class="chromeNote-noteItem-grid chromeNote-noteItem-grid2 chromeNote-noteItem-footer-menu">',
+                                    '<tbody>',
+                                        '<tr>',
+                                            '<td><i class="icon-tint"></i></td>',
+                                            '<td><i class="icon-trash"></td>',
+                                        '</tr>',
+                                    '</tbody>',
+                                '</table>',
+                                '<table class="chromeNote-noteItem-grid chromeNote-noteItem-grid3 chromeNote-noteItem-footer-color">',
+                                    '<tbody>',
+                                        '<tr>',
+                                            '<td><div class="chromeNote-noteItem-footer-colorItem chromeNote-noteItem-footer-colorItem-blue"><em></em></div></td>',
+                                            '<td><div class="chromeNote-noteItem-footer-colorItem chromeNote-noteItem-footer-colorItem-black"><em></em></div></td>',
+                                            '<td><div class="chromeNote-noteItem-footer-colorItem chromeNote-noteItem-footer-colorItem-green"><em></em></div></td>',
+                                        '</tr>',
+                                    '</tbody>',
+                                '</table>',
+                            '</div>',
+                        '</div>',
+                        '<div class="chromeNote-noteItem-miniIcon-wrap chromeNote-setup-3d-style chromeNote-3d-backface-hidden chromeNote-3d-flip-backSide">',
+                            '<div class="chromeNote-noteItem-miniIcon"></div>',
+                        '</div>',
+                    '</div>'
+                ].join("")
+            },
             methods: {
                 init: function (opt) {
-                    this.height = opt.height;
-                },
-                /* Basic: */
-                hide: function () {
-                    log("hide");
-                },
-                open: function () {
-                    log(this.height);
-                },
-                del: function () {
-                    log("delete");
-                },
-                /* Function */
-                showMore: function () {
-                    log("showMore");
-                },
-                showConfig: function () {
-                    log("showConfig");
+                    var body = document.querySelector("body");
+                    var div = document.createElement("div");
+
+                    div.className = "chromeNote-noteItem-threeDWorld chromeNote-setup-3d-perspective theme-note-blue chromeNote-noteItem-decorate-shadow chromeNote-noteItem-resize";
+                    div.innerHTML = this.tpl;
+                    body.appendChild(div);
+                    div = $(div);
+                    var pos = div.getAppropriatePos({
+                        top: opt.pos.y,
+                        left: opt.pos.x
+                    });
+
+                    div[0].style.left = pos[0] - 100 + "px";
+                    div[0].style.top = pos[1] - 90 + "px";
                 }
             }
         });
 
-        var note1 = Note.create({
-            height: 200
-        })
-
-        var note2 = Note.create({
-            height: 400
-        })
-
-        note1.open();
-        note2.open();
+        
+        document.addEventListener("dblclick", function (e) {
+            var opt = {
+                pos: {
+                    x: e.clientX,
+                    y: e.clientY
+                }
+            }
+            var note = Note.create(opt);    
+        });
     </script>
 </head>
 <body>
