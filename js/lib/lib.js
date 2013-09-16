@@ -124,7 +124,7 @@ var $ = (function () {
     _$.prototype = {
         constructor: this,
         getAppropriatePos: function (clientPos) {
-            debugger
+
             var el = this[0];
             var el_width = parseInt(window.getComputedStyle(el).getPropertyValue("width")),
                 el_height = parseInt(window.getComputedStyle(el).getPropertyValue("height"));
@@ -132,7 +132,7 @@ var $ = (function () {
             var top = clientPos.top - el_height / 2 >= 0? clientPos.top - el_height / 2: 0,
                 left = clientPos.left - el_width / 2 >= 0? clientPos.left - el_width / 2: 0;
 
-            top = clientPos.top + el_height / 2 <= window.innerHeight? top: window.innerHeight - el_height + 36,
+            top = clientPos.top + el_height / 2 <= window.innerHeight? top: window.innerHeight - el_height,
             left = clientPos.left + el_width / 2 <= window.innerWidth? left: window.innerWidth - el_width;
 
             return [top, left];
