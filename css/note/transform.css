@@ -1,0 +1,35 @@
+.chromeNote-noteItem-footer-showMenu-animate {
+    -webkit-animation-name: showMenu;
+    -webkit-animation-duration: 0.3s;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-direction: normal;
+}
+
+@-webkit-keyframes showMenu {
+    from {
+      bottom: -25px;
+    }
+    to {
+      bottom: 0px;
+    }
+}
+
+.chromeNote-noteItem-footer-hideMenu-animate {
+    -webkit-animation-name: hideMenu;
+    -webkit-animation-duration: 0.3s;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-direction: normal;
+}
+
+@-webkit-keyframes hideMenu {
+    from {
+      bottom: 0;
+    }
+    to {
+      bottom: -25px;
+    }
+}

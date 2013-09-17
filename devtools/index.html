@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="../css/note/theme-blue.css">
     <link rel="stylesheet" type="text/css" href="../css/note/theme-black.css">
     <link rel="stylesheet" type="text/css" href="../css/note/theme-green.css">
+    <link rel="stylesheet" type="text/css" href="../css/note/transform.css">
     <link rel="stylesheet" type="text/css" href="../css/transform.css">    
     <script type="text/javascript" src="../js/lib/lib.js"></script>
     <script type="text/javascript" src="../js/lib/class.js"></script>
@@ -23,25 +24,23 @@
                     '<div class="chromeNote-noteItem-flipCard chromeNote-setup-3d-style">',
                         '<div class="chromeNote-noteItem-wrap chromeNote-setup-3d-style chromeNote-3d-backface-hidden">',
                             '<div class="chromeNote-noteItem-header">',
-                                '<span class="chromeNote-noteItem-header-date">2012.9.9 23:09</span>',
+                                '<span id="chromeNote-noteItem-header-label-date" class="chromeNote-noteItem-header-date">2012.9.9 23:09</span>',
                                 '<span class="chromeNote-noteItem-header-iconWrap">',
-                                    '<i class="icon-gear chromeNote-noteItem-header-icon"></i>',
-                                    '<i class="icon-minus-sign chromeNote-noteItem-header-icon"></i>',
+                                    '<i id="chromeNote-noteItem-header-btn-config"  class="icon-gear chromeNote-noteItem-header-icon"></i>',
+                                    '<i id="chromeNote-noteItem-header-btn-mini" class="icon-minus-sign chromeNote-noteItem-header-icon"></i>',
                                 '</span>',
                             '</div>',
                             '<textarea class="chromeNote-noteItem-textarea"></textarea>',
-                            '<div class="chromeNote-noteItem-footer chromeNote-noteItem-footer-hide chromeNote-noteItem-footer-show">',
-                                '<!-- 想要显示颜色选项 chromeNote-noteItem-footer-showColor -->',
-                                '<!-- 想要显示菜单选项 chromeNote-noteItem-footer-showMenu -->',
-                                '<table class="chromeNote-noteItem-grid chromeNote-noteItem-grid2 chromeNote-noteItem-footer-menu">',
+                            '<div id="chromeNote-noteItem-footer" class="chromeNote-noteItem-footer chromeNote-noteItem-footer-hide">',
+                                '<table id="chromeNote-noteItem-footer-menu"  class="chromeNote-noteItem-grid chromeNote-noteItem-grid2 chromeNote-noteItem-footer-menu">',
                                     '<tbody>',
                                         '<tr>',
-                                            '<td><i class="icon-tint"></i></td>',
-                                            '<td><i class="icon-trash"></td>',
+                                            '<td><i id="chromeNote-noteItem-menu-color" class="icon-tint"></i></td>',
+                                            '<td><i id="chromeNote-noteItem-menu-remove" class="icon-trash"></td>',
                                         '</tr>',
                                     '</tbody>',
                                 '</table>',
-                                '<table class="chromeNote-noteItem-grid chromeNote-noteItem-grid3 chromeNote-noteItem-footer-color">',
+                                '<table id="chromeNote-noteItem-footer-color" class="chromeNote-noteItem-grid chromeNote-noteItem-grid3 chromeNote-noteItem-footer-color">',
                                     '<tbody>',
                                         '<tr>',
                                             '<td><div class="chromeNote-noteItem-footer-colorItem chromeNote-noteItem-footer-colorItem-blue"><em></em></div></td>',
@@ -56,7 +55,8 @@
                             '<div class="chromeNote-noteItem-miniIcon"></div>',
                         '</div>',
                     '</div>'
-                ].join("")
+                ].join(""),
+                doms: null
             },
             methods: {
                 init: function (opt) {
@@ -74,6 +74,97 @@
 
                     div[0].style.left = pos[1] + "px";
                     div[0].style.top = pos[0] + "px";
+
+                    this.doms = {
+                        header: {
+                            date: $(div[0].querySelector("#chromeNote-noteItem-header-label-date")), 
+                            cfg: $(div[0].querySelector("#chromeNote-noteItem-header-btn-config")),
+                            mini: $(div[0].querySelector("#chromeNote-noteItem-header-btn-mini"))
+                        },
+                        footer: {
+                            wrap: $(div[0].querySelector("#chromeNote-noteItem-footer")),
+                            panelMenu: $(div[0].querySelector("#chromeNote-noteItem-footer-menu")),
+                            panelColor: $(div[0].querySelector("#chromeNote-noteItem-footer-color")),
+                            btn: {
+                                color: $(div[0].querySelector("#chromeNote-noteItem-menu-color")),
+                                del: $(div[0].querySelector("#chromeNote-noteItem-menu-remove"))
+                            }
+                        }
+                    };
+                    this.bindAnimate();
+                    this.bindEvent();
+                },
+                bindAnimate: function () {
+                    var _this = this;
+                    this.doms.footer.panelMenu.animSub({
+                        open: [
+                            {
+                                elem: this.doms.footer.wrap,
+                                before: {
+                                    removedClass: ["chromeNote-noteItem-footer-hideMenu-animate"],
+                                    addedClass: ["chromeNote-noteItem-footer-showMenu"]
+                                },
+                                animateClass: "chromeNote-noteItem-footer-showMenu-animate",
+                                after: {
+                                    addedClass: []
+                                }
+                            }
+                        ],
+                        close: [
+                            {
+                                elem: this.doms.footer.wrap,
+                                before: {
+                                    removedClass: ["chromeNote-noteItem-footer-showMenu-animate"]
+                                },
+                                animateClass: "chromeNote-noteItem-footer-hideMenu-animate",
+                                after: {
+                                    removedClass: ["chromeNote-noteItem-footer-showMenu"]
+                                }
+                            }
+                        ]
+                    });
+
+                    this.doms.footer.panelColor.animSub({
+                        open: [
+                            {
+                                elem: this.doms.footer.wrap,
+                                before: {
+                                    callback: function () {
+                                        _this.doms.footer.panelMenu.animPub("close");
+
+                                        _this.doms.footer.wrap.removeClass("chromeNote-noteItem-footer-hideMenu-animate");
+                                        _this.doms.footer.wrap.addClass("chromeNote-noteItem-footer-showColor");
+                                    }
+                                },
+                                animateClass: "chromeNote-noteItem-footer-showMenu-animate"
+                            }
+                        ],
+                        close: [
+                            {
+                                elem: this.doms.footer.wrap,
+                                before: {
+                                    removedClass: ["chromeNote-noteItem-footer-showMenu-animate"]
+                                },
+                                animateClass: "chromeNote-noteItem-footer-hideMenu-animate",
+                                after: {
+                                    removedClass: ["chromeNote-noteItem-footer-showColor"]
+                                }
+                            }
+                        ]
+                    })      
+                },
+                bindEvent: function () {
+                    var _this = this;
+                    this.doms.header.cfg.on("click", function () {
+                        // _this.doms.footer.panelMenu.animPub("open");
+                        _this.doms.footer.panelColor.animPub("open");
+                    })
+
+
+                    this.doms.header.mini.on("click", function () {
+                        // _this.doms.footer.panelMenu.animPub("close");
+                        _this.doms.footer.panelColor.animPub("close");
+                    })
                 }
             }
         });
