@@ -1,4 +1,3 @@
-## Developing Google Chrome Extensions Source Code
+## 开发日志
 
-Here's the source code for the Nettuts+ article on Developing Google Chrome 
-Extensions, written by Krasimir Tsonev.
+2013.10.9：菜单切换和颜色切换需要 有动画先后的问题，需要使用promise模式

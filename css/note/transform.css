@@ -33,3 +33,21 @@
       bottom: -25px;
     }
 }
+
+.chromeNote-noteItem-flipCard-back-animate {
+    -webkit-animation-name: flip_to_back;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-direction: normal;   
+}
+
+@-webkit-keyframes flip_to_back {
+    from {
+        -webkit-transform: rotateY(0deg);
+    }
+    to {
+        -webkit-transform: rotateY(180deg);
+    }
+}

@@ -14,14 +14,15 @@
     <link rel="stylesheet" type="text/css" href="../css/note/theme-green.css">
     <link rel="stylesheet" type="text/css" href="../css/note/transform.css">
     <link rel="stylesheet" type="text/css" href="../css/transform.css">    
+    <link rel="stylesheet" type="text/css" href="../css/note/transform.css">    
     <script type="text/javascript" src="../js/lib/lib.js"></script>
     <script type="text/javascript" src="../js/lib/class.js"></script>
     <script type="text/javascript">
         var Note = Class.extend({
             property: {
                 tpl: [
-                    '<!-- 如果是在翻动状态则需要添加 chromeNote-3d-flipStatus-->',
-                    '<div class="chromeNote-noteItem-flipCard chromeNote-setup-3d-style">',
+                    '<!-- 如果是在翻动状态则需要在外容器添加 chromeNote-3d-flipStatus-->',
+                    '<div id="chromeNote-noteItem-flipCard" class="chromeNote-noteItem-flipCard chromeNote-setup-3d-style">',
                         '<div class="chromeNote-noteItem-wrap chromeNote-setup-3d-style chromeNote-3d-backface-hidden">',
                             '<div class="chromeNote-noteItem-header">',
                                 '<span id="chromeNote-noteItem-header-label-date" class="chromeNote-noteItem-header-date">2012.9.9 23:09</span>',
@@ -35,17 +36,17 @@
                                 '<table id="chromeNote-noteItem-footer-menu"  class="chromeNote-noteItem-grid chromeNote-noteItem-grid2 chromeNote-noteItem-footer-menu">',
                                     '<tbody>',
                                         '<tr>',
-                                            '<td><i id="chromeNote-noteItem-menu-color" class="icon-tint"></i></td>',
-                                            '<td><i id="chromeNote-noteItem-menu-remove" class="icon-trash"></td>',
+                                            '<td id="chromeNote-noteItem-menu-color" ><i class="icon-tint"></i></td>',
+                                            '<td id="chromeNote-noteItem-menu-remove"><i class="icon-trash"></td>',
                                         '</tr>',
                                     '</tbody>',
                                 '</table>',
                                 '<table id="chromeNote-noteItem-footer-color" class="chromeNote-noteItem-grid chromeNote-noteItem-grid3 chromeNote-noteItem-footer-color">',
                                     '<tbody>',
                                         '<tr>',
-                                            '<td><div class="chromeNote-noteItem-footer-colorItem chromeNote-noteItem-footer-colorItem-blue"><em></em></div></td>',
-                                            '<td><div class="chromeNote-noteItem-footer-colorItem chromeNote-noteItem-footer-colorItem-black"><em></em></div></td>',
-                                            '<td><div class="chromeNote-noteItem-footer-colorItem chromeNote-noteItem-footer-colorItem-green"><em></em></div></td>',
+                                            '<td><div id="chromeNote-noteItem-footer-colorItem-blue" class="chromeNote-noteItem-footer-colorItem chromeNote-noteItem-footer-colorItem-blue"><em data-noteItem-color="blue" data-noteItem-allColor="blue&black&green"></em></div></td>',
+                                            '<td><div id="chromeNote-noteItem-footer-colorItem-black" class="chromeNote-noteItem-footer-colorItem chromeNote-noteItem-footer-colorItem-black"><em data-noteItem-color="black"  data-noteItem-allColor="blue&black&green"></em></div></td>',
+                                            '<td><div id="chromeNote-noteItem-footer-colorItem-green" class="chromeNote-noteItem-footer-colorItem chromeNote-noteItem-footer-colorItem-green"><em data-noteItem-color="green"  data-noteItem-allColor="blue&black&green"></em></div></td>',
                                         '</tr>',
                                     '</tbody>',
                                 '</table>',
@@ -76,6 +77,8 @@
                     div[0].style.top = pos[0] + "px";
 
                     this.doms = {
+                        wrap: div,
+                        flipCard: $(div[0].querySelector("#chromeNote-noteItem-flipCard")),
                         header: {
                             date: $(div[0].querySelector("#chromeNote-noteItem-header-label-date")), 
                             cfg: $(div[0].querySelector("#chromeNote-noteItem-header-btn-config")),
@@ -87,7 +90,8 @@
                             panelColor: $(div[0].querySelector("#chromeNote-noteItem-footer-color")),
                             btn: {
                                 color: $(div[0].querySelector("#chromeNote-noteItem-menu-color")),
-                                del: $(div[0].querySelector("#chromeNote-noteItem-menu-remove"))
+                                del: $(div[0].querySelector("#chromeNote-noteItem-menu-remove")),
+                                btnColor: $(div[0].querySelectorAll(".chromeNote-noteItem-footer-colorItem"))
                             }
                         }
                     };
@@ -114,7 +118,7 @@
                             {
                                 elem: this.doms.footer.wrap,
                                 before: {
-                                    removedClass: ["chromeNote-noteItem-footer-showMenu-animate"]
+                                    removedClass: ["chromeNote-noteItem-footer-showMenu-animate", "chromeNote-noteItem-footer-showMenu"]
                                 },
                                 animateClass: "chromeNote-noteItem-footer-hideMenu-animate",
                                 after: {
@@ -123,17 +127,35 @@
                             }
                         ]
                     });
-
+                    this.doms.wrap.animSub({
+                        open: [
+                            {
+                                elem: this.doms.wrap,
+                                before: {
+                                    addedClass: ["chromeNote-3d-flipStatus"]
+                                }
+                            }, 
+                            {
+                                elem: this.doms.flipCard,
+                                animateClass: "chromeNote-noteItem-flipCard-back-animate",
+                                after: {
+                                    addedClass: ["chromeNote-noteItem-flipCard-back"]
+                                }
+                            }
+                        ]
+                    })
                     this.doms.footer.panelColor.animSub({
                         open: [
                             {
                                 elem: this.doms.footer.wrap,
                                 before: {
                                     callback: function () {
+                                        // 在打开颜色面板之前 需要关闭配置面板
                                         _this.doms.footer.panelMenu.animPub("close");
-
+                                        // 这里存在一个bug，暂时不解决
                                         _this.doms.footer.wrap.removeClass("chromeNote-noteItem-footer-hideMenu-animate");
                                         _this.doms.footer.wrap.addClass("chromeNote-noteItem-footer-showColor");
+
                                     }
                                 },
                                 animateClass: "chromeNote-noteItem-footer-showMenu-animate"
@@ -155,16 +177,33 @@
                 },
                 bindEvent: function () {
                     var _this = this;
-                    this.doms.header.cfg.on("click", function () {
-                        // _this.doms.footer.panelMenu.animPub("open");
+
+                    this.doms.footer.btn.btnColor.on("mouseover", function (e) {
+                        if (e.target.tagName.toLowerCase() != "em") return;
+
+                        var target = e.target,
+                            thisColor = target.getAttribute("data-noteItem-color"),
+                            allColor = target.getAttribute("data-noteItem-allColor").split("&");
+                        
+                        allColor.forEach(function (el, index) {
+                            _this.doms.wrap.removeClass("theme-note-" + el);
+                        });
+
+                        _this.doms.wrap.addClass("theme-note-" + thisColor);
+
+                    })
+
+                    this.doms.footer.btn.color.on("click", function (e) {
                         _this.doms.footer.panelColor.animPub("open");
                     })
 
-
-                    this.doms.header.mini.on("click", function () {
-                        // _this.doms.footer.panelMenu.animPub("close");
-                        _this.doms.footer.panelColor.animPub("close");
+                    this.doms.header.cfg.on("click", function (e) {
+                        _this.doms.footer.panelMenu.animPub("open");
                     })
+
+                    this.doms.header.mini.on("click", function (e) {
+                        _this.doms.wrap.animPub("open");
+                    })  
                 }
             }
         });
@@ -177,7 +216,7 @@
                     y: e.clientY
                 }
             }
-            var note = Note.create(opt);    
+            var note = Note.create(opt);
         });
     </script>
 </head>

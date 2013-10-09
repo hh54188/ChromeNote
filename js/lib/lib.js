@@ -349,6 +349,8 @@ var $ = (function () {
         // if selector is query string
         } else if (typeof selector === "string") {
             el = document.querySelectorAll(selector);
+        } else if (Object.prototype.toString.call(selector) === '[object HTMLCollection]' || Object.prototype.toString.call(selector) === '[object NodeList]' ) {
+            el = Array.prototype.slice.call(selector);
         } else {
             return {};
         }
