@@ -74,6 +74,7 @@ var $ = (function () {
     var fn_uuid = 0, el_uuid = 0;
 
     function _$(el) {
+        // el一定为数组
         for (var i = 0; i < el.length; i++) {
             this[i] = el[i];
         }
@@ -138,39 +139,40 @@ var $ = (function () {
             return [top, left];
 
         },
-        getTargetId: function () {
-            var el = this[0];
-            var id = el.getAttribute("data-note-uuid");
-            return id? id: 0;            
-        },
-        getTargetType: function () {
-            var el = this[0];
-            var type = el.getAttribute("data-note-type");
-            return type? type: "node";            
+        attr: function (key, value) {
+            if (value) {
+                this.el.forEach(function (el, index) {
+                    el.setAttribute(key, value);
+                })       
+            } else {
+                return this[0].getAttribute(key);
+            }
         },
         addClass: function (name) {
-            var el = this[0];
-            if (el.classList) {
-                el.classList.add(name);
-            } else {
-                el.className += " " + name;
-            }
+            this.el.forEach(function (el, index) {
+                if (el.classList) {
+                    el.classList.add(name);
+                } else {
+                    el.className += " " + name;
+                }
+            });
         },
         removeClass: function (name) {
-            var el =this[0];
-            if (el.classList) {
-                el.classList.remove(name);
-            } else {
-                var newClassName = "";
-                var i;
-                var classes = el.className.split(" ");
-                for(i = 0; i < classes.length; i++) {
-                    if(classes[i] !== name) {
-                        newClassName += classes[i] + " ";
+            this.el.forEach(function (el, index) {
+                if (el.classList) {
+                    el.classList.remove(name);
+                } else {
+                    var newClassName = "";
+                    var i;
+                    var classes = el.className.split(" ");
+                    for(i = 0; i < classes.length; i++) {
+                        if(classes[i] !== name) {
+                            newClassName += classes[i] + " ";
+                        }
                     }
+                    el.className = newClassName;
                 }
-                el.className = newClassName;
-            }
+            })
         },
         /*
             Animate:
@@ -190,7 +192,6 @@ var $ = (function () {
         },
         getData: function () {
             var el = this.el;
-            log(_e.cache);
             return _e.getData(el);
         },
         _execAnim: function (step) {
@@ -257,22 +258,24 @@ var $ = (function () {
             data.handlers[eventType].push(fn);
 
             if (!data.dispatcher){
-                // data.disabled =  false
                 data.dispatcher = function (event) {
-                    // if (data.disabled) return;
                     var handlers = data.handlers[event.type];
                     if (handlers) {
-                        for (var i = 0; i < handlers.length; i++) {
-                            handlers[i].call(el, event);
-                        }
+                        handlers.forEach(function (handler) {
+                            el.forEach(function (el) {
+                                handler.call(el, event);
+                            })
+                        })
                     }
                 }
             }
 
+            // 第一次绑定函数时，就把该事件的dispatcher绑定到元素上
+            // 一种event对应一个dispatcher
             if (data.handlers[eventType].length === 1) {
-                for (var i = 0; i < el.length; i++) {
-                    el[i].addEventListener(eventType, data.dispatcher, false);
-                }
+                el.forEach(function (el) {
+                    el.addEventListener(eventType, data.dispatcher, false);
+                });
             }            
         },
         off: function (eventType, fn) {
@@ -287,8 +290,8 @@ var $ = (function () {
                 _this.clear(t);
             }
 
-            // Unbind all event handlers:
-            // Usage: body.off();
+            // 任何一个参数都没有
+            // 解绑所有事件
             if (!eventType) {
                 for (var type in data.handlers) {
                     removeType(type);
@@ -299,7 +302,7 @@ var $ = (function () {
             var handlers = data.handlers[eventType];
             if (!handlers) return;
 
-            // Remove all handlers from one event type:
+            // 解绑某个事件下的所有回调
             // Usage: body.off("click")
             if (!fn) {
                 removeType(eventType);
@@ -307,7 +310,7 @@ var $ = (function () {
             }
 
 
-            // Remove one specified handler
+            // 解绑某个事件的指定回调
             // Usage: body.off("click", fn);
             if (fn.uuid) {
                 for (var i = 0; i < handlers.length; i++) {
@@ -321,12 +324,13 @@ var $ = (function () {
         clear: function (eventType) {
             var el = this.el
             var data = _e.getData(el);
-            // if not equal to zero?
+            
+            // 如果该元素的某种事件的回调函数已经为空，那么删除该元素的dispatcher的handler
             if (data.handlers[eventType].length === 0) {
                 delete data.handlers[eventType];
-                for (var i = 0; i < el.length; i++) {
-                    el[i].removeEventListener(eventType, data.dispatcher, false);    
-                }
+                el.forEach(function (el) {
+                    el.removeEventListener(eventType, data.dispatcher, false);
+                })
             }
 
             if (Helper.isEmptyObject(data.handlers)) {
@@ -343,16 +347,24 @@ var $ = (function () {
     var module = function (selector) {
         var el;
 
-        // if selector is event target
+        // 如果传入参数是单个node节点/target
         if (selector.nodeType && selector.nodeType === 1) {
             el = [selector];
-        // if selector is query string
+        // 如果传入参数是字符串
         } else if (typeof selector === "string") {
-            el = document.querySelectorAll(selector);
+            // 如果是无效选择器 querySelectorAll 会返回报错或者undefined
+            try {
+                el = Array.prototype.slice.call(document.querySelectorAll(selector));    
+            } catch (e) {
+                el = [];
+            }
+
+        // 如果传入参数是NodeList
         } else if (Object.prototype.toString.call(selector) === '[object HTMLCollection]' || Object.prototype.toString.call(selector) === '[object NodeList]' ) {
             el = Array.prototype.slice.call(selector);
         } else {
-            return {};
+            // 如果无参数传入
+            return [];
         }
 
         return  new _$(el);
