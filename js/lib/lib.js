@@ -51,23 +51,24 @@ var $ = (function () {
 
             return false;
         },
-        isBoolen: function (obj) {
-            if (Object.prototype.toString.call(obj) == "[object Boolen]") {
+        isBoolean: function (obj) {
+            if (Object.prototype.toString.call(obj) == "[object Boolean]") {
                 return true;
             }
 
             return false;
         },
         isEmptyObject: function (object) {
-            for (var prop in object) {
+            if (this.isObject(object)) {
+                for (var prop in object) {
+                    return false;
+                }
+
+                return true;
+
+            } else {
                 return false;
             }
-
-            return true;
-        },
-        isEmptyString: function (str) {
-            if (str) return false;
-            return true;
         },
         // http://www.quirksmode.org/js/findpos.html
         findOffset: function (obj) {
@@ -190,9 +191,10 @@ var $ = (function () {
             }  
             
             // 情况三： 传入两个以上参数
+            var args = arguments;
             if (arguments.length >= 2) {
                 this.el.forEach(function (el) {
-                    getStyle(el, arguments[0], arguments[1]);
+                    setStyle(el, args[0], args[1]);
                 });
             }                                
         },
@@ -210,7 +212,7 @@ var $ = (function () {
                     return;
                 }
 
-                if (!Helper.isString(value) || !Helper.isNumber(value) || !Helper.isBoolen(value)) {
+                if (!Helper.isString(value) && !Helper.isNumber(value) && !Helper.isBoolean(value)) {
                     return;
                 }
 
@@ -232,10 +234,11 @@ var $ = (function () {
                 return getAttr(this.el[0], arguments[0]);
             }
 
+            var args = arguments;
             // 情况三： 传入两个以上参数
             if (arguments.length >= 2) {
                 this.el.forEach(function (el) {
-                    setAttr(el, arguments[0], arguments[1]);
+                    setAttr(el, args[0], args[1]);
                 });
             }
         },
@@ -243,7 +246,8 @@ var $ = (function () {
             var res = true;
             this.el.forEach(function (el, index) {
                 if (el.classList) {
-                    if (!el.classList.contains(name))
+                    // 如果有多个元素，如有有一个没有则视为失败
+                    if (!el.classList.contains(clsName))
                         res = false;
                 } else {
                     var newClassName = "";
@@ -455,15 +459,17 @@ var $ = (function () {
 
     var module = function (selector) {
         var el;
-
+        
+        if (!selector) {
+            el = [];
         // 如果传入参数是单个node节点/target
-        if (selector.nodeType && selector.nodeType === 1) {
+        } else if (selector && selector.nodeType && selector.nodeType === 1) {
             el = [selector];
         // 如果传入参数是字符串
         } else if (typeof selector === "string") {
             // 如果是无效选择器 querySelectorAll 会返回报错或者undefined
             try {
-                el = Array.prototype.slice.call(document.querySelectorAll(selector));    
+                el = Array.prototype.slice.call(document.querySelectorAll(selector));
             } catch (e) {
                 el = [];
             }
@@ -474,9 +480,6 @@ var $ = (function () {
         // 如果传入的是一个包装过的对象
         } else if (selector.version) {
             el = selector.el;
-        } else {
-            // 如果无参数传入
-            return [];
         }
 
         return  new _$(el);
