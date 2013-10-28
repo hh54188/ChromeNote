@@ -32,13 +32,20 @@ var $ = (function () {
         },
         isObject: function (obj) {
             if (Object.prototype.toString.call(obj) == "[object Object]") {
-                return true;
-            }
+                return true
+;            }
 
             return false;
         },
         isString: function (obj) {
             if (Object.prototype.toString.call(obj) == "[object String]") {
+                return true;
+            }
+
+            return false;
+        },
+        isFunction: function (obj) {
+            if (Object.prototype.toString.call(obj) == "[object Function]") {
                 return true;
             }
 
@@ -398,63 +405,86 @@ var $ = (function () {
                 Data.removeData(data);
             }
         },
-        animSub: function (topics) {
+        animSub: function (topic) {
 
-            var el = this.el;
+            // var el = this.el;
+            // var data = Data.getData(el);
+            // if (!data.animate) data.animate = {};
+
+            // data.animate = topics;
+
+            var el = this;
             var data = Data.getData(el);
             if (!data.animate) data.animate = {};
 
-            data.animate = topics;
-        },
-        _execAnim: function (step) {
-            var execInnerStep = function (phase) {
-                if (phase.removedClass && phase.removedClass.length) {
-                    phase.removedClass.forEach(function (cls) {
-                        el.removeClass(cls);
-                    })
-                }
+            data.animate[topic] = [];
 
-                if (phase.addedClass && phase.addedClass.length) {
-                    phase.addedClass.forEach(function (cls) {
-                        el.addClass(cls);
-                    })
-                }
+            var exports ={
+                anim_que: data.animate[topic],
+                queue: function (fn) {
+                    this.anim_que.push({
+                        fn: fn
+                    });
+                    return this;
+                },
+                anim: function () {
+                    var self, fn;
 
-                if (phase.callback) {
-                    phase.callback.call(el);
-                }
+                    if (Helper.isFunction(arguments[0])) {
+                        self = el;
+                        fn = arguments[0];
+                    } else {
+                        self = arguments[0];
+                        fn = arguments[1];
+                    }
+
+                    fn = fn.bind(self);
+                    this.anim_que.push({
+                        type: "animate",
+                        target: self,
+                        fn: fn
+                    });
+                    return this;
+                }        
             }
 
-            var el = step.elem,
-                before = step.before,
-                animateClass = step.animateClass,
-                after =  step.after;
-
-            if (!Helper.isEmptyObject(before)) {
-                execInnerStep(before);
-            }
-
-            el.off("webkitAnimationStart");
-            el.off("webkitAnimationEnd");
-
-            el.on("webkitAnimationEnd", function (e) {
-                if (!Helper.isEmptyObject(after)) {
-                    execInnerStep(after);
-                }
-            });
-
-            if (animateClass) el.addClass(animateClass);
+            return exports;            
         },
         animPub: function (topic) {
-            var el = this.el;
+            var el = this;
             var data = Data.getData(el);
             var _this = this;
+
             if (!data || !data.animate) return;
             var queue = data.animate[topic];
-            queue.forEach(function (step, index) {
-                _this._execAnim(step);
-            })
-        },        
+
+            var pointer = 0;
+
+            (function exec() {
+                var item = queue[pointer++];
+                if (!item) return;
+
+                var fn = item.fn;
+
+                if (item.type === "animate") {
+                    
+                    var target = item.target;
+
+                    debugger
+                    target.on("webkitAnimationEnd", function () {
+                        target.off("webkitAnimationEnd");
+                        exec();
+                    });
+
+                    fn();
+
+                } else {
+                    fn();
+                    exec()
+                }
+
+            })();
+        }    
     }
 
     var module = function (selector) {

@@ -183,74 +183,59 @@ var CommandMenuView = (function () {
 
         eventBind();
 
-        doms.setting.board.animSub({
-            open: [
-                {
-                    elem: doms.setting.board,
-                    before: {
-                        removedClass: ["chromeNote-board-setting-hide"],
-                        addedClass: ["chromeNote-board-setting-show"]
-                    }
-                },
-                {
-                    elem: doms.widget.wrap,
-                    before: {
-                        addedClass: ["chromeNote-blur"]
-                    }
-                }
-            ],
-            close: [
-                {
-                    elem: doms.setting.board,
-                    before: {
-                        removedClass: ["chromeNote-board-setting-show"],
-                        addedClass: ["chromeNote-board-setting-hide"]
-                    }
-                },
-                {
-                    elem: doms.widget.wrap,
-                    before: {
-                        removedClass: ["chromeNote-blur"]
-                    }
-                }
-            ]
-        })
-        
-        doms.widget.wrap.animSub({
-            open: [
-                {
-                    elem: doms.world,
-                    before: {
-                        removedClass: ["chromeNote-hide"],
-                    }
-                },
-                {
-                    elem: doms.widget.wrap,
-                    before: {
-                        removedClass: ["chromeNote-transform-scale-point1", "animateScaleDown"],
-                    },
-                    animateClass: "animateScaleUp",
-                    after: {
-                        addedClass: ["chromeNote-transform-scale-one"]
-                    }
-                }
-            ],
-            close: [
-                {
-                    elem: doms.widget.wrap,
-                    before: {
-                        removedClass: ["chromeNote-transform-scale-one", "animateScaleUp"]
-                    },
-                    animateClass: "animateScaleDown",
-                    after: {
-                        addedClass: ["chromeNote-transform-scale-point1"],
-                        callback: function () {
-                            doms.world.addClass("chromeNote-hide");
-                        }
-                    }
-                },
-            ]
-        })
+        doms.setting.board.animSub("open")
+            .queue(function () {
+                doms.setting.board.removeClass("chromeNote-board-setting-hide");
+                doms.setting.board.addClass("chromeNote-board-setting-show");
+            })
+            .queue(function () {
+                doms.widget.wrap.addClass("chromeNote-blur");
+            })
+
+        doms.setting.board.animSub("close")
+            .queue(function () {
+                doms.setting.board.removeClass("chromeNote-board-setting-show");
+                doms.setting.board.addClass("chromeNote-board-setting-hide");
+            })
+            .queue(function () {
+                doms.widget.wrap.removeClass("chromeNote-blur");
+            })
+
+        doms.widget.wrap.animSub("open")
+            .queue(function () {
+                doms.world.removeClass("chromeNote-hide")
+                log("open 001");
+            })
+            .queue(function () {
+                doms.widget.wrap.removeClass("chromeNote-transform-scale-point1 animateScaleDown");
+                log("open 002");
+            })
+            .anim(function () {
+                doms.widget.wrap.addClass("animateScaleUp");
+                log("open 003");
+            })
+            .queue(function () {
+                doms.widget.wrap.addClass("chromeNote-transform-scale-one")
+                log("open 004");
+            })
+
+        doms.widget.wrap.animSub("close")
+            .queue(function () {
+                doms.widget.wrap.removeClass("chromeNote-transform-scale-one animateScaleUp");
+                log("close 001");
+            })
+            .anim(function () {
+                doms.widget.wrap.addClass("animateScaleDown");
+                log("close 002");
+            })
+            .queue(function () {
+                doms.widget.wrap.addClass("chromeNote-transform-scale-point1");
+                log("close 003");
+            })
+            .queue(function () {
+                doms.world.addClass("chromeNote-hide");
+                log("close 004");
+            })
 
         initialize = true;
     };
