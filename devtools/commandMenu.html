@@ -5,12 +5,17 @@
     <link rel="stylesheet" type="text/css" href="../css/font-awesome/css/font-awesome.css">    
     <link rel="stylesheet" type="text/css" href="../css/commandMenu/basic.css">
     <link rel="stylesheet" type="text/css" href="../css/commandMenu/theme.css">
-    <link rel="stylesheet" type="text/css" href="../css/transform.css">
+    <link rel="stylesheet" type="text/css" href="../css/commandMenu/transform.css">
     <script type="text/javascript" src="../js/lib/lib.js"></script>
     <script type="text/javascript" src="../js/View/commandmenu.js"></script>
+    <style type="text/css">
+        body {
+            background: url("../PSD/960grid.png");
+        }
+    </style>
 </head>
 <body class="theme-white">
-    <div id="article">
+    <div id="article" style="opacity: .3;">
 There is a lot of duplication due to vendor prefixes - until the specification if finalised, this will persist. If this bothers you, there are various tools such as CSS Scaffold, LESS, or my preference - SASS, that allow you to define mixins to avoid repetitive code.
 
 Another approach is simply to write the CSS without the prefixes, then use Lea Verou's -prefix-free to add them in at runtime.
@@ -51,41 +56,35 @@ Whenever any property changes, then it will animate instead of changing directly
 
 To see the difference in speed, have a look at the speed test.
     </div>
-<!--     <div id="chromeNote-threeDWorld" class="chromeNote-setup-3d-perspective">
-        <div id="chromeNote-tip-note" class="chromeNote-tip chromeNote-transform-transition chromeNote-setup-3d-style chromeNote-board-arrow-left">
-            <p>Write a sticky note on this page:)</p>
-        </div>
-        <div id="chromeNote-cmdMenu-mask" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-scale-point1 chromeNote-hide">
-            <div id="chromeNote-cmdMenu-wrap" class="chromeNote-decorate-circle chromeNote-setup-3d-style">
-                <div id="chromeNote-cmdMenu-btn" class="chromeNote-decorate-circle chromeNote-setup-3d-style chromeNote-transform-translateZ">
-                    <i class="chromeNote-cmdMenu-menuItem-text icon-off"></i>
-                </div>
-                <ul>
-                    <li class="chromeNote-cmdMenu-menuItem-outerWrap chromeNote-setup-3d-style chromeNote-transform-origin-100and100 chromeNote-transform-transition">
-                        <a id="chromeNote-cmdMenu-menuItem-write" class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-x72y21" href="javascript:void(0)">
-                            <i class="chromeNote-cmdMenu-menuItem-text icon-pencil"></i>
-                        </a>
-                    </li>
-                    <li class="chromeNote-cmdMenu-menuItem-outerWrap chromeNote-setup-3d-style chromeNote-transform-origin-100and100 chromeNote-transform-transition">
-                        <a id="chromeNote-cmdMenu-menuItem-setting" class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-x72y21" href="javascript:void(0)">
-                            <i class="chromeNote-cmdMenu-menuItem-text icon-gear"></i>
-                        </a>
-                    </li>
-                    <li class="chromeNote-cmdMenu-menuItem-outerWrap chromeNote-setup-3d-style chromeNote-transform-origin-100and100 chromeNote-transform-transition">
-                        <a id="chromeNote-cmdMenu-menuItem-mark" class="chromeNote-cmdMenu-menuItem-innerWrap chromeNote-decorate-circle chromeNote-transform-transition chromeNote-transform-origin-x72y21" href="javascript:void(0)">
-                            <i class="chromeNote-cmdMenu-menuItem-text icon-bookmark"></i>
-                        </a>
-                    </li>                    
-                </ul>
-            </div>
-        </div>
-    </div> -->
 </body>
 <script type="text/javascript">
     
 
     document.addEventListener("dblclick", function (e) {
         CommandMenuView.open(e);
+    })
+
+    function getSelectionHtml() {
+        var html = "";
+        if (typeof window.getSelection != "undefined") {
+            var sel = window.getSelection();
+            oRange = sel.getRangeAt(0); //get the text range
+            console.log(oRange.getBoundingClientRect());
+            console.log(oRange.getClientRects());
+            if (sel.rangeCount) {
+                var container = document.createElement("div");
+                for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                    container.appendChild(sel.getRangeAt(i).cloneContents());
+                }
+                html = container.innerHTML;
+            }
+        }
+
+        return html;
+    }
+
+    document.addEventListener("mouseup", function (e) {
+        console.log(getSelectionHtml())
     })
 
 

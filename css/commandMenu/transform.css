@@ -1,0 +1,108 @@
+.chromeNote-setup-3d-perspective {
+    -webkit-perspective: 1000px;
+}
+
+.chromeNote-setup-3d-style {
+    -webkit-transform-style: preserve-3d;
+}
+
+.chromeNote-3d-flipStatus {
+    overflow: visible;
+    -webkit-user-select: none;
+}
+.chromeNote-3d-flip-backSide {
+    -webkit-transform: rotateY(180deg);
+}
+
+.chromeNote-3d-backface-hidden {
+    -webkit-backface-visibility: hidden; 
+}
+
+.chromeNote-transform-origin-100and100 {
+    -webkit-transform-origin: 100% 100%;
+}
+
+.chromeNote-transform-translateZ {
+    -webkit-transform: translateZ(1px);
+}
+
+.chromeNote-transform-scale-point1 {
+    -webkit-transform: scale(0.1);
+}
+
+.chromeNote-transform-scale-one {
+    -webkit-transform: scale(1);
+}
+
+.chromeNote-transform-transition {
+    -webkit-transition: all 0.3s linear;
+}
+
+.chromeNote-transform-transition-point8-easeOutQuint {
+    -webkit-transition: all 0.8s cubic-bezier(0.230, 1.000, 0.320, 1.000);
+}
+
+.chromeNote-transform-origin-x67y21 {
+    -webkit-transform-origin: 67px 21px;
+}
+
+.chromeNote-transform-origin-x0y50 {
+    -webkit-transform-origin: left 50%;   
+}
+
+.chromeNote-transform-rotateY-90deg {
+    -webkit-transform: rotateY(90deg);
+}
+
+.chromeNote-transform-rotateY-0deg {
+    -webkit-transform: rotateY(0deg);
+}
+
+
+.animateScaleUp {
+    -webkit-animation-name: scaleUp;
+    -webkit-animation-duration: 0.3s;
+    /* easeOutBack: */
+    -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+    -webkit-animation-delay: 0s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-direction: normal;
+}
+
+@-webkit-keyframes scaleUp {
+    from {
+      -webkit-transform: scale(0.1);
+    }
+    to {
+      -webkit-transform: scale(1);
+    }
+}
+
+.animateScaleDown {
+    -webkit-animation-name: scaleDown;
+    -webkit-animation-duration: 0.3s;
+    /* easeInBack: */
+    -webkit-animation-timing-function: cubic-bezier(0.600, -0.280, 0.735, 0.045); 
+    -webkit-animation-delay: 0s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-direction: normal;
+}
+
+@-webkit-keyframes scaleDown {
+    from {
+      -webkit-transform: scale(1);
+    }
+    to {
+      -webkit-transform: scale(0.1);
+    }
+}
+
+.chromeNote-board-setting-hide {
+    opacity: 0;
+    -webkit-transform: rotateY(90deg) translateZ(0px);
+}
+
+.chromeNote-board-setting-show {
+    opacity: 1;
+    -webkit-transform: rotateY(0deg) translateZ(0px);
+}

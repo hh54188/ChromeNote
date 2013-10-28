@@ -1,25 +1,3 @@
-/*
-    现有方法：
-    $.: 
-        isArray
-        isEmptyObject
-    $():.
-        // Basic
-        getTargetId        
-        getTargetType
-        addClass
-        removeClass
-
-        // event:
-        on
-        off() | off("click") | off("click", fn)
-
-        // Animate:
-        animSub(topics)
-        animPub(topic)
-
-*/
-
 var $ = (function () {
 
     // Helper:
@@ -33,7 +11,7 @@ var $ = (function () {
         isObject: function (obj) {
             if (Object.prototype.toString.call(obj) == "[object Object]") {
                 return true
-;            }
+            }
 
             return false;
         },
@@ -470,7 +448,6 @@ var $ = (function () {
                     
                     var target = item.target;
 
-                    debugger
                     target.on("webkitAnimationEnd", function () {
                         target.off("webkitAnimationEnd");
                         exec();

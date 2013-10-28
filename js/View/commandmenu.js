@@ -63,7 +63,7 @@ var CommandMenuView = (function () {
         var elems = elem.querySelectorAll(".chromeNote-cmdMenu-subMenuItem");
         if (!elems) return;
         var len = elems.length;
-        // debugger
+
         var eachAngle = total / len;
         for (var i = 0; i < elems.length; i++) {
             var el = elems[i];
@@ -204,37 +204,29 @@ var CommandMenuView = (function () {
         doms.widget.wrap.animSub("open")
             .queue(function () {
                 doms.world.removeClass("chromeNote-hide")
-                log("open 001");
             })
             .queue(function () {
                 doms.widget.wrap.removeClass("chromeNote-transform-scale-point1 animateScaleDown");
-                log("open 002");
             })
             .anim(function () {
                 doms.widget.wrap.addClass("animateScaleUp");
-                log("open 003");
             })
             .queue(function () {
                 doms.widget.wrap.addClass("chromeNote-transform-scale-one")
-                log("open 004");
             })
 
         doms.widget.wrap.animSub("close")
             .queue(function () {
                 doms.widget.wrap.removeClass("chromeNote-transform-scale-one animateScaleUp");
-                log("close 001");
             })
             .anim(function () {
                 doms.widget.wrap.addClass("animateScaleDown");
-                log("close 002");
             })
             .queue(function () {
                 doms.widget.wrap.addClass("chromeNote-transform-scale-point1");
-                log("close 003");
             })
             .queue(function () {
                 doms.world.addClass("chromeNote-hide");
-                log("close 004");
             })
 
         initialize = true;
