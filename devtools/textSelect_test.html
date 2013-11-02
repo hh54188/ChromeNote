@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Select</title>
+    <style type="text/css">
+        * { margin: 0; padding: 0;}
+        body {
+            background: url("../PSD/960grid.png");
+        }    
+        .p1 {
+            position: absolute;
+            left: 100px;
+            top: 30px;
+
+            padding: 50px;
+
+            width: 500px;
+            height: 200px;
+            text-indent: 40px;
+        }
+        .mask {
+            background: white;
+            box-shadow: 0 0 10px black;
+            position: fixed;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <p class="p1">Empty border-boxes are completely ignored. If all the element's border-boxes are empty, then a rectangle is returned with a width and height of zero and where the top and left are the top-left of the border-box for the first CSS box (in content order) for the element.<br><br>The amount of scrolling that has been done of the viewport area (or any other scrollable element) is taken into account when computing the bounding rectangle. This means that the top and left property change their values as soon as the scrolling position changes (so their values are relative to the viewport and not absolute). If this is not the desired behaviour just add the current scrolling position to the top and left property (via window.scrollX and window.scrollY) to get constant values independent from the current scrolling position.</p>
+
+    <div id="target"></div>
+</body>
+<script type="text/javascript">
+    document.addEventListener("mouseup", function () {
+        var selection = window.getSelection();
+        var selectRange = selection.getRangeAt(0);
+
+        var cloneContents = selectRange.cloneContents(); //  DocumentFragment
+
+        var boundingClientRect = selectRange.getBoundingClientRect();
+        var clientRect = selectRange.getClientRects();
+
+        var mask = document.createElement("div");
+        mask.classList.add("mask");
+
+        mask.style.left = boundingClientRect.left + "px";
+        mask.style.top = boundingClientRect.top + "px";
+        mask.style.height = boundingClientRect.height + "px";
+        mask.style.width = boundingClientRect.width + "px";
+
+        var already = document.querySelector(".mask");
+        if (already) {
+            already.parentNode.removeChild(already);    
+        }
+        
+        document.querySelector("body").appendChild(mask);
+
+        console.clear();
+        console.log("cloneContents", cloneContents)
+        console.log("selection", selection);
+        console.log("selectRange", selectRange);
+        console.log("boundingClientRect", boundingClientRect);
+        console.log("clientRect", clientRect)
+    })
+</script>
+</html>
