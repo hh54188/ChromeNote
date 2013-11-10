@@ -19,7 +19,10 @@ var Select = (function () {
         }
 
         curRange = selectRange;
-        return curRange;
+        return {
+            selection: selection,
+            range: curRange
+        }
 
     }
 

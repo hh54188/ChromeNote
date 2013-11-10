@@ -33,10 +33,52 @@
 <script type="text/javascript">
 
     document.addEventListener("mouseup", function () {
-        var range = Select.getSelection();
+        var selection = Select.getSelection();
+        var range = selection.range;
+        window.arr = [];
         if (range) {
-            console.log(range);
-            Select.highlight();
+            arr.push(range);
+            var ancestorContainer = range.commonAncestorContainer;
+            // var walker = document.createTreeWalker(ancestorContainer, NodeFilter.SHOW_TEXT, null, false);
+            // var node;
+            // var textNodes = [];
+
+            // console.log(ancestorContainer);
+            // while(node = walker.nextNode()) {
+            //     textNodes.push({
+            //         node: node,
+            //         value: node.nodeValue
+            //     });
+            // }            
+
+            // console.log(textNodes);
+
+            var content = range.cloneContents();
+            var childNodes = content.childNodes;
+            // for (var i = 0; i < childNodes.length; i++) {
+            //     for (var j = 0; j < textNodes.length; j++) {
+            //         if (textNodes[j].value.indexOf(childNodes[i].textContent) > -1) {
+            //             var range = document.createRange();
+            //             console.log(textNodes[j]);
+            //             range.selectNode(textNodes[j]);
+            //             var surNode = document.createElement("em");
+            //             surNode.style.backgroundColor = "yellow";
+            //             range.surroundContents(surNode);
+            //         }
+            //     }
+            //     console.log(childNodes[i], childNodes[i].textContent, childNodes[i].nodeType);
+            // }
+            
+            document.designMode = "on";
+            var change = document.execCommand("backColor", false, "yellow");
+            document.designMode = "off";
+
+            // window.clearSelection = function () {
+            //     arr.forEach(function (sel) {
+            //         sel.removeAllRanges();
+            //     })          
+            // }
+            selection.selection.removeAllRanges();
         }
     })
 </script>
