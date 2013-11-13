@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        body {
+            font-family: "Consolas", "Menlo", "Monaco", 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New';
+        }
+        #editor {
+            padding: 5px;
+            width: 300px;
+            min-height: 20px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-cmd" data-command="bold" data-command-param="">B</button>
+    <button class="btn-cmd" data-command="underline" data-command-param="">U</button>
+    <button class="btn-cmd" data-command="italic" data-command-param="">I</button>
+    <div id="editor" contenteditable="true"></div>
+
+    <script type="text/javascript">
+        var editor = document.querySelector("#editor");
+        var btns = document.querySelectorAll(".btn-cmd");
+
+        editor.addEventListener("mouseup", function () {
+            var range = window.getSelection().getRangeAt(0);
+            if (range.collapsed) return;
+
+            var parent = range.commonAncestorContainer;
+            var parentNode = parent.parentNode;
+
+            console.log("ancestor container------", parent);
+            console.log("parentNode------", parentNode);
+        })
+
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+                var command = this.getAttribute("data-command");
+                var param = this.getAttribute("data-command-param");
+                document.execCommand(command, false, param);
+            });
+        }
+    </script>
+</body>
+</html>
