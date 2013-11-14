@@ -28,7 +28,8 @@
     <button class="btn-cmd" data-command="underline" data-command-param="">U</button>
     <button class="btn-cmd" data-command="italic" data-command-param="">I</button>
     <button class="btn-cmd" data-command="insertUnorderedList" data-command-param="">List</button>
-    <button class="btn-cmd" data-command="formatBlock" data-command-param="pre">Pre</button>
+<!--    <button class="btn-cmd" data-command="formatBlock" data-command-param="pre">Pre</button>-->
+    <button class="btn-cmd" data-command="formatBlock" data-command-param="blockquote">Quote</button>
 
     <div id="editor" contenteditable="true">this is a test</div>
 
@@ -45,7 +46,8 @@
                 "b": document.querySelector("[data-command=bold]"),
                 "u": document.querySelector("[data-command=underline]"),
                 "i": document.querySelector("[data-command=italic]"),
-                "pre": document.querySelector("[data-command=formatBlock]")
+//                "pre": document.querySelector("[data-command=formatBlock]")
+                "blockquote": document.querySelector("[data-command=formatBlock]")
             }
 
             for (var key in obj) {
