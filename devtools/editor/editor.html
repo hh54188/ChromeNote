@@ -2,6 +2,7 @@
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" type="text/css" href="bootstrap.css">
     <style type="text/css">
         body {
             font-family: "Consolas", "Menlo", "Monaco", 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New';
@@ -12,34 +13,100 @@
             min-height: 20px;
             border: 1px solid black;
         }
+        button {
+            border: none;
+            background: none;
+            outline: none;
+        }
+        button.pressed {
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body>
     <button class="btn-cmd" data-command="bold" data-command-param="">B</button>
     <button class="btn-cmd" data-command="underline" data-command-param="">U</button>
     <button class="btn-cmd" data-command="italic" data-command-param="">I</button>
-    <div id="editor" contenteditable="true"></div>
+    <button class="btn-cmd" data-command="insertUnorderedList" data-command-param="">List</button>
+    <button class="btn-cmd" data-command="formatBlock" data-command-param="pre">Pre</button>
+
+    <div id="editor" contenteditable="true">this is a test</div>
 
     <script type="text/javascript">
         var editor = document.querySelector("#editor");
         var btns = document.querySelectorAll(".btn-cmd");
 
-        editor.addEventListener("mouseup", function () {
+        var press = function (tagArr) {
+            if (!tagArr || !tagArr.length) tagArr = ["none"];
+
+            console.log("tag name--->", tagArr);
+
+            var obj = {
+                "b": document.querySelector("[data-command=bold]"),
+                "u": document.querySelector("[data-command=underline]"),
+                "i": document.querySelector("[data-command=italic]"),
+                "pre": document.querySelector("[data-command=formatBlock]")
+            }
+
+            for (var key in obj) {
+                obj[key].classList.remove("pressed");
+                for (var i = 0; i < tagArr.length; i++) {
+                    if (key == tagArr[i]) {
+                        obj[key].classList.add("pressed");
+                    }
+                }
+            }
+        }
+
+        var editorHandler = function () {
+            console.clear();
+
+            var topParent = editor;
+            
             var range = window.getSelection().getRangeAt(0);
-            if (range.collapsed) return;
 
-            var parent = range.commonAncestorContainer;
-            var parentNode = parent.parentNode;
+            console.log("Range------>", range);
+            console.log("Range's textContent------>", range.cloneContents().textContent);
 
-            console.log("ancestor container------", parent);
-            console.log("parentNode------", parentNode);
-        })
+            if (range.commonAncestorContainer == topParent) {
+                var parent = topParent;
+            } else {
+                var parent = range.commonAncestorContainer;
+                if (parent.nodeType == 3) {
+                    parent = parent.parentElement;
+                }
+            }
+
+            console.log("Range's parent------>", parent);
+
+            var tagArr = [];
+            while (parent != topParent) {
+                tagArr.push(parent.tagName.toLowerCase());
+                parent = parent.parentNode;
+            }
+            press(tagArr);
+        }
+
+        editor.addEventListener("keyup", editorHandler);
+        editor.addEventListener("mouseup", editorHandler);
+        editor.addEventListener("click", editorHandler);
 
         for (var i = 0; i < btns.length; i++) {
             btns[i].addEventListener("click", function () {
+                this.classList.toggle("pressed");
+
+                // if (this.classList.contains("pressed")) {
+                //     this.classList.remove("pressed");
+                // } else {
+                //     this.classList.add("pressed");
+                // }
+
                 var command = this.getAttribute("data-command");
                 var param = this.getAttribute("data-command-param");
                 document.execCommand(command, false, param);
+                editor.focus();
+
+                // editorHandler();
             });
         }
     </script>
