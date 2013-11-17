@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css"> -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
-    
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
     <script src="js/wysihtml5-0.3.0.min.js" type="text/javascript"></script>
     <script src="js/myrules.js" type="text/javascript"></script>
     <style type="text/css">
@@ -30,15 +30,24 @@
             margin-bottom: 5px;
             width: 100%;
         }
+        .editor-area {
+            font-size: 12px;
+        }
         .editor-container {
             border: 1px solid #adadad;
             margin: 20px;
             padding: 5px 8px 5px;
             width: 400px;
+            position: relative;
         }
-        .editor-textarea {
+        .editor-container iframe {
             width: 100%;
-            margin-bottom: 5px;
+            min-height: 50px;
+            border: 1px solid #adadad;
+            padding: 2px;
+        }
+        .toolbar-editor-btn:nth-of-type(3) {
+            margin: 0 5px;
         }
     </style>
 </head>
@@ -64,7 +73,7 @@
             <div class="btn-group editor-group ">
                 <button data-wysihtml5-command="createLink" class="btn btn-default btn-sm" >
                     <i class="fa fa-link"></i>
-                </button>        
+                </button>                      
                 <div data-wysihtml5-dialog="createLink" style="display:none;">
                     <label>
                         Link:
@@ -95,21 +104,105 @@
                 </button>            
             </div>                
         </div>
-        <textarea class="editor-textarea" id="wysihtml5-textarea" placeholder="Enter your text ..." autofocus></textarea>
-        <div class="btn-group">
-            <ul class="dropdown-menu">
-                <li><a href="#">Dropdown link</a></li>
-                <li><a href="#">Dropdown link</a></li>
-            </ul>
+        <textarea id="wysihtml5-textarea" style="height: 50px; width: 100%; margin-bottom: 5px;" placeholder="Enter your text ..." autofocus></textarea>
+        <div id="editor-toolbar">
+            <button id="btn-show-editor" class="btn btn-default btn-xs pull-left">Show Rich Editor</button>
+            <button id="btn-hide-editor" style="display:none;" class="btn btn-default btn-xs pull-left">hide Rich Editor</button>            
+            <button class="btn btn-default btn-xs pull-right toolbar-editor-btn">
+                <i class="fa fa-expand"></i>
+            </button>            
+            <button class="btn btn-default btn-xs pull-right toolbar-editor-btn">
+                <i class="fa fa-keyboard-o"></i>
+            </button>
+            <div class="clearfix"></div>
         </div>
-        <button class="btn btn-default btn-xs">Show Rich Editor</button>
-        <button class="btn btn-default btn-xs">Hide Rich Editor</button>
     </div>
     <script type="text/javascript">
-        var editor = new wysihtml5.Editor("wysihtml5-textarea", {
-            toolbar: "wysihtml5-toolbar", 
-            parserRules: myrules
+        var id = "wysihtml5";
+        var editor = new wysihtml5.Editor(id + "-textarea", {
+            style: false,
+            toolbar: id + "-toolbar", 
+            composerClassName: "editor-area",
+            parserRules: myrules,
+            stylesheets: ["css/bootstrap.min.css"]
         });
+        var pressedKey = [];
+
+        var shortCut = function (keys) {
+
+            var map = {
+                submit: [17, 13]
+            }
+
+            for (var act in map) {
+                var actKey = map[act];
+
+                if (actKey.length == keys.length) {
+                    for (var i = 0; i < actKey.length; i++) {
+                        if (keys.indexOf(actKey[i]) <= -1) {
+                            break;
+                        }
+                    }
+                    return act;
+                }
+            }
+            return false;
+        }
+
+        editor.on("load", function () {
+
+            this.toolbar.hide();
+            editor.composer.doc.body.style.fontSize = "12px";
+
+            $(editor.composer.doc.body).on("keydown", function (e) {
+                if (pressedKey.length && pressedKey[pressedKey.length - 1] == e.keyCode) {
+                    return;
+                }
+                pressedKey.push(e.keyCode);
+                var act = shortCut(pressedKey);
+                if (act == "submit") {
+                    return false;    
+                }
+                
+            }).on("keyup", function (e) {
+                pressedKey.forEach(function (el, index) {
+                    if (el == e.keyCode) {
+                        pressedKey.splice(index--, 1);
+                    }
+                })
+            });
+
+            $("#btn-show-editor").on("click", function () {
+
+            })
+
+            $("#btn-hide-editor").on("click", function () {
+
+            })            
+        });
+        
+
+        var getHTML = function () {
+            return editor.composer.getValue();
+        }
+
+        var max = function () {}
+
+        var min = function () {}
+
+        var richModeOn = function () {
+            editor.toolbar.show();
+            editor.composer.iframe.style.height = "100px";
+            $(this).hide();
+            $("#btn-hide-editor").show();
+        }
+
+        var richModeOff = function () {
+            editor.toolbar.hide();
+            editor.composer.iframe.style.height = "50px";
+            $(this).hide();
+            $("#btn-show-editor").show();            
+        }
     </script>
 </body>
 
