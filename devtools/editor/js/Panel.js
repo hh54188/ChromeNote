@@ -8,16 +8,20 @@ var Panel = (function () {
         }
     }
 
-    GlobalEvent.on("editor:focus", function (data) {
-        console.log("FOCUS", doms.btn.submit);
+    doms.btn.submit.on("click", function () {
+        Editor.fire("submit");
+    });
+
+    var enableSubmit = function () {
         doms.btn.submit.show();
-        doms.btn.config.hide();
-    });
+    }
 
-    GlobalEvent.on("editor:blur", function (data) {
-        console.log("BLUR", doms.btn.submit);
+    var disableSubmit = function () {
         doms.btn.submit.hide();
-        doms.btn.config.show();
-    });
+    }
 
+    return {
+        enableSubmit: enableSubmit,
+        disableSubmit: disableSubmit
+    }
 })()

@@ -3,17 +3,25 @@
 
 <head>
     <title></title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css"  href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"  href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/animate-custom.css">
+    <link rel="stylesheet" type="text/css" href="css/arrow.css">
     <!-- Lib -->
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-    <!-- Editor -->
+    <!-- wysihtml5 -->
     <script type="text/javascript" src="js/wysihtml5-0.3.0.min.js"></script>
     <script type="text/javascript" src="js/myrules.js"></script>
     <!-- Utility -->
     <script type="text/javascript" src="js/globalEvent.js"></script>
-    <script type="text/javascript" src="js/Panel.js"></script>
+    <!-- Editor -->
+    <script type="text/javascript" src="js/Editor.js"></script>
+    <!-- Tip -->
+    <script type="text/javascript" src="js/Tip.js"></script>
     <style type="text/css">
+        iframe, button {
+            outline: none;
+        }
         .wysihtml5-action-active, .wysihtml5-command-dialog-opened,
         .wysihtml5-command-active {
           box-shadow: rgba(0, 0, 0, 0.121569) 0px 3px 5px 0px inset;
@@ -37,7 +45,7 @@
             position: fixed;
             right: 5px;
             top: 10px;
-            width: 437px;
+            width: 429px;
         }
         .editor-container {
             border: 1px solid #adadad;
@@ -60,29 +68,33 @@
         .panel-btn-group {
             position: absolute;
             right: 0;
-            width: 32px;
+            width: 24px;
             height: 90px;
         }
         .panel-btn {
-            width: 32px;
-            height: 32px;
-            line-height: 28 px;
-
-            position: absolute;
+            width: 24px;
+            height: 24px;
+            line-height: 21px;
+            font-size: 13px;
 
             border-radius: 50%;
             border: 1px solid #adadad;
+
+            margin-bottom: 6px;
         }
-        .panel-btn-top {
-            top: 0;
-        }
-        .panel-btn-bottom {
-            top: 37px;
+        .tip-item {
+            margin: 10px 0 0 10px;
+            width: 400px;
+            padding: 3px 6px;
+            border: 1px solid #adadad;
         }
     </style>
 </head>
 
 <body>
+    <div class="tip-item arrow_box">
+        This is a test<br>This is another test
+    </div>
     <div class="editor-panel">
         <div class="editor-container">
             <div id="wysihtml5-toolbar" class="editor-toolbar" style="display: none;">
@@ -135,7 +147,7 @@
                     </button>            
                 </div>                
             </div>
-            <textarea id="wysihtml5-textarea" style="height: 50px; width: 100%; margin-bottom: 5px;" placeholder="Enter your text ..." autofocus></textarea>
+            <textarea id="wysihtml5-textarea" style="height: 50px; width: 100%; margin-bottom: 5px;" placeholder="Enter your text ..."></textarea>
             <div id="editor-toolbar">
                 <button id="btn-show-editor" class="btn btn-default btn-xs pull-left">Show Rich Editor</button>
                 <button id="btn-hide-editor" style="display:none;" class="btn btn-default btn-xs pull-left">hide Rich Editor</button>            
@@ -149,124 +161,29 @@
             </div>
         </div>
         <div class="panel-btn-group">
-            <button id="panel-btn-return" class="panel-btn panel-btn-top" style="display:none;"><i class="fa fa-chevron-up"></i></button>
-            <button id="panel-btn-close" class="panel-btn panel-btn-top"><i class="fa fa-times"></i></button>
-            <button id="panel-btn-submit" class="panel-btn panel-btn-bottom" style="display:none;"><i class="fa fa-check"></i></button>
-            <button id="panel-btn-config" class="panel-btn panel-btn-bottom"><i class="fa fa-gear"></i></button>
+            <button id="panel-btn-return" class="panel-btn" style="display:none;"><i class="fa fa-chevron-up"></i></button>
+            <button id="panel-btn-close" class="panel-btn"><i class="fa fa-times"></i></button>
+            <button id="panel-btn-submit" class="panel-btn" style="display:none;"><i class="fa fa-check"></i></button>
+            <button id="panel-btn-config" class="panel-btn fix-to-bottom"><i class="fa fa-gear"></i></button>
         </div>
     </div>
+    <!-- Panel -->
+    <script type="text/javascript" src="js/Panel.js"></script>    
     <script type="text/javascript">
-        var id = "wysihtml5";
-        var editor = new wysihtml5.Editor(id + "-textarea", {
-            style: false,
-            toolbar: id + "-toolbar", 
-            composerClassName: "editor-area",
-            parserRules: myrules,
-            stylesheets: ["css/bootstrap.min.css"]
-        });
-        var pressedKey = [];
-        var richModeOnHeight = 100;
-        var richModeOffHeight = 50;
+        Editor.init();
 
-        var shortCut = function (keys) {
-
-            var map = {
-                submit: [17, 13]
+        Editor.on("change", function () {
+            if (this.composer.getTextContent().trim()) {
+                Panel.enableSubmit();
+            } else {
+                Panel.disableSubmit();
             }
-
-            for (var act in map) {
-                var actKey = map[act];
-
-                if (actKey.length == keys.length) {
-                    for (var i = 0; i < actKey.length; i++) {
-                        if (keys.indexOf(actKey[i]) <= -1) {
-                            break;
-                        }
-                    }
-                    return act;
-                }
-            }
-            return false;
-        }
-
-        // 注册事件
-        editor.on("focus:composer", function () {
-            GlobalEvent.fire("editor:focus", {
-
-            });
         });
 
-        editor.on("blur:composer", function () {
-            GlobalEvent.fire("editor:blur", {
-
-            });
-        });        
-
-        editor.on("load", function () {
-
-            this.toolbar.hide();
-            editor.composer.doc.body.style.fontSize = "12px";
-
-            this.on("focus:composer", function () {
-
-            })
-
-            // 提交快捷键
-            $(editor.composer.doc.body).on("keydown", function (e) {
-                if (pressedKey.length && pressedKey[pressedKey.length - 1] == e.keyCode) {
-                    return;
-                }
-                pressedKey.push(e.keyCode);
-                var act = shortCut(pressedKey);
-                if (act == "submit") {
-                    GlobalEvent.fire("editor:blur", {
-
-                    });                    
-                    return false;    
-                }
-                
-            }).on("keyup", function (e) {
-                pressedKey.forEach(function (el, index) {
-                    if (el == e.keyCode) {
-                        pressedKey.splice(index--, 1);
-                    }
-                })
-            });
-
-            // 富文本编辑切换
-            $("#btn-show-editor").on("click", function () {
-                richModeOn();
-            })
-
-            $("#btn-hide-editor").on("click", function () {
-                richModeOff();
-            })            
-        });
-        
-
-        var getHTML = function () {
-            return editor.composer.getValue();
-        }
-
-        var max = function () {}
-
-        var min = function () {}
-
-        var richModeOn = function () {
-            editor.toolbar.show();
-            editor.composer.iframe.style.height = richModeOnHeight + "px";
-
-            $("#btn-show-editor").hide();
-            $("#btn-hide-editor").show();
-        }
-
-        var richModeOff = function () {
-            editor.toolbar.hide();
-            editor.composer.iframe.style.height = richModeOffHeight + "px";
-
-            $("#btn-hide-editor").hide();
-            $("#btn-show-editor").show();            
-        }
+        Editor.on("submit", function () {
+            var html = this.getValue();
+            $(".tip-item")[0].innerHTML = html;
+        })
     </script>
 </body>
 
