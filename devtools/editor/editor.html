@@ -71,7 +71,7 @@
             width: 24px;
             height: 90px;
         }
-        .panel-btn {
+        .panel-btn, .tip-btn{
             background: white;
             width: 24px;
             height: 24px;
@@ -83,27 +83,39 @@
 
             margin-bottom: 6px;
         }
-        .panel-btn:active {
+        .panel-btn:active, .tip-btn:active {
             background-image: none;
             outline: 0;
             -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
             box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
         }
-        .panel-btn:hover {
+        .panel-btn:hover, .tip-btn:hover {
             background: #ebebeb;
         }
         .tip-item {
-            margin: 10px 0 0 10px;
+            margin: 10px 0 0 50px;
             width: 400px;
             padding: 3px 6px;
             border: 1px solid #adadad;
+        }
+        .hover .tip-btn {
+            display: block;
+        }
+        .tip-btn {
+            display: none;
+            position: absolute;
+            left: -29px;
+            top: 0;
         }
     </style>
 </head>
 
 <body>
     <div class="tip-item arrow_box">
-        This is a test<br>This is another test
+        <button class="tip-btn">
+            <i class="fa fa-trash-o"></i>
+        </button>
+        This is a test This is another test
     </div>
     <div class="editor-panel">
         <div class="editor-container">
@@ -175,12 +187,16 @@
             <button id="panel-btn-close" class="panel-btn"><i class="fa fa-times"></i></button>
             <button id="panel-btn-submit" class="panel-btn" style="display:none;"><i class="fa fa-check"></i></button>
             <button id="panel-btn-showAll" style="display:none;" class="panel-btn"><i class="fa fa-eye"></i></button>
-            <button id="panel-btn-hideAll" class="panel-btn"><i class="fa fa-eye-slash"></i></button>
+            <button data-toggle="tooltip" data-placement="left" title="" data-original-title="Tooltip on bottom" id="panel-btn-hideAll" class="panel-btn"><i class="fa fa-eye-slash"></i></button>
         </div>
     </div>
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <!-- Panel -->
     <script type="text/javascript" src="js/Panel.js"></script>    
     <script type="text/javascript">
+        $('.panel-btn').tooltip();
+
         Editor.init();
 
         Editor.on("change", function () {
@@ -194,6 +210,12 @@
         Editor.on("submit", function () {
             var html = this.getValue();
             $(".tip-item")[0].innerHTML = html;
+        })
+
+        $(".tip-item").on("mouseover", function () {
+            $(this).addClass("hover");
+        }).on("mouseout", function () {
+            $(this).removeClass("hover");
         })
     </script>
 </body>
