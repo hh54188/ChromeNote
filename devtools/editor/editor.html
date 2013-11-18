@@ -4,16 +4,16 @@
 <head>
     <title></title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css"> -->
     <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- Lib -->
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-    <script src="js/wysihtml5-0.3.0.min.js" type="text/javascript"></script>
-    <script src="js/myrules.js" type="text/javascript"></script>
+    <!-- Editor -->
+    <script type="text/javascript" src="js/wysihtml5-0.3.0.min.js"></script>
+    <script type="text/javascript" src="js/myrules.js"></script>
+    <!-- Utility -->
+    <script type="text/javascript" src="js/globalEvent.js"></script>
+    <script type="text/javascript" src="js/Panel.js"></script>
     <style type="text/css">
-        body { 
-            padding:5px;
-        }
-
         .wysihtml5-action-active, .wysihtml5-command-dialog-opened,
         .wysihtml5-command-active {
           box-shadow: rgba(0, 0, 0, 0.121569) 0px 3px 5px 0px inset;
@@ -33,12 +33,20 @@
         .editor-area {
             font-size: 12px;
         }
+        .editor-panel {
+            position: fixed;
+            right: 5px;
+            top: 10px;
+            width: 437px;
+        }
         .editor-container {
             border: 1px solid #adadad;
-            margin: 20px;
             padding: 5px 8px 5px;
             width: 400px;
-            position: relative;
+
+            position: absolute;
+            left: 0;
+            top: 0;
         }
         .editor-container iframe {
             width: 100%;
@@ -49,72 +57,102 @@
         .toolbar-editor-btn:nth-of-type(3) {
             margin: 0 5px;
         }
+        .panel-btn-group {
+            position: absolute;
+            right: 0;
+            width: 32px;
+            height: 90px;
+        }
+        .panel-btn {
+            width: 32px;
+            height: 32px;
+            line-height: 28 px;
+
+            position: absolute;
+
+            border-radius: 50%;
+            border: 1px solid #adadad;
+        }
+        .panel-btn-top {
+            top: 0;
+        }
+        .panel-btn-bottom {
+            top: 37px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="editor-container">
-        <div id="wysihtml5-toolbar" class="editor-toolbar" style="display: none;">
-            <div class="btn-group editor-group">
-                <!--Bold-->
-                <button data-wysihtml5-command="bold" class="btn btn-default btn-sm" >
-                    <i class="fa fa-bold"></i>
-                </button>
-                <!--Italitc-->
-                <button data-wysihtml5-command="italic" class="btn btn-default btn-sm" >
-                    <i class="fa fa-italic"></i>
-                </button>        
-                <!--Underline-->
-                <button data-wysihtml5-command="underline" class="btn btn-default btn-sm" >
-                    <i class="fa fa-underline"></i>
-                </button>                           
-            </div>
-            <!--Create Link-->
-            <div class="btn-group editor-group ">
-                <button data-wysihtml5-command="createLink" class="btn btn-default btn-sm" >
-                    <i class="fa fa-link"></i>
-                </button>                      
-                <div data-wysihtml5-dialog="createLink" style="display:none;">
-                    <label>
-                        Link:
-                        <input data-wysihtml5-dialog-field="href" value="http://">
-                    </label>
-                    <a data-wysihtml5-dialog-action="save">OK</a>
-                    <a data-wysihtml5-dialog-action="cancel">Cancel</a>
+    <div class="editor-panel">
+        <div class="editor-container">
+            <div id="wysihtml5-toolbar" class="editor-toolbar" style="display: none;">
+                <div class="btn-group editor-group">
+                    <!--Bold-->
+                    <button data-wysihtml5-command="bold" class="btn btn-default btn-sm" >
+                        <i class="fa fa-bold"></i>
+                    </button>
+                    <!--Italitc-->
+                    <button data-wysihtml5-command="italic" class="btn btn-default btn-sm" >
+                        <i class="fa fa-italic"></i>
+                    </button>        
+                    <!--Underline-->
+                    <button data-wysihtml5-command="underline" class="btn btn-default btn-sm" >
+                        <i class="fa fa-underline"></i>
+                    </button>                           
                 </div>
+                <!--Create Link-->
+                <div class="btn-group editor-group ">
+                    <button data-wysihtml5-command="createLink" class="btn btn-default btn-sm" >
+                        <i class="fa fa-link"></i>
+                    </button>                      
+                    <div data-wysihtml5-dialog="createLink" style="display:none;">
+                        <label>
+                            Link:
+                            <input data-wysihtml5-dialog-field="href" value="http://">
+                        </label>
+                        <a data-wysihtml5-dialog-action="save">OK</a>
+                        <a data-wysihtml5-dialog-action="cancel">Cancel</a>
+                    </div>
+                </div>
+                <div class="btn-group editor-group ">
+                    <!--Code-->
+                    <button data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="pre" class="btn btn-default btn-sm" >
+                        <i class="fa fa-code"></i>
+                    </button>
+                    <!--Blockquote-->
+                    <button data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="blockquote" class="btn btn-default btn-sm" >
+                        <i class="fa fa-quote-left"></i>
+                    </button>
+                </div>
+                <div class="btn-group editor-group ">
+                    <!--Order List-->
+                    <button data-wysihtml5-command="insertOrderedList" class="btn btn-default btn-sm" >
+                        <i class="fa fa-list-ol"></i>
+                    </button>        
+                    <!--Unorder List-->
+                    <button data-wysihtml5-command="insertUnorderedList" class="btn btn-default btn-sm" >
+                        <i class="fa fa-list-ul"></i>
+                    </button>            
+                </div>                
             </div>
-            <div class="btn-group editor-group ">
-                <!--Code-->
-                <button data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="pre" class="btn btn-default btn-sm" >
-                    <i class="fa fa-code"></i>
-                </button>
-                <!--Blockquote-->
-                <button data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="blockquote" class="btn btn-default btn-sm" >
-                    <i class="fa fa-quote-left"></i>
-                </button>
-            </div>
-            <div class="btn-group editor-group ">
-                <!--Order List-->
-                <button data-wysihtml5-command="insertOrderedList" class="btn btn-default btn-sm" >
-                    <i class="fa fa-list-ol"></i>
-                </button>        
-                <!--Unorder List-->
-                <button data-wysihtml5-command="insertUnorderedList" class="btn btn-default btn-sm" >
-                    <i class="fa fa-list-ul"></i>
+            <textarea id="wysihtml5-textarea" style="height: 50px; width: 100%; margin-bottom: 5px;" placeholder="Enter your text ..." autofocus></textarea>
+            <div id="editor-toolbar">
+                <button id="btn-show-editor" class="btn btn-default btn-xs pull-left">Show Rich Editor</button>
+                <button id="btn-hide-editor" style="display:none;" class="btn btn-default btn-xs pull-left">hide Rich Editor</button>            
+                <button class="btn btn-default btn-xs pull-right toolbar-editor-btn">
+                    <i class="fa fa-expand"></i>
                 </button>            
-            </div>                
+                <button class="btn btn-default btn-xs pull-right toolbar-editor-btn">
+                    <i class="fa fa-keyboard-o"></i>
+                </button>
+                <div class="clearfix"></div>
+            </div>
         </div>
-        <textarea id="wysihtml5-textarea" style="height: 50px; width: 100%; margin-bottom: 5px;" placeholder="Enter your text ..." autofocus></textarea>
-        <div id="editor-toolbar">
-            <button id="btn-show-editor" class="btn btn-default btn-xs pull-left">Show Rich Editor</button>
-            <button id="btn-hide-editor" style="display:none;" class="btn btn-default btn-xs pull-left">hide Rich Editor</button>            
-            <button class="btn btn-default btn-xs pull-right toolbar-editor-btn">
-                <i class="fa fa-expand"></i>
-            </button>            
-            <button class="btn btn-default btn-xs pull-right toolbar-editor-btn">
-                <i class="fa fa-keyboard-o"></i>
-            </button>
-            <div class="clearfix"></div>
+        <div class="panel-btn-group">
+            <button id="panel-btn-return" class="panel-btn panel-btn-top" style="display:none;"><i class="fa fa-chevron-up"></i></button>
+            <button id="panel-btn-close" class="panel-btn panel-btn-top"><i class="fa fa-times"></i></button>
+            <button id="panel-btn-submit" class="panel-btn panel-btn-bottom" style="display:none;"><i class="fa fa-check"></i></button>
+            <button id="panel-btn-config" class="panel-btn panel-btn-bottom"><i class="fa fa-gear"></i></button>
         </div>
     </div>
     <script type="text/javascript">
@@ -127,6 +165,8 @@
             stylesheets: ["css/bootstrap.min.css"]
         });
         var pressedKey = [];
+        var richModeOnHeight = 100;
+        var richModeOffHeight = 50;
 
         var shortCut = function (keys) {
 
@@ -149,11 +189,29 @@
             return false;
         }
 
+        // 注册事件
+        editor.on("focus:composer", function () {
+            GlobalEvent.fire("editor:focus", {
+
+            });
+        });
+
+        editor.on("blur:composer", function () {
+            GlobalEvent.fire("editor:blur", {
+
+            });
+        });        
+
         editor.on("load", function () {
 
             this.toolbar.hide();
             editor.composer.doc.body.style.fontSize = "12px";
 
+            this.on("focus:composer", function () {
+
+            })
+
+            // 提交快捷键
             $(editor.composer.doc.body).on("keydown", function (e) {
                 if (pressedKey.length && pressedKey[pressedKey.length - 1] == e.keyCode) {
                     return;
@@ -161,6 +219,9 @@
                 pressedKey.push(e.keyCode);
                 var act = shortCut(pressedKey);
                 if (act == "submit") {
+                    GlobalEvent.fire("editor:blur", {
+
+                    });                    
                     return false;    
                 }
                 
@@ -172,12 +233,13 @@
                 })
             });
 
+            // 富文本编辑切换
             $("#btn-show-editor").on("click", function () {
-
+                richModeOn();
             })
 
             $("#btn-hide-editor").on("click", function () {
-
+                richModeOff();
             })            
         });
         
@@ -192,15 +254,17 @@
 
         var richModeOn = function () {
             editor.toolbar.show();
-            editor.composer.iframe.style.height = "100px";
-            $(this).hide();
+            editor.composer.iframe.style.height = richModeOnHeight + "px";
+
+            $("#btn-show-editor").hide();
             $("#btn-hide-editor").show();
         }
 
         var richModeOff = function () {
             editor.toolbar.hide();
-            editor.composer.iframe.style.height = "50px";
-            $(this).hide();
+            editor.composer.iframe.style.height = richModeOffHeight + "px";
+
+            $("#btn-hide-editor").hide();
             $("#btn-show-editor").show();            
         }
     </script>
