@@ -1,10 +1,12 @@
 var Panel = (function () {
     var doms = {
+        wrap: $(".editor-panel"),
         btn: {
             "submit": $("#panel-btn-submit"),
             "close": $("#panel-btn-close"),
             "return": $("#panel-btn-return"),
-            "config": $("#panel-btn-config")
+            "showAll": $("#panel-btn-showAll"),
+            "hideAll": $("#panel-btn-hideAll")
         }
     }
 

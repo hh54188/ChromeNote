@@ -1,10 +1,15 @@
 var Tip = (function () {
-    
-    var generateTip = function (html) {
-        
+
+    var tpl = [
+        '<div class="tip-item arrow_box">',
+        '</div>'
+    ].join(",");
+
+    var generate = function (html) {
+
     }
 
     return {
-        generateTip: generateTip
+        generate: generate
     }
 })()
