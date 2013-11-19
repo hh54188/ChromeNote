@@ -1,0 +1,38 @@
+.tip-item-wrap {
+    margin: 20px 0 0 50px;
+    width: 410px;
+    cursor: pointer;
+}
+.tip-item {
+    width: 400px;
+    padding: 3px 6px;
+    border: 1px solid #adadad;
+}
+.tip-btn {
+    background: white;
+    width: 24px;
+    height: 24px;
+    line-height: 21px;
+    font-size: 13px;
+
+    border-radius: 50%;
+    border: 1px solid #adadad;
+
+    margin-bottom: 6px;    
+}
+.tip-btn:active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.tip-btn:hover {
+    background: #ebebeb;
+}
+.tip-btn {
+    margin-left: 5px;
+}
+.tip-btn-group {
+    display: none;
+    margin-top: 5px;
+}
