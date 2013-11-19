@@ -92,30 +92,40 @@
         .panel-btn:hover, .tip-btn:hover {
             background: #ebebeb;
         }
+        .tip-item-wrap {
+            margin: 20px 0 0 50px;
+            width: 410px;
+        }
         .tip-item {
-            margin: 10px 0 0 50px;
             width: 400px;
             padding: 3px 6px;
             border: 1px solid #adadad;
         }
-        .hover .tip-btn {
+        .tip-btn {
+            margin-left: 2px;
+        }
+        .tip-item-wrap:hover .tip-btn-group {
             display: block;
         }
-        .tip-btn {
+        .tip-btn-group {
             display: none;
-            position: absolute;
-            left: -29px;
-            top: 0;
+            margin-top: 5px;
         }
     </style>
 </head>
 
 <body>
-    <div class="tip-item arrow_box">
-        <button class="tip-btn">
-            <i class="fa fa-trash-o"></i>
-        </button>
-        This is a test This is another test
+    <div class="tip-item-wrap">
+        <div class="tip-item arrow_box">
+            This is a test This is another test
+        </div>
+        <div class="tip-btn-group">
+            <button class="tip-btn"><i class="fa fa-trash-o"></i></button>
+            <button class="tip-btn"><i class="fa fa-share"></i></button>
+            <button class="tip-btn hide" ><i class="fa fa-twitter"></i></button>
+            <button class="tip-btn hide"><i class="fa fa-facebook"></i></button>
+            <button class="tip-btn hide"><i class="fa fa-google-plus"></i></button>
+        </div>
     </div>
     <div class="editor-panel">
         <div class="editor-container">
@@ -187,7 +197,7 @@
             <button id="panel-btn-close" class="panel-btn"><i class="fa fa-times"></i></button>
             <button id="panel-btn-submit" class="panel-btn" style="display:none;"><i class="fa fa-check"></i></button>
             <button id="panel-btn-showAll" style="display:none;" class="panel-btn"><i class="fa fa-eye"></i></button>
-            <button data-toggle="tooltip" data-placement="left" title="" data-original-title="Tooltip on bottom" id="panel-btn-hideAll" class="panel-btn"><i class="fa fa-eye-slash"></i></button>
+            <button id="panel-btn-hideAll" class="panel-btn"><i class="fa fa-eye-slash"></i></button>
         </div>
     </div>
     <!-- Bootstrap -->
@@ -195,8 +205,6 @@
     <!-- Panel -->
     <script type="text/javascript" src="js/Panel.js"></script>    
     <script type="text/javascript">
-        $('.panel-btn').tooltip();
-
         Editor.init();
 
         Editor.on("change", function () {
@@ -210,12 +218,6 @@
         Editor.on("submit", function () {
             var html = this.getValue();
             $(".tip-item")[0].innerHTML = html;
-        })
-
-        $(".tip-item").on("mouseover", function () {
-            $(this).addClass("hover");
-        }).on("mouseout", function () {
-            $(this).removeClass("hover");
         })
     </script>
 </body>
