@@ -20,6 +20,7 @@
     <script type="text/javascript" src="js/globalEvent.js"></script>
     <!-- Editor -->
     <script type="text/javascript" src="js/Editor.js"></script>
+    <script type="text/javascript" src="js/animate.js"></script>
     <style type="text/css">
         iframe, button {
             outline: none;
@@ -115,6 +116,7 @@
     <!-- Panel -->
     <script type="text/javascript" src="js/Panel.js"></script>    
     <script type="text/javascript">
+
         Editor.init();
 
         Editor.on("change", function () {
@@ -131,6 +133,9 @@
         });
 
         Tip.generate("This is a test");
+
+        var target = $(".tip-item-wrap");
+        
     </script>
 </body>
 
