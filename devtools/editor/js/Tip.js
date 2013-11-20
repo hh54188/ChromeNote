@@ -35,11 +35,13 @@ var Tip = (function () {
 
     var generate = function (innerHTML) {
         var item = $(tpl);
+        item.anim("flipX");
         var content = item.find(".tip-item");
         content.html(innerHTML);
 
         doms.body.append(item);
         bindEvent(item);
+        item.animShow();
     }
 
     return {

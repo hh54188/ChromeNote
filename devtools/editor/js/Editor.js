@@ -58,7 +58,7 @@ var Editor = (function () {
             toolbar: id + "-toolbar", 
             composerClassName: "editor-area",
             parserRules: myrules,
-            stylesheets: ["css/bootstrap.min.css"]
+            stylesheets: ["css/lib/bootstrap.min.css"]
         });
 
         editor.on("load", function () {
