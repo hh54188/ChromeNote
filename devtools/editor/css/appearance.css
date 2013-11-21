@@ -4,3 +4,9 @@
 .margin-left-30 {
     margin-left: 30px;
 }   
+.cursor-move {
+    cursor: move;
+}
+.user-select-none {
+    -webkit-user-select: none;
+}

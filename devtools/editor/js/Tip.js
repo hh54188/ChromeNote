@@ -6,35 +6,67 @@ var Tip = (function () {
             '<div class="tip-btn-group">',
                 '<button class="tip-btn-del tip-btn"><i class="fa fa-trash-o"></i></button>',
                 '<button class="tip-btn-share tip-btn"><i class="fa fa-share"></i></button>',
-                '<button class="tip-btn-share-item tip-btn margin-left-30" ><i class="fa fa-twitter"></i></button>',
-                '<button class="tip-btn-share-item tip-btn"><i class="fa fa-facebook"></i></button>',
-                '<button class="tip-btn-share-item tip-btn"><i class="fa fa-google-plus"></i></button>',
+                '<button class="tip-btn-share-item tip-btn-share-twit tip-btn margin-left-30" ><i class="fa fa-twitter"></i></button>',
+                '<button class="tip-btn-share-item tip-btn-share-face tip-btn"><i class="fa fa-facebook"></i></button>',
+                '<button class="tip-btn-share-item tip-btn-share-goog tip-btn"><i class="fa fa-google-plus"></i></button>',
             '</div>',
+            '<div class="tip-item-handle"></div>',
         '</div>'
     ].join("");
 
     var doms = {
-        body: $("body")
+        body: $("body"),
+        track: $('<div class="tip-track"></div>')
     }
+
+    var delegateOnBody = function () {
+        var curTarget = null;
+        var dis = 0;
+
+        doms.body.on("mousedown", function (e) {
+
+            var target = $(e.target);
+            if (!target.hasClass("tip-item-handle")) return;
+
+            curTarget = target.parents(".tip-item-wrap");
+            dis = e.clientY - parseInt(curTarget.css("top"));
+            doms.body.append(doms.track);
+            doms.body.addClass("cursor-move user-select-none");
+
+        }).on("mouseup", function (e) {
+
+            if (!curTarget) return;
+
+            curTarget = null;
+            doms.track.remove();
+            doms.body.removeClass("cursor-move user-select-none");
+
+        }).on("mousemove", function (e) {
+            if (!curTarget) return;
+
+            curTarget.css({
+                top: e.clientY - dis + "px"
+            })
+        })
+    }();
 
     var bindEvent = function (item) {
         var btnGroup = item.find(".tip-btn-group");
-        var shareItem = item.find(".tip-btn-share-item");
         var shareBtn = item.find(".tip-btn-share");
+        var removeBtn = item.find(".tip-btn-del");
 
-        item.on("mouseover", function () {
-            btnGroup.show();
-        }).on("mouseout", function () {
-            btnGroup.hide();
-        });
-
-        shareBtn.on("mouseover", function () {
-            
-        })
+        var shareItem = item.find(".tip-btn-share-item");
+        var sharetwit = item.find(".tip-btn-share-twit");
+        var shareface = item.find(".tip-btn-share-face");
+        var sharegoog = item.find(".tip-btn-share-goog");
     }
 
-    var generate = function (innerHTML) {
+    var generate = function (innerHTML, top) {
         var item = $(tpl);
+        item.css({
+            top: top + "px"
+        })
+
         item.anim("flipX");
         var content = item.find(".tip-item");
         content.html(innerHTML);

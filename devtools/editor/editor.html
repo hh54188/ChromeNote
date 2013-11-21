@@ -5,12 +5,12 @@
     <title></title>
     <link rel="stylesheet" type="text/css"  href="css/lib/bootstrap.min.css">
     <link rel="stylesheet" type="text/css"  href="css/lib/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/lib/animate-custom.css">
     <link rel="stylesheet" type="text/css" href="css/lib/arrow.css">
     <link rel="stylesheet" type="text/css" href="css/widget/editor.css">
     <link rel="stylesheet" type="text/css" href="css/widget/panel.css">
     <link rel="stylesheet" type="text/css" href="css/widget/tip.css">
     <link rel="stylesheet" type="text/css" href="css/appearance.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/animate-custom.css">
     <!-- Lib -->
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="js/animate.js"></script>
@@ -133,7 +133,7 @@
             $(".tip-item")[0].innerHTML = html;
         });
 
-        Tip.generate("This is a test");
+        Tip.generate("This is a test", 400);
 
         var target = $(".tip-item-wrap");
         

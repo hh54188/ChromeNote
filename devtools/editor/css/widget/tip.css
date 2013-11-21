@@ -1,6 +1,7 @@
 .tip-item-wrap {
-    margin: 20px 0 0 50px;
     width: 410px;
+    position: fixed;
+    right: 0;
     cursor: pointer;
 }
 .tip-item {
@@ -35,4 +36,25 @@
 .tip-btn-group {
     display: none;
     margin-top: 5px;
+}
+.tip-item-wrap:hover .tip-btn-group {
+    display: block;
+}
+.tip-btn-share-item {
+    /*opacity: 0;*/
+}
+.tip-item-handle {
+    width: 20px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: move;
+}
+.tip-track {
+    width: 50px;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
 }
