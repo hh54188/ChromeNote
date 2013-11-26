@@ -32,6 +32,8 @@ var Panel = (function () {
 
                 Editor.on("submit", function () {
                     var html = this.getValue();
+                    hidePanel();
+                    Tip.generate(html, top);
                 });                
 
                 doms.btn.submit.on("click", function () {
@@ -49,7 +51,8 @@ var Panel = (function () {
                 Editor.reset();
                 doms.wrap.show();
             }
-            
+
+            Editor.focus();
             doms.wrap.css("top", top + "px");
         })
 

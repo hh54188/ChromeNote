@@ -107,6 +107,7 @@ var Editor = (function () {
     }
     
     var delegateOnBody = function () {
+
         var pressed = false;
         var originHeight = 0;
         var originTop =  0;
@@ -118,6 +119,7 @@ var Editor = (function () {
         doms.body.on("mousedown", function (e) {
 
             var target = $(e.target);
+
             if (target.attr("id") != "editor-expand-handle") return;
 
             if (doms.textarea.length == 0) 
@@ -125,7 +127,9 @@ var Editor = (function () {
 
             pressed = true;
 
-            originTop = target.offset().top;
+            // originTop = target.offset().top;
+            originTop = parseInt(target.scrollTop());
+            console.log(originTop);
             originHeight = parseInt(doms.textarea.css("height")) + 6;
 
             doms.body.addClass("user-select-none");
@@ -138,8 +142,9 @@ var Editor = (function () {
         }).on("mousemove", function (e) {
 
             if (!pressed) return;
-            
+
             var height = e.clientY - originTop + originHeight;
+
             if (height >= min && height <= max) {
                 doms.textarea.css('height', height + "px");
             }
@@ -152,6 +157,10 @@ var Editor = (function () {
         $(editor.composer.iframe).removeAttr("style");
     }
 
+    var focus = function () {
+        editor.focus();
+    }
+
     var init = function () {
         $("body").append($(editorTpl));
 
@@ -162,6 +171,8 @@ var Editor = (function () {
             parserRules: myrules,
             stylesheets: ["css/lib/bootstrap.min.css"]
         });
+
+        // console.log(editor);
 
         editor.on("load", function () {
             // 默认隐藏工具栏
@@ -200,16 +211,16 @@ var Editor = (function () {
 
             $("#btn-hide-editor").on("click", function () {
                 richModeOff();
-            })            
+            });
+
+            doms = {
+                expand: $("#editor-expand-handle"),
+                body: $("body"),
+                textarea: $(".editor-container iframe")
+            }
+
+            delegateOnBody();   
         });
-
-        doms = {
-            expand: $("#editor-expand-handle"),
-            body: $("body"),
-            textarea: $(".editor-container iframe")
-        }
-
-        delegateOnBody();
     }
 
     var bindEvent = function (evt, handler) {
@@ -234,6 +245,7 @@ var Editor = (function () {
     }
 
     return {
+        focus: focus,
         reset: reset,
         init: init,
         on: bindEvent,
