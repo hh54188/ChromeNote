@@ -50,6 +50,10 @@ var Tip = (function () {
         })
     }();
 
+    var hide = function (item) {
+        item.animHide().animNone();
+    }
+
     var bindEvent = function (item) {
         var btnGroup = item.find(".tip-btn-group");
         var shareBtn = item.find(".tip-btn-share");
@@ -61,8 +65,14 @@ var Tip = (function () {
         var sharegoog = item.find(".tip-btn-share-goog");
 
         removeBtn.on("click", function () {
-            item.animHide().animNone();
+            hide(item);
         });
+
+        item.on("click", function () {
+            var top = item[0].getBoundingClientRect().top;
+            // hide(this);
+            Panel.moveTo(top);
+        })
     }
 
     var generate = function (innerHTML, top) {

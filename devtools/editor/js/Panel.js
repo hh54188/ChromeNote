@@ -60,6 +60,11 @@ var Panel = (function () {
     
     bindEvent();
 
+    var moveTo = function (top) {
+        doms.wrap.css("top", top + "px");
+        doms.wrap.show();
+    }
+
     var hidePanel = function () {
         isOpen = false;
         doms.wrap.hide();
@@ -74,6 +79,7 @@ var Panel = (function () {
     }
 
     return {
+        moveTo: moveTo,
         enableSubmit: enableSubmit,
         disableSubmit: disableSubmit
     }

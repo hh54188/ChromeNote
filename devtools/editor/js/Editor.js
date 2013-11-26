@@ -127,9 +127,7 @@ var Editor = (function () {
 
             pressed = true;
 
-            // originTop = target.offset().top;
-            originTop = parseInt(target.scrollTop());
-            console.log(originTop);
+            originTop = target[0].getBoundingClientRect().top;
             originHeight = parseInt(doms.textarea.css("height")) + 6;
 
             doms.body.addClass("user-select-none");
@@ -161,6 +159,10 @@ var Editor = (function () {
         editor.focus();
     }
 
+    var content = function (html) {
+        editor.setValue(html);
+    }
+
     var init = function () {
         $("body").append($(editorTpl));
 
@@ -172,7 +174,7 @@ var Editor = (function () {
             stylesheets: ["css/lib/bootstrap.min.css"]
         });
 
-        // console.log(editor);
+        console.log(editor);
 
         editor.on("load", function () {
             // 默认隐藏工具栏
@@ -245,9 +247,12 @@ var Editor = (function () {
     }
 
     return {
-        focus: focus,
-        reset: reset,
         init: init,
+        focus: focus,
+        // API
+        reset: reset,
+        content: content,
+        // Event
         on: bindEvent,
         fire: triggerEvent
     }
