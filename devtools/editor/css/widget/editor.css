@@ -35,3 +35,17 @@
 .toolbar-editor-btn:nth-of-type(3) {
     margin: 0 5px;
 }
+#editor-expand-handle {
+    width: 20px;
+    height: 3px;
+    background: #ebebeb;
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    margin-left: 2.5px;
+    cursor: ns-resize;
+}
+#editor-expand-handle:hover {
+    background: #adadad;
+    height: 5px;
+}

@@ -1,18 +1,66 @@
 var Panel = (function () {
     var doms = {
-        wrap: $(".editor-panel"),
-        btn: {
-            "submit": $("#panel-btn-submit"),
-            "close": $("#panel-btn-close"),
-            "return": $("#panel-btn-return"),
-            "showAll": $("#panel-btn-showAll"),
-            "hideAll": $("#panel-btn-hideAll")
-        }
-    }
+        body: $("body")
+    };
 
-    doms.btn.submit.on("click", function () {
-        Editor.fire("submit");
-    });
+    var isOpen = true;
+
+    var bindEvent = function () {
+
+        doms.body.on("dblclick", function (e) {
+            var top = e.clientY;
+
+            if (!doms.wrap) {
+                Editor.init();
+
+                doms.wrap = $(".editor-panel"),
+                doms.btn = {
+                    "submit": $("#panel-btn-submit"),
+                    "close": $("#panel-btn-close"),
+                    "return": $("#panel-btn-return"),
+                    "showAll": $("#panel-btn-showAll"),
+                    "hideAll": $("#panel-btn-hideAll")
+                }
+
+                Editor.on("change", function () {
+                    if (this.composer.getTextContent().trim()) {
+                        Panel.enableSubmit();
+                    } else {
+                        Panel.disableSubmit();
+                    }
+                });
+
+                Editor.on("submit", function () {
+                    var html = this.getValue();
+                });                
+
+                doms.btn.submit.on("click", function () {
+                    Editor.fire("submit");
+                });
+
+                doms.btn.close.on("click", function () {
+                    hidePanel();
+                })                
+            }
+
+            // 无需重置高度
+            if (!isOpen) {
+                isOpen = true;
+                Editor.reset();
+                doms.wrap.show();
+            }
+            
+            doms.wrap.css("top", top + "px");
+        })
+
+    }
+    
+    bindEvent();
+
+    var hidePanel = function () {
+        isOpen = false;
+        doms.wrap.hide();
+    }
 
     var enableSubmit = function () {
         doms.btn.submit.show();

@@ -67,18 +67,24 @@
         // });
 
         // CASE 5: 同时可以控制多个元素
+        // countDown(function () {
+        //     // 基本
+        //     div1.anim();
+        //     div2.anim();
+        //     div3.anim();
+
+        //     div1.animShow().animShow(div2).animShow(div3).animHide().animHide(div2).animHide(div3);
+
+        //     // 临时设置
+        //     // div1.animHide().animHide(div2).animHide(div3);
+        //     // div1.animShow().animShow(div2).animShow(div3);
+        // });        
+
+        // CASE 6: None
         countDown(function () {
-            // 基本
             div1.anim();
-            div2.anim();
-            div3.anim();
-
-            div1.animShow().animShow(div2).animShow(div3).animHide().animHide(div2).animHide(div3);
-
-            // 临时设置
-            // div1.animHide().animHide(div2).animHide(div3);
-            // div1.animShow().animShow(div2).animShow(div3);
-        });        
+            div1.animShow().animNone();
+        })
         
     </script>
 </body>

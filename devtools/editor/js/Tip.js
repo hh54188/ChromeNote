@@ -59,6 +59,10 @@ var Tip = (function () {
         var sharetwit = item.find(".tip-btn-share-twit");
         var shareface = item.find(".tip-btn-share-face");
         var sharegoog = item.find(".tip-btn-share-goog");
+
+        removeBtn.on("click", function () {
+            item.animHide().animNone();
+        });
     }
 
     var generate = function (innerHTML, top) {

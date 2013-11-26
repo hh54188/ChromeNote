@@ -178,4 +178,20 @@
         return this;            
     }
 
+    $.fn.animNone = function (el) {
+        var target = el || this;
+        var id = this.attr("data-anim-id");
+
+        var fn = function () {
+            target.hide();
+        }
+
+        SetData(id, {
+            el: target,
+            fn: fn
+        });
+
+        return this;
+    }
+
 })(jQuery, window, document);

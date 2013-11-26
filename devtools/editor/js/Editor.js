@@ -1,9 +1,65 @@
 var Editor = (function () {
+
+
+    var editorTpl = [
+        '<div class="editor-panel transition">',
+            '<div class="editor-container">',
+                '<div id="wysihtml5-toolbar" class="editor-toolbar" style="display: none;">',
+                    '<div class="btn-group editor-group">',
+                        '<button data-wysihtml5-command="bold" class="btn btn-default btn-sm" >',
+                            '<i class="fa fa-bold"></i>',
+                        '</button>',
+                        '<button data-wysihtml5-command="italic" class="btn btn-default btn-sm" >',
+                            '<i class="fa fa-italic"></i>',
+                        '</button>',
+                        '<button data-wysihtml5-command="underline" class="btn btn-default btn-sm" >',
+                            '<i class="fa fa-underline"></i>',
+                        '</button>',
+                    '</div>',
+                    '<div class="btn-group editor-group ">',
+                        '<button data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="pre" class="btn btn-default btn-sm" >',
+                            '<i class="fa fa-code"></i>',
+                        '</button>',
+                        '<button data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="blockquote" class="btn btn-default btn-sm" >',
+                            '<i class="fa fa-quote-left"></i>',
+                        '</button>',
+                    '</div>',
+                    '<div class="btn-group editor-group ">',
+                        '<button data-wysihtml5-command="insertOrderedList" class="btn btn-default btn-sm" >',
+                            '<i class="fa fa-list-ol"></i>',
+                        '</button>',
+                        '<button data-wysihtml5-command="insertUnorderedList" class="btn btn-default btn-sm" >',
+                            '<i class="fa fa-list-ul"></i>',
+                        '</button>',
+                    '</div>',
+                '</div>',
+                '<textarea id="wysihtml5-textarea" style="height: 50px; width: 100%; margin-bottom: 5px;" placeholder="Enter your text ..."></textarea>',
+                '<div id="editor-toolbar">',
+                    '<button id="btn-show-editor" class="btn btn-default btn-xs pull-left">Show Rich Editor</button>',
+                    '<button id="btn-hide-editor" style="display:none;" class="btn btn-default btn-xs pull-left">hide Rich Editor</button>',
+                    '<button class="btn btn-default btn-xs pull-right toolbar-editor-btn">',
+                        '<i class="fa fa-keyboard-o"></i>',
+                    '</button>',
+                    '<div class="clearfix"></div>',
+                '</div>',
+                '<div id="editor-expand-handle"></div>',
+            '</div>',
+            '<div class="panel-btn-group">',
+                '<button id="panel-btn-return" class="panel-btn" style="display:none;"><i class="fa fa-chevron-up"></i></button>',
+                '<button id="panel-btn-close" class="panel-btn"><i class="fa fa-times"></i></button>',
+                '<button id="panel-btn-submit" class="panel-btn" style="display:none;"><i class="fa fa-check"></i></button>',
+                '<button id="panel-btn-showAll" style="display:none;" class="panel-btn"><i class="fa fa-eye"></i></button>',
+                '<button id="panel-btn-hideAll" class="panel-btn"><i class="fa fa-eye-slash"></i></button>',
+            '</div>',
+        '</div>'
+    ].join("");
+
     var editor = null;
     var id = "wysihtml5";
     var pressedKey = [];
     var richModeOnHeight = 100;
     var richModeOffHeight = 50;
+    var doms = {};
 
     var eventMap = {
         "focus": "focus:composer",
@@ -14,7 +70,6 @@ var Editor = (function () {
 
     var richModeOn = function () {
         editor.toolbar.show();
-        editor.composer.iframe.style.height = richModeOnHeight + "px";
 
         $("#btn-show-editor").hide();
         $("#btn-hide-editor").show();
@@ -22,7 +77,6 @@ var Editor = (function () {
 
     var richModeOff = function () {
         editor.toolbar.hide();
-        editor.composer.iframe.style.height = richModeOffHeight + "px";
 
         $("#btn-hide-editor").hide();
         $("#btn-show-editor").show();            
@@ -51,8 +105,56 @@ var Editor = (function () {
         }
         return false;
     }
+    
+    var delegateOnBody = function () {
+        var pressed = false;
+        var originHeight = 0;
+        var originTop =  0;
+        var min = 50, max = 300;
+
+        var minHeight = parseInt(doms.textarea.css("height"));
+
+        // 输入框可拖拽伸展
+        doms.body.on("mousedown", function (e) {
+
+            var target = $(e.target);
+            if (target.attr("id") != "editor-expand-handle") return;
+
+            if (doms.textarea.length == 0) 
+                doms.textarea = $(".editor-container iframe");
+
+            pressed = true;
+
+            originTop = target.offset().top;
+            originHeight = parseInt(doms.textarea.css("height")) + 6;
+
+            doms.body.addClass("user-select-none");
+
+        }).on("mouseup", function (e) {
+
+            pressed = false;
+            doms.body.removeClass("user-select-none");
+
+        }).on("mousemove", function (e) {
+
+            if (!pressed) return;
+            
+            var height = e.clientY - originTop + originHeight;
+            if (height >= min && height <= max) {
+                doms.textarea.css('height', height + "px");
+            }
+
+        });
+    }
+
+    var reset = function () {
+        editor.clear();
+        $(editor.composer.iframe).removeAttr("style");
+    }
 
     var init = function () {
+        $("body").append($(editorTpl));
+
         editor = new wysihtml5.Editor(id + "-textarea", {
             style: false,
             toolbar: id + "-toolbar", 
@@ -99,7 +201,15 @@ var Editor = (function () {
             $("#btn-hide-editor").on("click", function () {
                 richModeOff();
             })            
-        });        
+        });
+
+        doms = {
+            expand: $("#editor-expand-handle"),
+            body: $("body"),
+            textarea: $(".editor-container iframe")
+        }
+
+        delegateOnBody();
     }
 
     var bindEvent = function (evt, handler) {
@@ -124,6 +234,7 @@ var Editor = (function () {
     }
 
     return {
+        reset: reset,
         init: init,
         on: bindEvent,
         fire: triggerEvent
