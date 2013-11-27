@@ -1,8 +1,12 @@
 var Marker = (function () {
 
     var markerTpl = [
-
-    ]
+    '<div class="marker">',
+        '<div class="marker-inner">',
+            '<i class="fa fa-info"></i>',
+        '</div>',
+    '</div>'
+    ].join("");
 
     var data = [];
 
@@ -31,6 +35,12 @@ var Marker = (function () {
 
         el.status.from = el.status.to;
         el.status.to = status;
+    }
+
+    var generate = function (top) {
+        var item = $(markerTpl);
+        item.css("top", top + "px");
+        doms.body.append(item);
     }
 
     var bindEvent = function () {
@@ -66,5 +76,7 @@ var Marker = (function () {
             });
         });
     }
+    
+    // bindEvent();
 
 })();
