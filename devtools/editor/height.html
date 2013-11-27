@@ -1376,7 +1376,7 @@ Element-granular frameworks make it possible to update the value directly inside
 
 			var div = document.createElement("div");
 			div.classList.add("mark");
-			div.classList.add("transition");
+			// div.classList.add("transition");
 			div.classList.add("item");
 			div.style.top = pageY - document.body.scrollTop + "px";
 
@@ -1401,7 +1401,7 @@ Element-granular frameworks make it possible to update the value directly inside
 					console.log("SHOW");
 				} else if (el.pageY <= min) {
 					console.log("UP");
-				} else if (el.pageY <= max) {
+				} else if (el.pageY >= max) {
 					console.log("DOWN");
 				}
 			})

@@ -26,6 +26,13 @@ var Marker = (function () {
         }
     }
 
+    var syncStatus = function (el, status) {
+        if (el.status.to == status) return;
+
+        el.status.from = el.status.to;
+        el.status.to = status;
+    }
+
     var bindEvent = function () {
 
         $(document).on("scroll", function () {
@@ -37,10 +44,7 @@ var Marker = (function () {
 
                 if (el.pageY > cfg.min && el.pageY < cfg.max) {
 
-                    if (el.status.to == "middle") return;
-
-                    el.status.from = el.status.to;
-                    el.status.to = "middle";
+                    syncStatus("middle");
 
                     if (el.status.from == "above") {
                         cfg.count.above--;
@@ -50,20 +54,12 @@ var Marker = (function () {
 
                 } else if (el.pageY <= cfg.min) {
 
-                    if (el.status.to == "above") return;
-
-                    el.status.from = el.status.to;
-                    el.status.to = "above";
-                    
+                    syncStatus("above");
                     cfg.count.above++;
 
-                } else if (el.pageY <= cfg.max) {
+                } else if (el.pageY >= cfg.max) {
 
-                    if (el.status.to == "below") return;
-
-                    el.status.from = el.status.to;
-                    el.status.to = "below";
-
+                    syncStatus("below");
                     cfg.count.below++;
                 }
                 
